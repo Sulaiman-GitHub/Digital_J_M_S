@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { RouterProvider } from 'react-router-dom'
 import { AppProviders } from './app/providers'
 import { router } from './app/router'
+import { registerServiceWorker } from './lib/registerServiceWorker'
 import './index.css'
 
 const root = document.getElementById('root')
@@ -15,3 +16,5 @@ createRoot(root).render(
     </AppProviders>
   </StrictMode>,
 )
+
+registerServiceWorker()
