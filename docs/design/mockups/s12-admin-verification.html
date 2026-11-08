@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>S12 Admin employer verification · mockup</title>
+  <link rel="stylesheet" href="mockup.css" />
+  <style>
+    .page { padding: 16px 16px 40px; }
+    .desktop .page { padding: 24px 48px 48px; }
+    .page h1 { font-size: 24px; }
+    .stack > * + * { margin-top: 16px; }
+    .tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+    .q-card { display: block; text-decoration: none; color: inherit; }
+    .facts { display: grid; grid-template-columns: 1fr; gap: 8px 24px; }
+    .desktop .facts { grid-template-columns: 1fr 1fr; }
+    .facts dt { font-size: 14px; color: var(--color-text-secondary); }
+    .facts dd { margin: 0; font-weight: 600; word-break: break-word; }
+    .check { list-style: none; }
+    .check li { display: flex; gap: 10px; padding: 10px 0; border-top: 1px solid var(--color-border); }
+    .check li:first-child { border-top: 0; }
+    .mark { flex: none; width: 24px; height: 24px; border-radius: 999px; display: grid; place-items: center; font-weight: 700; font-size: 14px; }
+    .mark.ok { background: var(--color-success); color: #fff; }
+    .mark.no { background: var(--color-danger); color: #fff; }
+    .check .what { font-weight: 600; }
+    .check .help { font-size: 14px; color: var(--color-text-secondary); }
+    .timeline { list-style: none; border-left: 2px solid var(--color-border); margin-left: 8px; }
+    .timeline li { position: relative; padding: 0 0 16px 20px; }
+    .timeline li::before { content: ''; position: absolute; left: -7px; top: 6px; width: 12px; height: 12px; border-radius: 999px; background: var(--color-primary); border: 2px solid #fff; }
+    .timeline .when { font-size: 14px; color: var(--color-text-secondary); }
+    .timeline .why { margin-top: 4px; padding: 8px 12px; background: var(--color-surface); border-radius: 8px; font-size: 14px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+    .btn-danger { background: var(--color-danger); color: #fff; }
+    .dialog { background: #fff; border-radius: 12px; padding: 20px; width: calc(100% - 32px); position: absolute; left: 16px; top: 160px; box-shadow: 0 8px 24px rgb(0 0 0 / .25); }
+    .dialog h2 { font-size: 20px; }
+    .dialog .actions { justify-content: flex-end; margin-top: 16px; }
+    .textarea { width: 100%; min-height: 96px; padding: 10px 12px; font: inherit; border: 2px solid var(--color-danger); border-radius: 8px; }
+    .err { font-size: 14px; font-weight: 600; color: var(--color-danger); }
+    .note-box { background: var(--color-info-tint); border: 1px solid var(--color-info); border-radius: 8px; padding: 10px 12px; font-size: 14px; }
+  </style>
+</head>
+<body>
+<div class="doc">
+  <header class="doc-head">
+    <h1>S12 · Admin: employer verification</h1>
+    <p>Queue, detail with the verification checklist, history, and the Approve, Reject and Suspend actions with a reason dialog.
+      The checklist shows what the employer provided; whether it is true is checked by the admin outside the system.
+      Sample data is fictional.</p>
+    <nav><a href="s6-profile.html">S6 Profile</a><a href="s9-employer-banner.html">S9 Employer banner</a><a href="s12-admin-verification.html">S12 Admin verification</a></nav>
+  </header>
+
+  <div class="frames">
+    <!-- 1 QUEUE phone -->
+    <section>
+      <div class="frame-label">1 · Queue (phone)</div>
+      <div class="frame phone">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a><div class="header-actions"><button class="btn btn-ghost btn-sm">Menu</button></div></header>
+        <div class="page stack">
+          <h1>Employers</h1>
+          <div class="pills tabs" role="group" aria-label="Filter by status">
+            <button class="pill" aria-pressed="true">Pending (3)</button><button class="pill" aria-pressed="false">Approved</button>
+            <button class="pill" aria-pressed="false">Rejected</button><button class="pill" aria-pressed="false">Suspended</button>
+            <button class="pill" aria-pressed="false">Draft</button><button class="pill" aria-pressed="false">All</button>
+          </div>
+          <a class="card q-card" href="#"><div class="row between"><span class="vc-title">Ssese Foods Ltd</span><span class="badge badge-warning">Pending</span></div>
+            <div class="vc-company">hr@ssese-foods.example.com</div>
+            <div class="vc-meta"><span>Kampala</span><span class="dot">Sent 6 Nov 2026, 09:12</span></div></a>
+          <a class="card q-card" href="#"><div class="row between"><span class="vc-title">Gulu Hardware</span><span class="badge badge-warning">Pending</span></div>
+            <div class="vc-company">info@gulu-hardware.example.com</div>
+            <div class="vc-meta"><span>Gulu</span><span class="dot">Sent 5 Nov 2026, 16:40</span></div></a>
+          <nav class="pagination" aria-label="Pages"><span aria-disabled="true">‹</span><span aria-current="page">1</span><a href="#">2</a><a href="#">›</a></nav>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 DETAIL phone -->
+    <section>
+      <div class="frame-label">2 · Detail, pending (phone)</div>
+      <div class="frame phone">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a><div class="header-actions"><button class="btn btn-ghost btn-sm">Menu</button></div></header>
+        <div class="page stack">
+          <a href="#" class="small">‹ All employers</a>
+          <div class="row between"><h1>Ssese Foods Ltd</h1><span class="badge badge-warning">Pending</span></div>
+          <div class="card"><h2 class="section-title" style="font-size:18px">Checklist</h2>
+            <p class="small muted" style="margin:4px 0 8px">What was provided. Check it is true before you approve.</p>
+            <ul class="check">
+              <li><span class="mark ok" aria-hidden="true">✓</span><div><div class="what">Company name</div><div class="help">Ssese Foods Ltd. Does it match the registration?</div></div></li>
+              <li><span class="mark ok" aria-hidden="true">✓</span><div><div class="what">Registration details</div><div class="help">80020012345678. Look it up with the registrar.</div></div></li>
+              <li><span class="mark ok" aria-hidden="true">✓</span><div><div class="what">Named contact</div><div class="help">hr@ssese-foods.example.com (email verified).</div></div></li>
+              <li><span class="mark no" aria-hidden="true">✕</span><div><div class="what">Working phone or website</div><div class="help">Missing. The employer cannot submit without one.</div></div></li>
+            </ul></div>
+          <div class="card"><dl class="facts">
+            <div><dt>District</dt><dd>Kampala</dd></div><div><dt>Phone</dt><dd>+256 414 123456</dd></div>
+            <div><dt>Website</dt><dd>https://ssese-foods.example.com</dd></div><div><dt>Sent</dt><dd>6 Nov 2026, 09:12</dd></div>
+            <div style="grid-column:1/-1"><dt>About</dt><dd style="font-weight:400">We process and sell fruit juice across northern Uganda.</dd></div></dl></div>
+          <div class="card"><h2 class="section-title" style="font-size:18px">History</h2>
+            <ul class="timeline" style="margin-top:12px">
+              <li><div><strong>Sent for checking</strong></div><div class="when">6 Nov 2026, 09:12 · hr@ssese-foods.example.com</div></li>
+            </ul></div>
+          <div class="actions"><button class="btn btn-primary">Approve</button><button class="btn btn-secondary">Reject…</button></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 REJECT DIALOG phone -->
+    <section>
+      <div class="frame-label">3 · Reject dialog, reason missing (phone)</div>
+      <div class="frame phone" style="min-height:740px">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a></header>
+        <div class="page"><h1>Ssese Foods Ltd</h1></div>
+        <div class="scrim"></div>
+        <div class="dialog" role="dialog" aria-labelledby="d3">
+          <h2 id="d3">Reject Ssese Foods Ltd?</h2>
+          <p class="muted small" style="margin:4px 0 12px">The employer will see your reason and can fix the profile and send it again.</p>
+          <div class="field"><label class="label">Reason</label><textarea class="textarea" aria-invalid="true"></textarea><span class="err">Give a reason. The employer will see it.</span></div>
+          <div class="actions"><button class="btn btn-ghost">Cancel</button><button class="btn btn-danger">Reject</button></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 DETAIL approved: suspend -->
+    <section>
+      <div class="frame-label">4 · Detail, approved (phone)</div>
+      <div class="frame phone">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a><div class="header-actions"><button class="btn btn-ghost btn-sm">Menu</button></div></header>
+        <div class="page stack">
+          <a href="#" class="small">‹ All employers</a>
+          <div class="row between"><h1>Charlie Ltd</h1><span class="badge badge-success">Approved</span></div>
+          <div class="note-box">Suspending stops new publishing. Vacancies that are already live stay as they are.</div>
+          <div class="card"><h2 class="section-title" style="font-size:18px">History</h2>
+            <ul class="timeline" style="margin-top:12px">
+              <li><strong>Approved</strong><div class="when">5 Nov 2026, 11:03 · admin@example.com</div></li>
+              <li><strong>Sent for checking</strong><div class="when">5 Nov 2026, 09:40 · hr@charlie.example.com</div></li>
+            </ul></div>
+          <div class="actions"><button class="btn btn-danger">Suspend…</button></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 DESKTOP queue + detail -->
+    <section style="width:100%">
+      <div class="frame-label">5 · Detail, suspended (desktop)</div>
+      <div class="frame desktop" style="min-height:620px">
+        <header class="app-header"><a class="brand" href="#">Digital Job Matching <span>System</span></a>
+          <nav class="desktop-nav"><a href="#" aria-current="page">Employers</a></nav><div class="header-actions"><button class="btn btn-ghost btn-sm">admin@example.com</button></div></header>
+        <div class="page stack">
+          <a href="#" class="small">‹ All employers</a>
+          <div class="row between"><h1>Charlie Ltd</h1><span class="badge" style="color:var(--color-danger);background:var(--color-danger-tint)">Suspended</span></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start">
+            <div class="stack">
+              <div class="card"><h2 class="section-title" style="font-size:18px">Profile</h2><dl class="facts" style="margin-top:8px">
+                <div><dt>District</dt><dd>Mbarara</dd></div><div><dt>Phone</dt><dd>+256 772 000111</dd></div>
+                <div><dt>Registration</dt><dd>80020055555555</dd></div><div><dt>Owner</dt><dd>hr@charlie.example.com</dd></div></dl></div>
+              <div class="actions"><button class="btn btn-primary">Approve again</button></div></div>
+            <div class="card"><h2 class="section-title" style="font-size:18px">History</h2>
+              <ul class="timeline" style="margin-top:12px">
+                <li><strong>Suspended</strong><div class="when">6 Nov 2026, 14:20 · admin@example.com</div><div class="why">Several applicants reported unpaid "training fees".</div></li>
+                <li><strong>Approved</strong><div class="when">5 Nov 2026, 11:03 · admin@example.com</div></li>
+                <li><strong>Sent for checking</strong><div class="when">5 Nov 2026, 09:40 · hr@charlie.example.com</div></li>
+              </ul></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="notes">
+    <h2>Notes</h2>
+    <ul>
+      <li>The queue opens on Pending. Filters are toggle pills; the count of the current filter comes from the page details. States: loading skeleton, empty ("No employers waiting"), error with Retry.</li>
+      <li>Actions depend on status: pending shows Approve and Reject; approved shows Suspend; suspended shows Approve again; draft and rejected show "Waiting for the employer".</li>
+      <li>Reject and Suspend open a dialog with a required reason. Approve needs no dialog. The server message is shown if a decision was already made by another admin (409).</li>
+      <li>The checklist only marks what was provided (tick or cross, with text). It never claims the details are true.</li>
+      <li>Timeline entries show who, when and the reason. Admin emails are visible to admins only.</li>
+    </ul>
+  </section>
+</div>
+</body>
+</html>

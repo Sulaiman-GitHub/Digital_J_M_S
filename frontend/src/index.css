@@ -1,0 +1,77 @@
+@import 'tailwindcss';
+
+/*
+ * Design tokens.
+ * Tailwind's default colour palette is switched off: only these colours exist,
+ * so components cannot drift from the design system.
+ * Spacing (4 px grid) and breakpoints (sm 640, md 768, lg 1024, xl 1280) use Tailwind's defaults,
+ * which already match the design.
+ */
+@theme {
+  --color-*: initial;
+  --color-white: #ffffff;
+
+  --color-primary: #0a66c2;
+  --color-primary-hover: #004182;
+  --color-accent: #f59e0b;
+
+  --color-text: #111827;
+  --color-text-secondary: #4b5563;
+
+  --color-bg: #ffffff;
+  --color-surface: #f3f6f8;
+  --color-border: #dce3ea;
+
+  --color-success: #15803d;
+  --color-warning: #b45309;
+  --color-danger: #b91c1c;
+  --color-info: #1d4ed8;
+  /* Teal keeps "Shortlisted" different from the blue brand colour. */
+  --color-teal: #0f766e;
+
+  /* Tints for badges and notices; pair with the matching strong colour (all >= 4.5:1). */
+  --color-primary-tint: #eaf2fb;
+  --color-teal-tint: #f1f7f6;
+  --color-success-tint: #f1f7f3;
+  --color-warning-tint: #faf5f0;
+  --color-danger-tint: #fbf1f1;
+  --color-info-tint: #f1f4fd;
+  --color-accent-tint: #fef5e7;
+
+  --color-scrim: rgb(17 24 39 / 0.5);
+
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --text-title-sm: 1.25rem;
+  --text-title-sm--line-height: 1.25;
+  --text-title-md: 1.5rem;
+  --text-title-md--line-height: 1.25;
+  --text-title-lg: 2rem;
+  --text-title-lg--line-height: 1.25;
+
+  --radius-card: 8px;
+  --radius-pill: 999px;
+}
+
+@layer base {
+  html {
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}

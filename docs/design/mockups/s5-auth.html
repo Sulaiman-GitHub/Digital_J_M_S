@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>S5 Register and login · mockup</title>
+  <link rel="stylesheet" href="mockup.css" />
+  <style>
+    .auth { padding: 24px 16px; }
+    .auth h1 { font-size: 24px; margin-bottom: 4px; }
+    .auth .lead { color: var(--color-text-secondary); margin-bottom: 20px; }
+    .stack > * + * { margin-top: 16px; }
+    .hint { font-size: 14px; color: var(--color-text-secondary); }
+    .err { font-size: 14px; font-weight: 600; color: var(--color-danger); }
+    .input.invalid { border: 2px solid var(--color-danger); }
+    .pw { position: relative; }
+    .pw .input { padding-right: 72px; }
+    .pw button { position: absolute; right: 4px; top: 50%; transform: translateY(-50%); min-height: 40px; }
+    .roles { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .role { border: 1px solid var(--color-text-secondary); border-radius: var(--radius-card); padding: 12px; display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
+    .role input { margin-top: 3px; width: 18px; height: 18px; accent-color: var(--color-primary); }
+    .role.checked { border: 2px solid var(--color-primary); background: var(--color-primary-tint); }
+    .role strong { display: block; }
+    .role span { font-size: 13px; color: var(--color-text-secondary); }
+    .alert { border-radius: var(--radius-card); padding: 12px; font-size: 14px; display: flex; gap: 8px; }
+    .alert-danger { border: 1px solid var(--color-danger); background: var(--color-danger-tint); }
+    .alert-danger strong { color: var(--color-danger); }
+    .alert-success { border: 1px solid var(--color-success); background: var(--color-success-tint); }
+    .alert-success strong { color: var(--color-success); }
+    .center { text-align: center; }
+    .icon-circle { width: 56px; height: 56px; border-radius: 999px; display: grid; place-items: center; margin: 8px auto 12px; font-size: 26px; }
+    .banner { background: var(--color-accent-tint); border-bottom: 1px solid var(--color-warning); padding: 10px 16px; font-size: 14px; display: flex; gap: 8px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+    .banner strong { color: var(--color-warning); }
+    .user-btn { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 8px; border-radius: var(--radius-card); border: 1px solid var(--color-border); background: #fff; font: inherit; }
+    .avatar { width: 28px; height: 28px; border-radius: 999px; background: var(--color-primary); color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 13px; }
+    .menu { position: absolute; right: 16px; top: 60px; width: 240px; background: #fff; border: 1px solid var(--color-border); border-radius: var(--radius-card); box-shadow: 0 8px 24px rgb(0 0 0 / .12); padding: 8px 0; z-index: 2; }
+    .menu .who { padding: 8px 16px 12px; border-bottom: 1px solid var(--color-border); font-size: 14px; }
+    .menu a, .menu button { display: flex; width: 100%; min-height: 44px; align-items: center; padding: 0 16px; color: var(--color-text); text-decoration: none; background: none; border: 0; font: inherit; text-align: left; }
+    .menu .danger { color: var(--color-danger); }
+    .burger { min-width: 44px; min-height: 44px; border: 1px solid var(--color-border); border-radius: var(--radius-card); background: #fff; font-size: 20px; }
+    .mobile-menu { border-bottom: 1px solid var(--color-border); padding: 8px 16px 16px; }
+    .mobile-menu a { display: flex; min-height: 44px; align-items: center; color: var(--color-text); text-decoration: none; border-bottom: 1px solid var(--color-surface); }
+    .mini { min-height: 0 !important; }
+    .desk-auth { display: grid; grid-template-columns: 1fr 440px; min-height: 700px; }
+    .desk-side { background: var(--color-surface); padding: 64px 56px; }
+    .desk-side h2 { font-size: 32px; margin-bottom: 12px; }
+    .desk-side li { margin: 0 0 10px 20px; }
+    .desk-form { padding: 56px 40px; }
+  </style>
+</head>
+<body>
+<div class="doc">
+  <header class="doc-head">
+    <h1>S5 · Register, login and account emails</h1>
+    <p>Register (role choice), check-your-email, login with its error states, verify email, forgot and reset password,
+      the header (logged out and logged in) and the verify-email banner. Sample data is fictional.</p>
+    <nav><a href="s1-home.html">S1 Home</a><a href="s2-job-list.html">S2 Job list</a><a href="s3-vacancy-card.html">S3 Vacancy card</a><a href="s4-vacancy-detail.html">S4 Vacancy detail</a><a href="s5-auth.html">S5 Auth</a><a href="s6-profile.html">S6 Profile</a></nav>
+  </header>
+
+  <div class="frames">
+    <!-- REGISTER -->
+    <section>
+      <div class="frame-label">Phone · Register (one field error shown)</div>
+      <div class="frame phone">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a><div class="header-actions"><a class="btn btn-ghost btn-sm" href="#">Log in</a></div></header>
+        <main class="auth">
+          <h1>Create your account</h1>
+          <p class="lead">Free for students, graduates and employers.</p>
+          <form class="stack" novalidate>
+            <fieldset style="border:0;padding:0;margin:0">
+              <legend class="label" style="margin-bottom:8px">I am</legend>
+              <div class="roles">
+                <label class="role checked"><input type="radio" name="role" checked /><div><strong>Looking for work</strong><span>Student or graduate</span></div></label>
+                <label class="role"><input type="radio" name="role" /><div><strong>Hiring</strong><span>Employer</span></div></label>
+              </div>
+            </fieldset>
+            <div class="field">
+              <label class="label" for="r-email">Email</label>
+              <input class="input invalid" id="r-email" value="nakato@example.com" aria-invalid="true" aria-describedby="r-email-err" />
+              <p class="err" id="r-email-err">! An account with this email already exists. <a href="#">Log in</a> or <a href="#">reset your password</a>.</p>
+            </div>
+            <div class="field">
+              <label class="label" for="r-pw">Password</label>
+              <p class="hint">At least 8 characters. Avoid common passwords.</p>
+              <div class="pw"><input class="input" id="r-pw" type="password" value="••••••••••" /><button type="button" class="btn btn-ghost btn-sm" aria-pressed="false">Show</button></div>
+            </div>
+            <button class="btn btn-primary btn-block" type="button">Create account</button>
+            <p class="small muted center">Already have an account? <a href="#">Log in</a></p>
+            <p class="small muted center" style="margin-top:4px">By creating an account you agree to the <a href="#">Terms</a> and <a href="#">Privacy policy</a>.</p>
+          </form>
+        </main>
+      </div>
+    </section>
+
+    <!-- CHECK EMAIL -->
+    <section>
+      <div class="frame-label">Phone · After registering (and after "forgot password")</div>
+      <div class="frame phone">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a><div class="header-actions"><a class="btn btn-ghost btn-sm" href="#">Log in</a></div></header>
+        <main class="auth center">
+          <div class="icon-circle" style="background:var(--color-primary-tint);color:var(--color-primary)" aria-hidden="true">✉</div>
+          <h1>Check your email</h1>
+          <p class="lead">We sent a link to <strong style="color:var(--color-text)">nakato@example.com</strong>. Open it to confirm your address. The link works for 24 hours.</p>
+          <a class="btn btn-primary btn-block" href="#">Continue to log in</a>
+          <p class="small muted" style="margin-top:16px">No email after a few minutes? Check spam, or log in and use "Resend link".</p>
+        </main>
+      </div>
+    </section>
+
+    <!-- LOGIN -->
+    <section>
+      <div class="frame-label">Phone · Login (wrong details)</div>
+      <div class="frame phone">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a><div class="header-actions"><a class="btn btn-secondary btn-sm" href="#">Register</a></div></header>
+        <main class="auth">
+          <h1>Log in</h1>
+          <p class="lead">Welcome back.</p>
+          <form class="stack" novalidate>
+            <div class="alert alert-danger" role="alert"><strong>!</strong><span><strong>Invalid email or password.</strong> Check both and try again.</span></div>
+            <div class="field"><label class="label" for="l-email">Email</label><input class="input" id="l-email" value="nakato@example.com" autocomplete="email" /></div>
+            <div class="field">
+              <div class="row between"><label class="label" for="l-pw">Password</label><a href="#" class="small" style="font-weight:600">Forgot password?</a></div>
+              <div class="pw"><input class="input" id="l-pw" type="password" value="••••••••" autocomplete="current-password" /><button type="button" class="btn btn-ghost btn-sm">Show</button></div>
+            </div>
+            <button class="btn btn-primary btn-block" type="button">Log in</button>
+            <p class="small muted center">New here? <a href="#">Create an account</a></p>
+          </form>
+          <div class="notes" style="padding:12px;margin-top:20px;box-shadow:none;border:1px dashed var(--color-text-secondary)">
+            <p class="small" style="font-weight:600">Other login messages (same alert style)</p>
+            <ul class="small"><li>403: "This account is suspended. Contact support."</li><li>429: "Too many failed attempts. Wait 15 minutes or reset your password."</li><li>429 (rate limit): "Too many requests. Please wait a minute and try again."</li></ul>
+          </div>
+        </main>
+      </div>
+    </section>
+
+    <!-- VERIFY EMAIL -->
+    <section>
+      <div class="frame-label">Phone · Verify email (3 states)</div>
+      <div class="frame phone" style="min-height:0">
+        <main class="auth center" style="border-bottom:1px solid var(--color-border)">
+          <p class="small muted" style="text-align:left">A. Checking (skeleton, announced)</p>
+          <div class="skeleton" style="height:56px;width:56px;border-radius:999px;margin:12px auto"></div>
+          <div class="skeleton" style="height:22px;width:60%;margin:0 auto"></div>
+          <p class="small muted" style="margin-top:8px">Confirming your email…</p>
+        </main>
+        <main class="auth center" style="border-bottom:1px solid var(--color-border)">
+          <p class="small muted" style="text-align:left">B. Success</p>
+          <div class="icon-circle" style="background:var(--color-success-tint);color:var(--color-success)" aria-hidden="true">✓</div>
+          <h1>Email confirmed</h1>
+          <p class="lead">You can now apply for jobs.</p>
+          <a class="btn btn-primary btn-block" href="#">Go to my account</a>
+        </main>
+        <main class="auth center">
+          <p class="small muted" style="text-align:left">C. Expired, used or invalid link</p>
+          <div class="icon-circle" style="background:var(--color-danger-tint);color:var(--color-danger)" aria-hidden="true">!</div>
+          <h1>This link has expired</h1>
+          <p class="lead">Log in and choose "Resend link" to get a new one.</p>
+          <a class="btn btn-primary btn-block" href="#">Log in</a>
+        </main>
+      </div>
+    </section>
+
+    <!-- FORGOT + RESET -->
+    <section>
+      <div class="frame-label">Phone · Forgot password, then reset</div>
+      <div class="frame phone" style="min-height:0">
+        <main class="auth" style="border-bottom:1px solid var(--color-border)">
+          <h1>Forgot your password?</h1>
+          <p class="lead">Enter your email and we will send you a link to choose a new one.</p>
+          <form class="stack"><div class="field"><label class="label" for="f-email">Email</label><input class="input" id="f-email" /></div>
+            <button class="btn btn-primary btn-block" type="button">Send reset link</button>
+            <p class="small center"><a href="#">Back to log in</a></p></form>
+          <p class="small muted" style="margin-top:12px">After sending: the same "Check your email" screen, worded "If an account exists for this email, we sent a reset link." (never says whether it exists).</p>
+        </main>
+        <main class="auth">
+          <h1>Choose a new password</h1>
+          <p class="lead">This logs you out on all your devices.</p>
+          <form class="stack"><div class="field"><label class="label" for="n-pw">New password</label><p class="hint">At least 8 characters. Avoid common passwords.</p>
+            <div class="pw"><input class="input" id="n-pw" type="password" /><button type="button" class="btn btn-ghost btn-sm">Show</button></div></div>
+            <button class="btn btn-primary btn-block" type="button">Save new password</button></form>
+          <div class="alert alert-success" style="margin-top:16px" role="status"><strong>✓</strong><span><strong>Password changed.</strong> Log in with your new password.</span></div>
+        </main>
+      </div>
+    </section>
+
+    <!-- HEADER STATES + BANNER -->
+    <section>
+      <div class="frame-label">Phone · Header (logged in) + verify banner + open menu</div>
+      <div class="frame phone" style="min-height:420px">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a><button class="burger" aria-expanded="true" aria-label="Menu">✕</button></header>
+        <nav class="mobile-menu" aria-label="Main">
+          <p class="small muted" style="padding:8px 0">nakato@example.com · Job seeker</p>
+          <a href="#">Find jobs</a><a href="#">My account</a>
+          <button class="btn btn-ghost" style="padding:0;color:var(--color-danger);margin-top:4px" type="button">Log out</button>
+        </nav>
+        <div class="banner" role="region" aria-label="Email verification"><span><strong>Verify your email</strong> to apply for jobs.</span><button class="btn btn-secondary btn-sm mini" style="min-height:36px" type="button">Resend link</button></div>
+        <main class="auth"><h1>My account</h1><p class="lead">nakato@example.com</p></main>
+      </div>
+    </section>
+
+    <!-- DESKTOP -->
+    <section>
+      <div class="frame-label">Desktop · 1280 px · Login, and the logged-in header with user menu open</div>
+      <div class="frame desktop" style="min-height:0">
+        <header class="app-header"><a class="brand" href="#">Digital Job Matching <span>System</span></a>
+          <nav class="desktop-nav" aria-label="Main"><a href="#">Find jobs</a><a href="#">For employers</a></nav>
+          <div class="header-actions"><a class="btn btn-ghost" href="#">Log in</a><a class="btn btn-secondary" href="#">Register</a></div></header>
+        <div class="desk-auth">
+          <div class="desk-side"><h2>Your next job starts here</h2><ul><li>Search vacancies from verified employers</li><li>Apply with your profile and CV</li><li>Follow every application's status</li></ul></div>
+          <div class="desk-form"><h1 style="font-size:28px;margin-bottom:4px">Log in</h1><p class="lead" style="color:var(--color-text-secondary);margin-bottom:20px">Welcome back.</p>
+            <form class="stack"><div class="field"><label class="label">Email</label><input class="input" /></div>
+              <div class="field"><div class="row between"><label class="label">Password</label><a href="#" class="small" style="font-weight:600">Forgot password?</a></div><div class="pw"><input class="input" type="password" /><button type="button" class="btn btn-ghost btn-sm">Show</button></div></div>
+              <button class="btn btn-primary btn-block" type="button">Log in</button><p class="small muted center">New here? <a href="#">Create an account</a></p></form></div>
+        </div>
+        <div style="border-top:8px solid #d1d5db;position:relative;min-height:260px">
+          <header class="app-header"><a class="brand" href="#">Digital Job Matching <span>System</span></a>
+            <nav class="desktop-nav" aria-label="Main"><a href="#">Find jobs</a><a href="#" aria-current="page">My account</a></nav>
+            <button class="user-btn" aria-expanded="true" aria-haspopup="menu"><span class="avatar" aria-hidden="true">N</span>nakato@example.com ▾</button></header>
+          <div class="menu" role="menu" style="right:48px;top:68px"><div class="who"><strong>nakato@example.com</strong><br><span class="muted">Job seeker · email not verified</span></div><a href="#" role="menuitem">My account</a><button role="menuitem" class="danger">Log out</button></div>
+          <div class="banner" style="padding:10px 48px"><span><strong>Verify your email</strong> to apply for jobs. We sent a link to nakato@example.com.</span><button class="btn btn-secondary btn-sm mini" style="min-height:36px">Resend link</button></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="notes">
+    <h2>Notes and rules</h2>
+    <ul>
+      <li>One primary action per screen. Forms validate on submit, then on change; server field errors appear under the field, other errors in the alert above the form.</li>
+      <li>Role choice uses two large radio cards (no default would be safer, but most users are job seekers, so "Looking for work" is preselected). Admin is never offered.</li>
+      <li>Show/Hide toggles the password field; no "confirm password" field (show/hide makes typos visible).</li>
+      <li>Login never says whether an email exists. Forgot password always shows the same confirmation.</li>
+      <li>After login: go back to the page that asked for login (same-site paths only), otherwise "My account".</li>
+      <li>Verify banner: only for logged-in, unverified users. Resend shows a toast; "already verified" and "too many requests" show their messages.</li>
+      <li>Phone header: brand + menu button (keyboard and screen reader friendly, Escape closes). Desktop: inline links + user menu. Job seeker bottom nav comes with the profile screens.</li>
+      <li>Inputs 16 px, autocomplete set (email, current-password, new-password), tap targets 44 px.</li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>

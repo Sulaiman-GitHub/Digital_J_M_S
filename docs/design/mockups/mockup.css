@@ -1,0 +1,183 @@
+/* Shared styles for the static mockups. Values mirror docs/design/tokens.md. */
+:root {
+  --color-primary: #0f766e;
+  --color-primary-hover: #115e59;
+  --color-accent: #f59e0b;
+  --color-text: #111827;
+  --color-text-secondary: #4b5563;
+  --color-bg: #ffffff;
+  --color-surface: #f3f4f6;
+  --color-border: #e5e7eb;
+  --color-success: #15803d;
+  --color-warning: #b45309;
+  --color-danger: #b91c1c;
+  --color-info: #1d4ed8;
+  --color-primary-tint: #f1f7f6;
+  --color-success-tint: #f1f7f3;
+  --color-warning-tint: #faf5f0;
+  --color-danger-tint: #fbf1f1;
+  --color-info-tint: #f1f4fd;
+  --color-accent-tint: #fef5e7;
+  --radius-card: 8px;
+  --radius-pill: 999px;
+  --font: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font: 16px/1.5 var(--font);
+  color: var(--color-text);
+  background: #d1d5db; /* canvas behind the frames; not a product colour */
+}
+h1, h2, h3 { line-height: 1.25; font-weight: 600; margin: 0; }
+p { margin: 0; }
+a { color: var(--color-primary); }
+ul { margin: 0; padding: 0; }
+
+/* ---------- Mockup page chrome (not part of the design) ---------- */
+.doc { max-width: 1400px; margin: 0 auto; padding: 24px 16px 64px; }
+.doc-head { background: #fff; border-radius: 8px; padding: 16px 20px; margin-bottom: 24px; }
+.doc-head h1 { font-size: 24px; }
+.doc-head p { color: var(--color-text-secondary); margin-top: 4px; }
+.doc-head nav { margin-top: 8px; display: flex; gap: 16px; flex-wrap: wrap; font-size: 14px; }
+.frames { display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start; }
+.frame-label { font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #1f2937; }
+.frame {
+  background: var(--color-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.1), 0 8px 24px rgb(0 0 0 / 0.12);
+  position: relative;
+}
+.phone { width: 360px; min-height: 740px; }
+.desktop { width: 1280px; min-height: 800px; }
+.notes {
+  background: #fff; border-radius: 8px; padding: 16px 20px; margin-top: 32px; max-width: 900px;
+}
+.notes h2 { font-size: 20px; margin-bottom: 8px; }
+.notes li { margin-left: 20px; margin-bottom: 4px; }
+
+/* ---------- Product UI ---------- */
+.app-header {
+  display: flex; align-items: center; justify-content: space-between;
+  min-height: 56px; padding: 0 16px; border-bottom: 1px solid var(--color-border);
+}
+.brand { font-weight: 700; color: var(--color-text); text-decoration: none; font-size: 18px; }
+.brand span { color: var(--color-primary); }
+.header-actions { display: flex; gap: 8px; align-items: center; }
+.desktop .app-header { padding: 0 48px; min-height: 64px; }
+.desktop-nav { display: flex; gap: 24px; margin-left: 40px; flex: 1; align-self: stretch; }
+.desktop-nav a {
+  display: inline-flex; align-items: center; color: var(--color-text); text-decoration: none; font-weight: 500;
+}
+.desktop-nav a[aria-current] { color: var(--color-primary); box-shadow: inset 0 -2px 0 var(--color-primary); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 44px; padding: 0 16px; border-radius: var(--radius-card);
+  font: inherit; font-weight: 600; border: 1px solid transparent; cursor: pointer;
+  text-decoration: none; white-space: nowrap;
+}
+.btn-primary { background: var(--color-primary); color: #fff; }
+.btn-primary:hover { background: var(--color-primary-hover); }
+.btn-secondary { background: #fff; color: var(--color-primary); border-color: var(--color-primary); }
+.btn-ghost { background: transparent; color: var(--color-primary); }
+.btn-block { width: 100%; }
+.btn-sm { min-height: 44px; padding: 0 12px; font-size: 16px; }
+
+.field { display: flex; flex-direction: column; gap: 4px; }
+.label { font-weight: 600; font-size: 14px; }
+.input, .select {
+  min-height: 48px; width: 100%; padding: 0 12px; font: inherit; font-size: 16px;
+  color: var(--color-text); background: #fff;
+  border: 1px solid var(--color-text-secondary); border-radius: var(--radius-card);
+}
+.input-icon { position: relative; }
+.input-icon .input { padding-left: 40px; }
+.input-icon svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); }
+
+.pill {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 14px;
+  border-radius: var(--radius-pill); border: 1px solid var(--color-text-secondary);
+  background: #fff; color: var(--color-text); font-size: 14px; font-weight: 500; white-space: nowrap;
+  text-decoration: none; font-family: inherit; cursor: pointer;
+}
+.pill[aria-pressed='true'] { background: var(--color-primary); border-color: var(--color-primary); color: #fff; }
+.pill-tag { /* static job-type tag on cards */
+  min-height: 0; padding: 2px 10px; border-color: var(--color-primary); color: var(--color-primary);
+  background: var(--color-primary-tint);
+}
+.pills { display: flex; gap: 8px; flex-wrap: wrap; }
+.pills-scroll { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; }
+
+.badge {
+  display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; font-size: 14px;
+  font-weight: 600; border-radius: var(--radius-pill); border: 1px solid currentColor;
+}
+.badge-info { color: var(--color-info); background: var(--color-info-tint); }
+.badge-warning { color: var(--color-warning); background: var(--color-accent-tint); }
+.badge-success { color: var(--color-success); background: var(--color-success-tint); }
+.badge-neutral { color: var(--color-text-secondary); background: var(--color-surface); }
+
+.card {
+  display: block; border: 1px solid var(--color-border); border-radius: var(--radius-card);
+  padding: 16px; background: #fff; color: inherit; text-decoration: none;
+}
+.card:hover { border-color: var(--color-primary); }
+.card + .card { margin-top: 12px; }
+
+/* Vacancy card (S3) */
+.vc-title { font-size: 18px; font-weight: 600; color: var(--color-text); }
+.vc-company { color: var(--color-text-secondary); margin-top: 2px; display: flex; gap: 4px; align-items: center; }
+.vc-meta { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; margin-top: 12px; font-size: 14px; color: var(--color-text-secondary); }
+.vc-meta .dot::before { content: '·'; margin-right: 12px; }
+.vc-salary { margin-top: 8px; font-weight: 600; }
+.vc-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; gap: 8px; }
+.vc-posted { font-size: 14px; color: var(--color-text-secondary); }
+.vc-closing { font-size: 14px; color: var(--color-warning); font-weight: 600; }
+.verified { color: var(--color-primary); display: inline-flex; }
+
+.section-title { font-size: 20px; }
+.muted { color: var(--color-text-secondary); }
+.small { font-size: 14px; }
+.stack-4 > * + * { margin-top: 16px; }
+.stack-2 > * + * { margin-top: 8px; }
+.row { display: flex; gap: 8px; align-items: center; }
+.between { justify-content: space-between; }
+.surface { background: var(--color-surface); }
+
+.skeleton { background: var(--color-surface); border-radius: 4px; }
+
+.pagination { display: flex; gap: 4px; align-items: center; justify-content: center; margin-top: 24px; }
+.pagination a, .pagination span {
+  min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-card); color: var(--color-text); text-decoration: none; font-weight: 500;
+}
+.pagination [aria-current='page'] { background: var(--color-primary); color: #fff; }
+.pagination [aria-disabled='true'] { color: var(--color-text-secondary); opacity: 0.6; }
+
+.notice {
+  border: 1px solid var(--color-info); background: var(--color-info-tint); color: var(--color-text);
+  border-radius: var(--radius-card); padding: 12px; display: flex; gap: 8px; font-size: 14px;
+}
+.notice strong { color: var(--color-info); }
+
+/* Bottom sheet (S2 filters on phone) */
+.scrim { position: absolute; inset: 0; background: rgb(17 24 39 / 0.5); }
+.sheet {
+  position: absolute; left: 0; right: 0; bottom: 0; background: #fff;
+  border-radius: 16px 16px 0 0; padding: 8px 16px 16px; max-height: 85%; overflow: auto;
+}
+.sheet-handle { width: 40px; height: 4px; border-radius: 2px; background: var(--color-border); margin: 4px auto 12px; }
+
+/* Sticky apply bar (S4) */
+.apply-bar {
+  position: sticky; bottom: 0; background: #fff; border-top: 1px solid var(--color-border);
+  padding: 12px 16px; display: flex; gap: 12px; align-items: center;
+}
+
+.annot {
+  display: inline-block; font-size: 12px; font-weight: 700; color: #fff; background: #7c3aed;
+  border-radius: 999px; padding: 0 7px; margin-left: 6px; vertical-align: middle;
+}

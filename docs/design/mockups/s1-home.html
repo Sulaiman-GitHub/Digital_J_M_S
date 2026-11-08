@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>S1 Home · mockup</title>
+  <link rel="stylesheet" href="mockup.css" />
+  <style>
+    .hero { padding: 24px 16px; background: var(--color-surface); }
+    .hero h1 { font-size: 24px; }
+    .hero p { color: var(--color-text-secondary); margin-top: 4px; }
+    .search { margin-top: 16px; display: flex; flex-direction: column; gap: 12px; }
+    .desktop .hero { padding: 48px; }
+    .desktop .hero h1 { font-size: 32px; }
+    .desktop .search { flex-direction: row; align-items: flex-end; max-width: 960px; }
+    .desktop .search .field:first-child { flex: 1; }
+    .desktop .search .field:nth-child(2) { width: 260px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid-2 .card + .card { margin-top: 0; }
+    .footer { border-top: 1px solid var(--color-border); padding: 16px; font-size: 14px; color: var(--color-text-secondary); }
+  </style>
+</head>
+<body>
+<div class="doc">
+  <header class="doc-head">
+    <h1>S1 · Home</h1>
+    <p>Search is the front door: a big search box, district select, popular filters as pills, latest vacancies.
+      One primary action: <strong>Search</strong>. Sample data is fictional.</p>
+    <nav><a href="s1-home.html">S1 Home</a><a href="s2-job-list.html">S2 Job list</a><a href="s3-vacancy-card.html">S3 Vacancy card</a><a href="s4-vacancy-detail.html">S4 Vacancy detail</a><a href="s5-auth.html">S5 Auth</a><a href="s6-profile.html">S6 Profile</a></nav>
+  </header>
+
+  <div class="frames">
+    <!-- ================= PHONE ================= -->
+    <section>
+      <div class="frame-label">Phone · 360 px</div>
+      <div class="frame phone">
+        <header class="app-header">
+          <a class="brand" href="#">DJM<span>S</span></a>
+          <div class="header-actions">
+            <a class="btn btn-ghost btn-sm" href="#">Log in</a>
+            <a class="btn btn-secondary btn-sm" href="#">Register</a>
+          </div>
+        </header>
+
+        <section class="hero">
+          <h1>Find jobs and internships across Uganda</h1>
+          <p>For students and graduates of every university and tertiary institution.</p>
+          <form class="search" role="search">
+            <div class="field">
+              <label class="label" for="p-q">What</label>
+              <div class="input-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4B5563" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                <input class="input" id="p-q" placeholder="Job title, skill or company" />
+              </div>
+            </div>
+            <div class="field">
+              <label class="label" for="p-d">Where</label>
+              <select class="select" id="p-d"><option>All districts</option><option>Kampala</option><option>Wakiso</option><option>Gulu</option><option>Mbarara</option></select>
+            </div>
+            <button class="btn btn-primary btn-block" type="button">Search jobs</button>
+          </form>
+        </section>
+
+        <section style="padding:16px">
+          <h2 class="small" style="font-size:14px;margin-bottom:8px">Popular</h2>
+          <div class="pills pills-scroll">
+            <a class="pill" href="s2-job-list.html">Internships</a>
+            <a class="pill" href="s2-job-list.html">Graduate trainee</a>
+            <a class="pill" href="s2-job-list.html">Part-time</a>
+            <a class="pill" href="s2-job-list.html">IT &amp; software</a>
+            <a class="pill" href="s2-job-list.html">Accounting</a>
+          </div>
+        </section>
+
+        <section style="padding:0 16px 16px">
+          <div class="row between" style="margin-bottom:12px">
+            <h2 class="section-title">Latest vacancies</h2>
+            <a href="s2-job-list.html" class="small" style="font-weight:600;min-height:44px;display:inline-flex;align-items:center">See all</a>
+          </div>
+
+          <a class="card" href="s4-vacancy-detail.html">
+            <h3 class="vc-title">Graduate Trainee – Accounts</h3>
+            <p class="vc-company">Ssese Fresh Foods Ltd <span class="verified"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" role="img" aria-label="Verified employer"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3zm-1.2 14.2-3.5-3.5 1.4-1.4 2.1 2.1 4.6-4.6 1.4 1.4-6 6z"/></svg></span></p>
+            <div class="vc-meta"><span>Kampala</span><span class="pill pill-tag">Full-time</span></div>
+            <p class="vc-salary">UGX 1,200,000 – 1,500,000 / month</p>
+            <div class="vc-foot"><span class="vc-posted">Posted 3 days ago</span></div>
+          </a>
+          <a class="card" href="s4-vacancy-detail.html">
+            <h3 class="vc-title">Software Developer Intern</h3>
+            <p class="vc-company">Rwenzori Digital Labs <span class="verified"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" role="img" aria-label="Verified employer"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3zm-1.2 14.2-3.5-3.5 1.4-1.4 2.1 2.1 4.6-4.6 1.4 1.4-6 6z"/></svg></span></p>
+            <div class="vc-meta"><span>Fort Portal</span><span class="pill pill-tag">Internship</span></div>
+            <div class="vc-foot"><span class="vc-posted">Posted today</span><span class="vc-closing">Closes in 2 days</span></div>
+          </a>
+          <a class="card" href="s4-vacancy-detail.html">
+            <h3 class="vc-title">Agricultural Extension Officer</h3>
+            <p class="vc-company">Elgon Coffee Growers Cooperative</p>
+            <div class="vc-meta"><span>Mbale</span><span class="pill pill-tag">Full-time</span></div>
+            <p class="vc-salary">UGX 900,000 / month</p>
+            <div class="vc-foot"><span class="vc-posted">Posted 1 week ago</span></div>
+          </a>
+
+          <a class="btn btn-secondary btn-block" href="s2-job-list.html" style="margin-top:16px">See all 134 jobs</a>
+        </section>
+
+        <footer class="footer">
+          <p>Hiring? <a href="#">Post a vacancy</a></p>
+          <p style="margin-top:8px"><a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Help</a></p>
+        </footer>
+      </div>
+    </section>
+
+    <!-- ================= DESKTOP ================= -->
+    <section>
+      <div class="frame-label">Desktop · 1280 px</div>
+      <div class="frame desktop">
+        <header class="app-header">
+          <a class="brand" href="#">Digital Job Matching <span>System</span></a>
+          <nav class="desktop-nav" aria-label="Main">
+            <a href="s2-job-list.html">Find jobs</a>
+            <a href="#">For employers</a>
+          </nav>
+          <div class="header-actions">
+            <a class="btn btn-ghost" href="#">Log in</a>
+            <a class="btn btn-secondary" href="#">Register</a>
+          </div>
+        </header>
+
+        <section class="hero">
+          <h1>Find jobs and internships across Uganda</h1>
+          <p>For students and graduates of every university and tertiary institution.</p>
+          <form class="search" role="search">
+            <div class="field">
+              <label class="label" for="d-q">What</label>
+              <div class="input-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4B5563" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                <input class="input" id="d-q" placeholder="Job title, skill or company" />
+              </div>
+            </div>
+            <div class="field">
+              <label class="label" for="d-d">Where</label>
+              <select class="select" id="d-d"><option>All districts</option></select>
+            </div>
+            <button class="btn btn-primary" type="button" style="min-height:48px;padding:0 28px">Search jobs</button>
+          </form>
+          <div class="row" style="margin-top:16px;flex-wrap:wrap">
+            <span class="small muted" style="margin-right:4px">Popular:</span>
+            <a class="pill" href="s2-job-list.html">Internships</a>
+            <a class="pill" href="s2-job-list.html">Graduate trainee</a>
+            <a class="pill" href="s2-job-list.html">Part-time</a>
+            <a class="pill" href="s2-job-list.html">IT &amp; software</a>
+            <a class="pill" href="s2-job-list.html">Accounting</a>
+            <a class="pill" href="s2-job-list.html">Health</a>
+          </div>
+        </section>
+
+        <section style="padding:32px 48px">
+          <div class="row between" style="margin-bottom:16px">
+            <h2 class="section-title" style="font-size:24px">Latest vacancies</h2>
+            <a href="s2-job-list.html" style="font-weight:600">See all 134 jobs →</a>
+          </div>
+          <div class="grid-2">
+            <a class="card" href="s4-vacancy-detail.html">
+              <div class="row between" style="align-items:flex-start"><h3 class="vc-title">Graduate Trainee – Accounts</h3><span class="vc-posted">3 days ago</span></div>
+              <p class="vc-company">Ssese Fresh Foods Ltd <span class="verified"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" role="img" aria-label="Verified employer"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3zm-1.2 14.2-3.5-3.5 1.4-1.4 2.1 2.1 4.6-4.6 1.4 1.4-6 6z"/></svg></span></p>
+              <div class="vc-meta"><span>Kampala</span><span class="pill pill-tag">Full-time</span></div>
+              <p class="vc-salary">UGX 1,200,000 – 1,500,000 / month</p>
+            </a>
+            <a class="card" href="s4-vacancy-detail.html">
+              <div class="row between" style="align-items:flex-start"><h3 class="vc-title">Software Developer Intern</h3><span class="vc-closing">Closes in 2 days</span></div>
+              <p class="vc-company">Rwenzori Digital Labs <span class="verified"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" role="img" aria-label="Verified employer"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3zm-1.2 14.2-3.5-3.5 1.4-1.4 2.1 2.1 4.6-4.6 1.4 1.4-6 6z"/></svg></span></p>
+              <div class="vc-meta"><span>Fort Portal</span><span class="pill pill-tag">Internship</span></div>
+            </a>
+            <a class="card" href="s4-vacancy-detail.html">
+              <div class="row between" style="align-items:flex-start"><h3 class="vc-title">Agricultural Extension Officer</h3><span class="vc-posted">1 week ago</span></div>
+              <p class="vc-company">Elgon Coffee Growers Cooperative</p>
+              <div class="vc-meta"><span>Mbale</span><span class="pill pill-tag">Full-time</span></div>
+              <p class="vc-salary">UGX 900,000 / month</p>
+            </a>
+            <a class="card" href="s4-vacancy-detail.html">
+              <div class="row between" style="align-items:flex-start"><h3 class="vc-title">Community Health Officer</h3><span class="vc-posted">1 week ago</span></div>
+              <p class="vc-company">Kigezi Health Trust</p>
+              <div class="vc-meta"><span>Kabale</span><span class="pill pill-tag">Contract</span><span class="badge badge-neutral">Employer site</span></div>
+            </a>
+            <a class="card" href="s4-vacancy-detail.html">
+              <div class="row between" style="align-items:flex-start"><h3 class="vc-title">Customer Service Assistant</h3><span class="vc-posted">5 days ago</span></div>
+              <p class="vc-company">Gulu City Traders Ltd</p>
+              <div class="vc-meta"><span>Gulu</span><span class="pill pill-tag">Part-time</span></div>
+            </a>
+            <a class="card" href="s4-vacancy-detail.html">
+              <div class="row between" style="align-items:flex-start"><h3 class="vc-title">Data Entry Clerk</h3><span class="vc-posted">2 weeks ago</span></div>
+              <p class="vc-company">Mbarara Dairy Processors Ltd <span class="verified"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" role="img" aria-label="Verified employer"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3zm-1.2 14.2-3.5-3.5 1.4-1.4 2.1 2.1 4.6-4.6 1.4 1.4-6 6z"/></svg></span></p>
+              <div class="vc-meta"><span>Mbarara</span><span class="pill pill-tag">Contract</span></div>
+              <p class="vc-salary">UGX 700,000 / month</p>
+            </a>
+          </div>
+        </section>
+
+        <footer class="footer" style="padding:16px 48px" >
+          <div class="row between"><p>Hiring? <a href="#">Post a vacancy</a></p><p><a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Help</a></p></div>
+        </footer>
+      </div>
+    </section>
+  </div>
+
+  <div class="notes">
+    <h2>Notes</h2>
+    <ul>
+      <li>The brand is a placeholder ("DJMS" on phone, full name on desktop) until C.4 is decided.</li>
+      <li>Header shows Log in / Register when anonymous. The signed-in header and the job seeker bottom nav are designed with the sign-in and profile screens.</li>
+      <li>Search submits to the job list (S2) with the query and district in the URL, so results can be shared and bookmarked.</li>
+      <li>Popular pills are links to pre-filtered S2 results, not toggles (toggles live on S2).</li>
+      <li>Latest vacancies: 3 on phone, 6 on desktop; empty state if none ("No vacancies yet. Check back soon.").</li>
+      <li>Loading: card skeletons (see S3 E). Error: ErrorState with Retry in place of the list; search still works.</li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>

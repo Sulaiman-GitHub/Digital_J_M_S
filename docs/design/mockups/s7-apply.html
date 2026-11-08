@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>S7 Apply · mockup</title>
+  <link rel="stylesheet" href="mockup.css" />
+  <style>
+    .page { padding: 16px 16px 40px; }
+    .page h1 { font-size: 24px; }
+    .stack > * + * { margin-top: 16px; }
+    .hint { font-size: 14px; color: var(--color-text-secondary); }
+    .box { border: 1px solid var(--color-border); border-radius: var(--radius-card); padding: 12px; background: #fff; }
+    .check { display: flex; gap: 10px; align-items: flex-start; padding: 8px 0; }
+    .check + .check { border-top: 1px solid var(--color-border); }
+    .ok { color: var(--color-success); font-weight: 600; }
+    .bad { color: var(--color-danger); font-weight: 600; }
+    .textarea { width: 100%; min-height: 120px; padding: 10px 12px; font: inherit; border: 1px solid var(--color-text-secondary); border-radius: 8px; }
+    .opt { display: flex; gap: 10px; align-items: flex-start; min-height: 44px; }
+    .btn[aria-disabled="true"] { background: var(--color-surface); color: var(--color-text-secondary); border: 1px solid var(--color-border); }
+    .success { text-align: center; padding-top: 48px; }
+    .tick { width: 56px; height: 56px; border-radius: 999px; background: var(--color-success-tint); color: var(--color-success); font-size: 28px; display: inline-flex; align-items: center; justify-content: center; border: 2px solid var(--color-success); }
+  </style>
+</head>
+<body>
+<div class="doc">
+  <header class="doc-head">
+    <h1>S7 · Apply</h1>
+    <p>Apply to a vacancy that takes applications here. Sample data is fictional.</p>
+    <nav><a href="s4-vacancy-detail.html">S4 Vacancy detail</a><a href="s8-applications.html">S8 My applications</a></nav>
+  </header>
+
+  <div class="frames">
+    <section>
+      <div class="frame-label">1 · Ready to apply (phone, <code>/jobs/:id/apply</code>)</div>
+      <div class="frame phone">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a></header>
+        <div class="page stack">
+          <a href="#" class="hint">‹ Back to the vacancy</a>
+          <div><h1>Apply</h1><p>Graduate Trainee – Accounts · Ssese Fresh Foods Ltd</p></div>
+          <div class="box">
+            <h2 style="font-size:16px">What will be sent</h2>
+            <div class="check"><span class="ok">✓</span><div>Your profile<div class="hint">Nakato Sarah · 2 skills · 1 experience. <a href="#">Review</a></div></div></div>
+            <div class="check"><span class="ok">✓</span><div>Your CV<div class="hint">nakato-cv.pdf (240 KB). A copy is sent; changing your CV later does not change it.</div></div></div>
+            <div class="check"><span class="ok">✓</span><div>Your email address<div class="hint">nakato@example.com, so the employer can reply.</div></div></div>
+          </div>
+          <div class="field"><label class="label">Cover note (optional)</label><textarea class="textarea"></textarea><span class="hint">0 / 2000</span></div>
+          <label class="opt"><input type="checkbox" /> I agree that this employer may see my profile and CV. I can withdraw my application later.</label>
+          <button class="btn btn-primary" style="width:100%">Send application</button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="frame-label">2 · Something is missing (phone)</div>
+      <div class="frame phone">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a></header>
+        <div class="page stack">
+          <a href="#" class="hint">‹ Back to the vacancy</a>
+          <div><h1>Apply</h1><p>Graduate Trainee – Accounts · Ssese Fresh Foods Ltd</p></div>
+          <div class="box">
+            <h2 style="font-size:16px">Before you can apply</h2>
+            <div class="check"><span class="bad">!</span><div>Complete your profile<div class="hint">Employers need to know who you are. <a href="#">Complete your profile</a></div></div></div>
+            <div class="check"><span class="bad">!</span><div>Upload your CV<div class="hint">PDF or Word, up to 5 MB. <a href="#">Upload your CV</a></div></div></div>
+            <div class="check"><span class="ok">✓</span><div>Email address confirmed</div></div>
+          </div>
+          <button class="btn btn-primary" aria-disabled="true" style="width:100%">Send application</button>
+          <p class="hint" style="text-align:center">Finish the steps above to apply.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="frame-label">3 · Email not confirmed, and other blocked states (phone)</div>
+      <div class="frame phone">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a></header>
+        <div class="page stack">
+          <div><h1>Apply</h1><p>Graduate Trainee – Accounts</p></div>
+          <div class="box" style="border-color:var(--color-warning);background:var(--color-warning-tint)"><strong>Confirm your email address first.</strong><p class="hint">We sent you a link. Check your inbox, then come back.</p></div>
+          <hr style="border:0;border-top:1px solid var(--color-border)" />
+          <h2 style="font-size:16px">Already applied</h2>
+          <div class="box" style="border-color:var(--color-info);background:var(--color-info-tint)"><strong>You have already applied for this vacancy.</strong><p class="hint"><a href="#">See your application</a></p></div>
+          <hr style="border:0;border-top:1px solid var(--color-border)" />
+          <h2 style="font-size:16px">Applies on another website</h2>
+          <div class="box"><strong>This employer takes applications on its own website.</strong><p class="hint">They are not tracked here. <a href="#">Back to the vacancy</a></p></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="frame-label">4 · Sent (phone)</div>
+      <div class="frame phone">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a></header>
+        <div class="page success stack">
+          <span class="tick">✓</span>
+          <h1>Application sent</h1>
+          <p>Graduate Trainee – Accounts at Ssese Fresh Foods Ltd. We will show you here when the employer reviews it.</p>
+          <a class="btn btn-primary" style="display:block" href="#">See my application</a>
+          <a class="btn btn-ghost" style="display:block" href="#">Find more jobs</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="notes">
+    <h2>Notes</h2>
+    <ul>
+      <li>Reached from the Apply button on the vacancy (S4). That button turns into "Applied" with the status once an application exists.</li>
+      <li>The server decides; the page only explains. Each missing step has a link that fixes it. The send button looks inactive and the reason is written beside it.</li>
+      <li>The consent box is shown only if the person has not already agreed to share their CV. Agreeing is recorded when they send.</li>
+      <li>Errors: already applied, vacancy gone, applies elsewhere, and a network failure with Retry. Nothing is lost when sending fails: the note stays.</li>
+    </ul>
+  </section>
+</div>
+</body>
+</html>

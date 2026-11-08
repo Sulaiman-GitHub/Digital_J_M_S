@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>S9 Employer area and verification banner · mockup</title>
+  <link rel="stylesheet" href="mockup.css" />
+  <style>
+    .page { padding: 16px 16px 40px; }
+    .page h1 { font-size: 24px; }
+    .stack > * + * { margin-top: 16px; }
+    .banner { display: flex; gap: 10px; padding: 12px 16px; border-bottom: 1px solid; font-size: 15px; }
+    .banner strong { display: block; }
+    .banner .icon { font-weight: 700; flex: none; }
+    .banner .actions { margin-top: 8px; }
+    .banner-info { background: var(--color-info-tint); border-color: var(--color-info); }
+    .banner-info .icon, .banner-info strong { color: var(--color-info); }
+    .banner-success { background: var(--color-success-tint); border-color: var(--color-success); }
+    .banner-success .icon, .banner-success strong { color: var(--color-success); }
+    .banner-danger { background: var(--color-danger-tint); border-color: var(--color-danger); }
+    .banner-danger .icon, .banner-danger strong { color: var(--color-danger); }
+    .banner-warning { background: var(--color-warning-tint); border-color: var(--color-warning); }
+    .banner-warning .icon, .banner-warning strong { color: var(--color-warning); }
+    .btn[aria-disabled='true'] { background: var(--color-surface); color: var(--color-text-secondary); border-color: var(--color-border); cursor: not-allowed; }
+    .why { font-size: 14px; color: var(--color-text-secondary); margin-top: 6px; }
+    .why a { font-weight: 600; }
+    .reason { margin-top: 6px; padding: 8px 12px; background: #fff; border-left: 4px solid var(--color-danger); font-size: 14px; }
+    .form-note { font-size: 14px; color: var(--color-text-secondary); }
+    .input[disabled], .select[disabled] { background: var(--color-surface); color: var(--color-text-secondary); }
+  </style>
+</head>
+<body>
+<div class="doc">
+  <header class="doc-head">
+    <h1>S9 · Employer area and verification banner</h1>
+    <p>The banner part of the employer dashboard. The vacancy list and applicant counts arrive in Phase 4.
+      The banner sits under the header on every employer page and says what the status means and what to do next.
+      Publishing buttons stay visible but disabled, with the reason written next to them. Sample data is fictional.</p>
+    <nav><a href="s5-auth.html">S5 Auth</a><a href="s6-profile.html">S6 Profile</a><a href="s12-admin-verification.html">S12 Admin verification</a></nav>
+  </header>
+
+  <div class="frames">
+    <!-- 1 DRAFT / no profile -->
+    <section>
+      <div class="frame-label">1 · Draft (phone)</div>
+      <div class="frame phone">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a><div class="header-actions"><button class="btn btn-ghost btn-sm">Menu</button></div></header>
+        <div class="banner banner-info" role="status"><span class="icon" aria-hidden="true">i</span>
+          <div><strong>Your company is not verified yet</strong>
+            Complete your company profile and send it for verification. You can post vacancies once it is approved.
+            <div class="actions"><a class="btn btn-primary btn-sm" href="#">Complete company profile</a></div></div></div>
+        <div class="page stack">
+          <h1>Your company</h1>
+          <div class="card"><div class="vc-title">Post a vacancy</div>
+            <p class="muted small" style="margin-top:4px">Reach students and graduates across Uganda.</p>
+            <div style="margin-top:12px"><a class="btn btn-primary btn-block" aria-disabled="true" aria-describedby="why1" href="#">Post a vacancy</a>
+              <p class="why" id="why1">Available once your company is verified. <a href="#">Go to company profile</a></p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 PENDING -->
+    <section>
+      <div class="frame-label">2 · Pending review (phone)</div>
+      <div class="frame phone">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a><div class="header-actions"><button class="btn btn-ghost btn-sm">Menu</button></div></header>
+        <div class="banner banner-warning" role="status"><span class="icon" aria-hidden="true">…</span>
+          <div><strong>We are checking your company</strong>
+            You sent your profile on 6 Nov 2026. You cannot edit it or post vacancies until we have decided.</div></div>
+        <div class="page stack">
+          <h1>Company profile</h1>
+          <div class="field"><label class="label">Company name</label><input class="input" disabled value="Ssese Foods Ltd" /></div>
+          <div class="field"><label class="label">Registration number</label><input class="input" disabled value="80020012345678" /></div>
+          <p class="form-note">The profile is read-only while it is being checked.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 REJECTED -->
+    <section>
+      <div class="frame-label">3 · Rejected (phone)</div>
+      <div class="frame phone">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a><div class="header-actions"><button class="btn btn-ghost btn-sm">Menu</button></div></header>
+        <div class="banner banner-danger" role="alert"><span class="icon" aria-hidden="true">!</span>
+          <div><strong>Your company was not approved</strong>
+            Fix the points below, then send it again.
+            <div class="reason">We could not find this registration number. Check it and add a working phone number.</div>
+            <div class="actions"><a class="btn btn-primary btn-sm" href="#">Edit and send again</a></div></div></div>
+        <div class="page stack">
+          <h1>Company profile</h1>
+          <div class="field"><label class="label">Company name</label><input class="input" value="Ssese Foods Ltd" /></div>
+          <div class="field"><label class="label">Registration number</label><input class="input invalid" style="border:2px solid var(--color-danger)" value="8002001" /></div>
+          <div class="row" style="flex-wrap:wrap"><button class="btn btn-secondary">Save changes</button><button class="btn btn-primary">Submit for verification</button></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 APPROVED -->
+    <section>
+      <div class="frame-label">4 · Approved (phone)</div>
+      <div class="frame phone">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a><div class="header-actions"><button class="btn btn-ghost btn-sm">Menu</button></div></header>
+        <div class="banner banner-success" role="status"><span class="icon" aria-hidden="true">✓</span>
+          <div><strong>Your company is verified</strong>You can post vacancies.</div></div>
+        <div class="page stack">
+          <h1>Your company</h1>
+          <div class="card"><div class="vc-title">Post a vacancy</div>
+            <p class="muted small" style="margin-top:4px">Posting opens in the next release.</p></div>
+          <p class="form-note">Changing the company name or registration number sends the profile back for checking.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 SUSPENDED -->
+    <section>
+      <div class="frame-label">5 · Suspended (phone)</div>
+      <div class="frame phone">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a><div class="header-actions"><button class="btn btn-ghost btn-sm">Menu</button></div></header>
+        <div class="banner banner-danger" role="alert"><span class="icon" aria-hidden="true">!</span>
+          <div><strong>Your company is suspended</strong>
+            You cannot post new vacancies. Vacancies already live stay as they are.
+            <div class="reason">Several applicants reported unpaid "training fees".</div></div></div>
+        <div class="page stack">
+          <h1>Your company</h1>
+          <div class="card"><div class="vc-title">Post a vacancy</div>
+            <div style="margin-top:12px"><a class="btn btn-primary btn-block" aria-disabled="true" aria-describedby="why5" href="#">Post a vacancy</a>
+              <p class="why" id="why5">Publishing is blocked while the company is suspended.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 COMPANY FORM (draft, errors) -->
+    <section>
+      <div class="frame-label">6 · Company profile form (phone)</div>
+      <div class="frame phone">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a><div class="header-actions"><button class="btn btn-ghost btn-sm">Menu</button></div></header>
+        <div class="banner banner-info" role="status"><span class="icon" aria-hidden="true">i</span>
+          <div><strong>Your company is not verified yet</strong>Complete your company profile and send it for verification.</div></div>
+        <div class="page stack">
+          <h1>Company profile</h1>
+          <div class="field"><label class="label">Company name</label><input class="input" value="Ssese Foods Ltd" /></div>
+          <div class="field"><label class="label">Registration number</label><input class="input" /><span class="form-note">As on your certificate of incorporation.</span></div>
+          <div class="field"><label class="label">Phone</label><input class="input" value="0414 123456" /></div>
+          <div class="field"><label class="label">Website (optional)</label><input class="input" placeholder="https://" /><span class="form-note">A phone number or a website is needed so we can check the company.</span></div>
+          <div class="field"><label class="label">District</label><select class="select"><option>Kampala</option></select></div>
+          <div class="field"><label class="label">What does your company do?</label><textarea class="textarea" style="min-height:96px;width:100%;font:inherit;padding:10px 12px;border:1px solid var(--color-text-secondary);border-radius:8px"></textarea></div>
+          <div class="row" style="flex-wrap:wrap"><button class="btn btn-secondary">Save</button>
+            <button class="btn btn-primary" aria-disabled="true" style="background:var(--color-surface);color:var(--color-text-secondary)">Submit for verification</button></div>
+          <p class="why">Save your profile first. We need the registration number and a phone or website before you can submit.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 DASHBOARD VACANCY LIST -->
+    <section>
+      <div class="frame-label">7 · Dashboard: your vacancies (phone)</div>
+      <div class="frame phone">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a><div class="header-actions"><button class="btn btn-ghost btn-sm">Menu</button></div></header>
+        <div class="banner banner-success" role="status"><span class="icon" aria-hidden="true">✓</span>
+          <div><strong>Your company is verified</strong>You can post vacancies.</div></div>
+        <div class="page stack">
+          <div class="row between"><h1>Your vacancies</h1><a class="btn btn-primary btn-sm" href="#">New vacancy</a></div>
+          <div class="pills"><button class="pill" aria-pressed="true">All</button><button class="pill" aria-pressed="false">Drafts</button><button class="pill" aria-pressed="false">Live</button><button class="pill" aria-pressed="false">Closed</button></div>
+          <div class="card"><div class="row between"><span class="vc-title">Accounts Assistant</span><span class="badge badge-success">Live</span></div>
+            <div class="vc-meta"><span>Kampala</span><span class="dot">Closes 28 Nov 2026</span></div>
+            <div class="row" style="margin-top:12px;flex-wrap:wrap"><a class="btn btn-secondary btn-sm" href="#">Edit</a><button class="btn btn-ghost btn-sm">Close…</button></div></div>
+          <div class="card"><div class="row between"><span class="vc-title">Driver</span><span class="badge badge-neutral">Draft</span></div>
+            <div class="vc-meta"><span>Not published yet</span></div>
+            <div class="row" style="margin-top:12px;flex-wrap:wrap"><a class="btn btn-secondary btn-sm" href="#">Edit</a><button class="btn btn-primary btn-sm">Publish</button><button class="btn btn-ghost btn-sm">Discard…</button></div></div>
+          <div class="card"><div class="row between"><span class="vc-title">Warehouse Assistant</span><span class="badge badge-warning">Expired</span></div>
+            <div class="vc-meta"><span>Closed to applicants on 30 Oct 2026</span></div>
+            <div class="row" style="margin-top:12px;flex-wrap:wrap"><a class="btn btn-secondary btn-sm" href="#">Edit</a><button class="btn btn-ghost btn-sm">Close…</button></div></div>
+          <div class="card"><div class="row between"><span class="vc-title">Cashier</span><span class="badge badge-neutral">Closed</span></div>
+            <div class="vc-meta"><span>Closed</span></div></div>
+          <p class="why">Applicant counts will appear on each card in a later release.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="notes">
+    <h2>Notes</h2>
+    <ul>
+      <li>Banner colour is never the only signal: each state has a heading, an icon and text. Danger banners are announced at once (role alert); the others politely (role status).</li>
+      <li>Rejected and suspended banners show the admin's reason in a quoted block. The employer cannot reply in the app yet.</li>
+      <li>Disabled publishing buttons use <code>aria-disabled</code> and the explanation is linked with <code>aria-describedby</code>, so screen readers read why.</li>
+      <li>The profile is read-only while pending or suspended; approved profiles warn that renaming or changing the registration number triggers a new check.</li>
+      <li>Submit shows a confirm dialog: "Submit for verification? You cannot edit while we check it."</li>
+      <li>Submitting needs a verified email address: if it is not, the Submit button is disabled and says so, next to the existing verify-email banner.</li>
+    </ul>
+  </section>
+</div>
+</body>
+</html>

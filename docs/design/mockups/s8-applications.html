@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>S8 My applications · mockup</title>
+  <link rel="stylesheet" href="mockup.css" />
+  <style>
+    .page { padding: 16px 16px 72px; }
+    .page h1 { font-size: 24px; }
+    .stack > * + * { margin-top: 16px; }
+    .hint { font-size: 14px; color: var(--color-text-secondary); }
+    .box { border: 1px solid var(--color-border); border-radius: var(--radius-card); padding: 12px; background: #fff; }
+    .scrim { position: absolute; inset: 0; background: rgb(17 24 39 / .5); }
+    .dialog { background: #fff; border-radius: 12px; padding: 20px; position: absolute; left: 16px; right: 16px; top: 200px; box-shadow: 0 8px 24px rgb(0 0 0 / .25); }
+    .dialog h2 { font-size: 20px; }
+    .dialog .row { justify-content: flex-end; margin-top: 16px; flex-wrap: wrap; }
+    .btn-danger { background: var(--color-danger); color: #fff; }
+    .tl { list-style: none; }
+    .tl li { display: flex; gap: 12px; padding-bottom: 12px; }
+    .dotc { width: 12px; height: 12px; border-radius: 999px; border: 2px solid var(--color-text-secondary); margin-top: 6px; flex: none; }
+    .dotc.now { background: var(--color-primary); border-color: var(--color-primary); }
+  </style>
+</head>
+<body>
+<div class="doc">
+  <header class="doc-head">
+    <h1>S8 · My applications</h1>
+    <p>The job seeker's list of applications and one application with its history. Sample data is fictional.</p>
+    <nav><a href="s7-apply.html">S7 Apply</a><a href="s11-employer-applicants.html">S11 Employer applicants</a></nav>
+  </header>
+
+  <div class="frames">
+    <section>
+      <div class="frame-label">1 · List (phone, <code>/applications</code>)</div>
+      <div class="frame phone">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a></header>
+        <div class="page stack">
+          <h1>My applications</h1>
+          <p class="hint">3 applications</p>
+          <a class="card" href="#" style="display:block;text-decoration:none;color:inherit">
+            <div class="row between"><span class="vc-title">Graduate Trainee – Accounts</span><span class="badge badge-primary">Shortlisted</span></div>
+            <div class="vc-company">Ssese Fresh Foods Ltd</div>
+            <div class="vc-meta"><span>Applied 4 Nov 2026</span><span class="dot">Updated 6 Nov 2026</span></div></a>
+          <a class="card" href="#" style="display:block;text-decoration:none;color:inherit">
+            <div class="row between"><span class="vc-title">Office Assistant</span><span class="badge">Submitted</span></div>
+            <div class="vc-company">Gulu Hardware</div>
+            <div class="vc-meta"><span>Applied 5 Nov 2026</span></div></a>
+          <a class="card" href="#" style="display:block;text-decoration:none;color:inherit">
+            <div class="row between"><span class="vc-title">Sales Intern</span><span class="badge">Withdrawn</span></div>
+            <div class="vc-company">Mbarara Traders</div>
+            <div class="vc-meta"><span>Applied 1 Nov 2026</span><span class="dot">Closed vacancy</span></div></a>
+        </div>
+        <nav class="bottom-nav"><a href="#">Jobs</a><a href="#" aria-current="page">Applications</a><a href="#">Profile</a><a href="#">Account</a></nav>
+      </div>
+    </section>
+
+    <section>
+      <div class="frame-label">2 · Empty, loading and error (phone)</div>
+      <div class="frame phone">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a></header>
+        <div class="page stack">
+          <h1>My applications</h1>
+          <div class="box" style="text-align:center;border-style:dashed"><strong>You have not applied for any jobs yet</strong><p class="hint">When you apply, you can follow every application here.</p><p style="margin-top:8px"><a class="btn btn-primary" href="#">Find jobs</a></p></div>
+          <div class="skeleton" style="height:84px"></div><div class="skeleton" style="height:84px"></div>
+          <div class="box" style="border-color:var(--color-danger);background:var(--color-danger-tint)"><strong>Could not load your applications</strong><p class="hint">Check your connection and try again.</p><p style="margin-top:8px"><button class="btn btn-secondary">Retry</button></p></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="frame-label">3 · One application (phone, <code>/applications/:id</code>)</div>
+      <div class="frame phone">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a></header>
+        <div class="page stack">
+          <a href="#" class="hint">‹ My applications</a>
+          <div><h1 style="font-size:22px">Graduate Trainee – Accounts</h1><p>Ssese Fresh Foods Ltd · <a href="#">See the vacancy</a></p></div>
+          <p><span class="badge badge-primary">Shortlisted</span> <span class="hint">Updated 6 Nov 2026, 10:12</span></p>
+          <div class="box">
+            <h2 style="font-size:16px;margin-bottom:8px">History</h2>
+            <ol class="tl">
+              <li><span class="dotc now"></span><div><span class="badge badge-primary">Shortlisted</span> <span class="hint">6 Nov 2026, 10:12</span><p>Please bring your certificates.</p></div></li>
+              <li><span class="dotc"></span><div><span class="badge badge-info">Under review</span> <span class="hint">5 Nov 2026, 15:40</span></div></li>
+              <li><span class="dotc"></span><div><span class="badge">Submitted</span> <span class="hint">4 Nov 2026, 09:02</span></div></li>
+            </ol>
+          </div>
+          <div class="box"><h2 style="font-size:16px">What you sent</h2><p class="hint">CV: nakato-cv.pdf · Cover note:</p><p>I finished my accounting degree in July …</p></div>
+          <button class="btn btn-secondary" style="width:100%">Withdraw application…</button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="frame-label">4 · Withdraw confirmation (phone)</div>
+      <div class="frame phone" style="min-height:560px">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a></header>
+        <div class="page"><h1 style="font-size:22px">Graduate Trainee – Accounts</h1></div>
+        <div class="scrim"></div>
+        <div class="dialog" role="dialog" aria-labelledby="w1">
+          <h2 id="w1">Withdraw this application?</h2>
+          <p class="hint" style="margin-top:8px">The employer will see that you withdrew. You cannot apply for this vacancy again.</p>
+          <div class="row"><button class="btn btn-ghost">Keep application</button><button class="btn btn-danger">Withdraw</button></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="notes">
+    <h2>Notes</h2>
+    <ul>
+      <li>Job seekers get an Applications link in the bottom navigation and the header.</li>
+      <li>Newest application first. The badge shows the current status; colour is always paired with the word. "Not selected" is the friendly label for a rejected application.</li>
+      <li>The history shows the newest change first, with the employer's note when they wrote one. Notes are visible to the applicant, and the employer is told so when they write it.</li>
+      <li>Withdraw is offered only while the application is not rejected or withdrawn. It asks for confirmation, and says withdrawing cannot be undone.</li>
+      <li>The vacancy link is shown only while the vacancy is still live.</li>
+    </ul>
+  </section>
+</div>
+</body>
+</html>

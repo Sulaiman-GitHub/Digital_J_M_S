@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>S11 Employer applicants · mockup</title>
+  <link rel="stylesheet" href="mockup.css" />
+  <style>
+    .page { padding: 16px 16px 40px; }
+    .page h1 { font-size: 24px; }
+    .stack > * + * { margin-top: 16px; }
+    .hint { font-size: 14px; color: var(--color-text-secondary); }
+    .box { border: 1px solid var(--color-border); border-radius: var(--radius-card); padding: 12px; background: #fff; }
+    .box h2 { font-size: 16px; margin-bottom: 8px; }
+    .tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+    dt { font-size: 14px; color: var(--color-text-secondary); } dd { margin: 0 0 8px; font-weight: 600; }
+    .opt { border: 1px solid var(--color-text-secondary); border-radius: var(--radius-card); padding: 8px 12px; display: inline-flex; gap: 8px; min-height: 44px; align-items: center; margin: 0 8px 8px 0; }
+    .opt.checked { border: 2px solid var(--color-primary); background: var(--color-primary-tint); font-weight: 600; }
+    .textarea { width: 100%; min-height: 72px; padding: 10px 12px; font: inherit; border: 1px solid var(--color-text-secondary); border-radius: 8px; }
+    .tl { list-style: none; } .tl li { display: flex; gap: 12px; padding-bottom: 12px; }
+    .dotc { width: 12px; height: 12px; border-radius: 999px; border: 2px solid var(--color-text-secondary); margin-top: 6px; flex: none; }
+    .dotc.now { background: var(--color-primary); border-color: var(--color-primary); }
+  </style>
+</head>
+<body>
+<div class="doc">
+  <header class="doc-head">
+    <h1>S11 · Employer: applicants</h1>
+    <p>The dashboard counts, the applicants for one vacancy, and one applicant with the status control. Sample data is fictional.</p>
+    <nav><a href="s8-applications.html">S8 My applications</a><a href="s9-employer-banner.html">S9 Employer dashboard</a></nav>
+  </header>
+
+  <div class="frames">
+    <section>
+      <div class="frame-label">1 · Dashboard row with counts (phone)</div>
+      <div class="frame phone">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a></header>
+        <div class="page stack">
+          <h1>My vacancies</h1>
+          <div class="card">
+            <div class="row between"><span class="vc-title">Accounts Assistant</span><span class="badge badge-success">Live</span></div>
+            <div class="hint">On-site · Closes 4 Dec 2026</div>
+            <p style="margin-top:8px;font-size:14px"><a href="#"><strong>12 applicants</strong></a> <span class="badge badge-info">3 new</span></p>
+            <div style="margin-top:8px"><button class="btn btn-secondary btn-sm">Edit</button> <button class="btn btn-ghost btn-sm">Close…</button></div>
+          </div>
+          <div class="card">
+            <div class="row between"><span class="vc-title">Driver</span><span class="badge badge-neutral">Draft</span></div>
+            <div class="hint">Not published yet. Applicants appear after publishing.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="frame-label">2 · Applicants (phone, <code>/employer/vacancies/:id/applicants</code>)</div>
+      <div class="frame phone">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a></header>
+        <div class="page stack">
+          <a href="#" class="hint">‹ My vacancies</a>
+          <h1>Applicants</h1>
+          <div class="pills tabs"><button class="pill" aria-pressed="true">All</button><button class="pill" aria-pressed="false">Submitted</button><button class="pill" aria-pressed="false">Under review</button><button class="pill" aria-pressed="false">Shortlisted</button><button class="pill" aria-pressed="false">Interview</button></div>
+          <p class="hint">12 applicants</p>
+          <a class="card" href="#" style="display:block;text-decoration:none;color:inherit"><div class="row between"><span class="vc-title">Nakato Sarah</span><span class="badge">Submitted</span></div>
+            <div class="vc-company">Bachelor's degree · Gulu University</div><div class="vc-meta"><span>Applied 6 Nov 2026</span><span class="dot">Cover note</span></div></a>
+          <a class="card" href="#" style="display:block;text-decoration:none;color:inherit"><div class="row between"><span class="vc-title">Okello Daniel</span><span class="badge badge-primary">Shortlisted</span></div>
+            <div class="vc-company">Diploma · Makerere University</div><div class="vc-meta"><span>Applied 5 Nov 2026</span></div></a>
+          <div class="box" style="text-align:center;border-style:dashed"><strong>No applicants with this status</strong><p class="hint">Choose another status to see the others.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="frame-label">3 · One applicant (phone, <code>/employer/applications/:id</code>)</div>
+      <div class="frame phone">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a></header>
+        <div class="page stack">
+          <a href="#" class="hint">‹ All applicants</a>
+          <div><h1 style="font-size:22px">Nakato Sarah</h1><p>Applied for Accounts Assistant</p><p style="margin-top:4px"><span class="badge badge-info">Under review</span> <span class="hint">Applied 6 Nov 2026</span></p></div>
+          <div class="box"><h2>Contact</h2><dl style="margin:0"><dt>Email</dt><dd>nakato@example.com</dd><dt>Phone</dt><dd>+256 772 123456</dd></dl></div>
+          <div class="box"><h2>Profile when they applied</h2><dl style="margin:0"><dt>Institution</dt><dd>Gulu University</dd><dt>Qualification</dt><dd>Bachelor's degree, Accounting</dd><dt>Graduated</dt><dd>15 Jul 2025</dd></dl><p class="hint">Skills: Excel, Python</p></div>
+          <div class="box"><h2>Cover note and CV</h2><p>I finished my accounting degree in July …</p><p style="margin-top:8px"><a class="btn btn-secondary" style="display:block" href="#">Download CV (nakato-cv.pdf, 240 KB)</a></p></div>
+          <div class="box"><h2>Status</h2>
+            <p class="hint">Move this application to</p>
+            <label class="opt checked"><input type="radio" checked /> Shortlisted</label><label class="opt"><input type="radio" /> Not selected</label>
+            <div class="field"><label class="label">Note (optional)</label><span class="hint">The applicant can read this note.</span><textarea class="textarea"></textarea></div>
+            <button class="btn btn-primary" style="width:100%;margin-top:8px">Update status</button></div>
+          <div class="box"><h2>History</h2><ol class="tl"><li><span class="dotc now"></span><div><span class="badge badge-info">Under review</span> <span class="hint">6 Nov, 09:10</span></div></li><li><span class="dotc"></span><div><span class="badge">Submitted</span> <span class="hint">6 Nov, 08:02</span></div></li></ol></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="notes">
+    <h2>Notes</h2>
+    <ul>
+      <li>Only vacancies that take applications here show a count; the number links to the applicants. "N new" counts applications nobody has moved out of Submitted.</li>
+      <li>The status control offers only the moves the rules allow from the current status. Rejected and withdrawn are final, and the control is replaced by a sentence saying so.</li>
+      <li>The note is optional, at most 1000 characters, and the applicant can read it (the screen says so).</li>
+      <li>Download CV gives the copy the applicant sent, not their current CV. Every download is logged.</li>
+      <li>The employer sees the profile as it was when the person applied, with a clear label.</li>
+      <li>States: loading skeletons, "No one has applied yet" and "No applicants with this status", error with Retry, and a plain message when the application belongs to someone else.</li>
+    </ul>
+  </section>
+</div>
+</body>
+</html>

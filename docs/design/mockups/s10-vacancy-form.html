@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>S10 Vacancy form · mockup</title>
+  <link rel="stylesheet" href="mockup.css" />
+  <style>
+    .page { padding: 16px 16px 24px; }
+    .page h1 { font-size: 24px; }
+    .stack > * + * { margin-top: 16px; }
+    .section { border: 1px solid var(--color-border); border-radius: var(--radius-card); padding: 16px; }
+    .section h2 { font-size: 18px; margin-bottom: 12px; }
+    .hint { font-size: 14px; color: var(--color-text-secondary); }
+    .err { font-size: 14px; font-weight: 600; color: var(--color-danger); }
+    .textarea { width: 100%; min-height: 120px; padding: 10px 12px; font: inherit; border: 1px solid var(--color-text-secondary); border-radius: 8px; }
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .opt { border: 1px solid var(--color-text-secondary); border-radius: var(--radius-card); padding: 12px; display: flex; gap: 10px; min-height: 44px; align-items: center; }
+    .opt.checked { border: 2px solid var(--color-primary); background: var(--color-primary-tint); font-weight: 600; }
+    .chip { display: inline-flex; align-items: center; gap: 4px; min-height: 36px; padding: 0 4px 0 12px; border-radius: 999px; border: 1px solid var(--color-primary); background: var(--color-primary-tint); color: var(--color-primary); font-size: 14px; font-weight: 600; }
+    .req { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 0; border-top: 1px solid var(--color-border); }
+    .req:first-of-type { border-top: 0; }
+    .req .label-text { font-weight: 600; }
+    .req label { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; font-size: 14px; }
+    .bar { position: sticky; bottom: 0; background: #fff; border-top: 1px solid var(--color-border); padding: 12px 16px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .input[disabled], .select[disabled] { background: var(--color-surface); color: var(--color-text-secondary); }
+    .banner { display: flex; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--color-info); background: var(--color-info-tint); font-size: 15px; }
+    .banner strong { color: var(--color-info); display: block; }
+    .btn[aria-disabled='true'] { background: var(--color-surface); color: var(--color-text-secondary); border-color: var(--color-border); cursor: not-allowed; }
+    .why { font-size: 14px; color: var(--color-text-secondary); }
+    .btn-danger { background: var(--color-danger); color: #fff; }
+    .scrim { position: absolute; inset: 0; background: rgb(17 24 39 / .5); }
+    .dialog { background: #fff; border-radius: 12px; padding: 20px; position: absolute; left: 16px; right: 16px; top: 200px; box-shadow: 0 8px 24px rgb(0 0 0 / .25); }
+    .dialog h2 { font-size: 20px; }
+    .dialog .row { justify-content: flex-end; margin-top: 16px; }
+  </style>
+</head>
+<body>
+<div class="doc">
+  <header class="doc-head">
+    <h1>S10 · Vacancy form</h1>
+    <p>Create and edit a vacancy. Sections: Basics, Pay, Requirements (each with a Required toggle),
+      How to apply, Closing date. Save draft is always available; Publish is disabled with a written reason until the company is approved.
+      Sample data is fictional.</p>
+    <nav><a href="s9-employer-banner.html">S9 Employer area</a><a href="s12-admin-verification.html">S12 Admin verification</a></nav>
+  </header>
+
+  <div class="frames">
+    <!-- 1 NEW, top -->
+    <section>
+      <div class="frame-label">1 · New vacancy, basics and pay (phone)</div>
+      <div class="frame phone">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a><div class="header-actions"><button class="btn btn-ghost btn-sm">Menu</button></div></header>
+        <div class="page stack">
+          <a href="#" class="hint">‹ Your vacancies</a>
+          <h1>New vacancy</h1>
+          <div class="section stack"><h2>Basics</h2>
+            <div class="field"><label class="label">Job title</label><input class="input" value="Accounts Assistant" /></div>
+            <div class="field"><label class="label">Job type</label><select class="select"><option>Full-time</option></select></div>
+            <fieldset class="field"><legend class="label">Where the work is done</legend>
+              <div class="two"><label class="opt checked"><input type="radio" checked /> On-site</label><label class="opt"><input type="radio" /> Remote</label><label class="opt"><input type="radio" /> Hybrid</label></div></fieldset>
+            <div class="field"><label class="label">District</label><select class="select"><option>Kampala</option></select><span class="hint">Only remote jobs can leave this out.</span></div>
+            <div class="field"><label class="label">About the job</label><textarea class="textarea"></textarea><span class="hint" style="text-align:right">0 of 10000</span></div>
+          </div>
+          <div class="section stack"><h2>Pay and experience</h2>
+            <div class="two"><div class="field"><label class="label">Lowest pay (UGX)</label><input class="input" value="800000" inputmode="numeric" /></div>
+              <div class="field"><label class="label">Highest pay (UGX)</label><input class="input" value="1200000" inputmode="numeric" /></div></div>
+            <label class="row" style="min-height:44px"><input type="checkbox" checked /> Show the pay on the vacancy</label>
+            <div class="field"><label class="label">Lowest qualification</label><select class="select"><option>No minimum</option></select></div>
+            <div class="field"><label class="label">Years of experience</label><input class="input" value="1" inputmode="numeric" /></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 requirements, apply, closing -->
+    <section>
+      <div class="frame-label">2 · Requirements, how to apply, closing date (phone)</div>
+      <div class="frame phone">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a><div class="header-actions"><button class="btn btn-ghost btn-sm">Menu</button></div></header>
+        <div class="page stack">
+          <div class="section stack"><h2>Requirements</h2>
+            <div class="field"><label class="label">Skills</label><input class="input" placeholder="e.g. Microsoft Excel" /><span class="hint">Search and pick from the list.</span></div>
+            <div>
+              <div class="req"><span class="label-text">Microsoft Excel</span><span class="row"><label><input type="checkbox" checked /> Required</label><button class="btn btn-ghost btn-sm" aria-label="Remove Microsoft Excel">✕</button></span></div>
+              <div class="req"><span class="label-text">QuickBooks</span><span class="row"><label><input type="checkbox" /> Required</label><button class="btn btn-ghost btn-sm" aria-label="Remove QuickBooks">✕</button></span></div>
+            </div>
+            <h3 style="font-size:16px">Other requirements</h3>
+            <div class="field"><label class="label">Type</label><select class="select"><option>Certification</option></select></div>
+            <div class="field"><label class="label">Requirement</label><input class="input" value="CPA Part 1" /></div>
+            <div class="row"><label><input type="checkbox" /> Required</label><button class="btn btn-ghost btn-sm">Remove</button></div>
+            <button class="btn btn-secondary">Add a requirement</button>
+            <p class="hint">3 of 20 requirements.</p>
+          </div>
+          <div class="section stack"><h2>How people apply</h2>
+            <fieldset class="field"><legend class="label">Applications</legend>
+              <label class="opt checked"><input type="radio" checked /> On this site (recommended)</label>
+              <label class="opt" style="margin-top:8px"><input type="radio" /> On another website</label></fieldset>
+          </div>
+          <div class="section stack"><h2>Closing date</h2>
+            <div class="field"><label class="label">Applications close on</label><input class="input" type="date" value="2026-11-28" /><span class="hint">Pick a date up to 89 days from today.</span></div>
+          </div>
+        </div>
+        <div class="bar"><button class="btn btn-secondary">Save draft</button>
+          <button class="btn btn-primary">Publish</button></div>
+      </div>
+    </section>
+
+    <!-- 3 not approved -->
+    <section>
+      <div class="frame-label">3 · Not approved yet: Publish disabled with the reason (phone)</div>
+      <div class="frame phone">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a><div class="header-actions"><button class="btn btn-ghost btn-sm">Menu</button></div></header>
+        <div class="banner"><span aria-hidden="true">i</span><div><strong>Your company is not verified yet</strong>You can save drafts now and publish once it is approved.</div></div>
+        <div class="page stack"><h1>Edit vacancy</h1>
+          <div class="section"><div class="field"><label class="label">Job title</label><input class="input" value="Accounts Assistant" /></div></div>
+          <p class="hint">…the rest of the form…</p></div>
+        <div class="bar" style="flex-direction:column;align-items:stretch">
+          <div class="row" style="flex-wrap:wrap"><button class="btn btn-secondary">Save draft</button><button class="btn" aria-disabled="true" aria-describedby="why3">Publish</button></div>
+          <p class="why" id="why3">Available once your company is verified. <a href="#">Go to company profile</a></p></div>
+      </div>
+    </section>
+
+    <!-- 4 published, locked -->
+    <section>
+      <div class="frame-label">4 · Published: identity fields locked (phone)</div>
+      <div class="frame phone">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a><div class="header-actions"><button class="btn btn-ghost btn-sm">Menu</button></div></header>
+        <div class="page stack">
+          <a href="#" class="hint">‹ Your vacancies</a>
+          <div class="row" style="justify-content:space-between"><h1>Edit vacancy</h1><span class="badge badge-success">Live</span></div>
+          <div class="banner" style="background:var(--color-surface);border-color:var(--color-border)"><div>This vacancy is live. The title, job type, place and how people apply cannot be changed. You can change the description, requirements, pay and closing date.</div></div>
+          <div class="section stack"><h2>Basics</h2>
+            <div class="field"><label class="label">Job title</label><input class="input" disabled value="Accounts Assistant" /></div>
+            <div class="field"><label class="label">Job type</label><select class="select" disabled><option>Full-time</option></select></div>
+            <div class="field"><label class="label">About the job</label><textarea class="textarea">Prepare invoices…</textarea></div></div>
+          <div class="section stack"><h2>Closing date</h2><div class="field"><label class="label">Applications close on</label><input class="input" type="date" value="2026-11-28" /><span class="hint">Up to 22 Jan 2027 (90 days after publishing).</span></div></div>
+        </div>
+        <div class="bar"><button class="btn btn-primary">Save changes</button><button class="btn btn-ghost" style="color:var(--color-danger)">Close vacancy…</button></div>
+      </div>
+    </section>
+
+    <!-- 5 close dialog -->
+    <section>
+      <div class="frame-label">5 · Close confirmation (phone)</div>
+      <div class="frame phone" style="min-height:560px">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a></header>
+        <div class="page"><h1>Your vacancies</h1></div>
+        <div class="scrim"></div>
+        <div class="dialog" role="dialog" aria-labelledby="d5"><h2 id="d5">Close "Accounts Assistant"?</h2>
+          <p class="hint" style="margin-top:6px">It disappears from the job list straight away and cannot be reopened. You can post a new vacancy instead.</p>
+          <div class="row"><button class="btn btn-ghost">Keep it open</button><button class="btn btn-danger">Close vacancy</button></div></div>
+      </div>
+    </section>
+
+    <!-- 6 admin on behalf -->
+    <section>
+      <div class="frame-label">6 · Admin: create for a partner employer (phone)</div>
+      <div class="frame phone">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a><div class="header-actions"><button class="btn btn-ghost btn-sm">Menu</button></div></header>
+        <div class="page stack">
+          <a href="#" class="hint">‹ All employers</a>
+          <h1>New vacancy for a partner</h1>
+          <div class="section stack"><h2>Employer</h2>
+            <div class="field"><label class="label">Partner employer</label><select class="select"><option>Gulu Hardware (approved)</option></select><span class="hint">Only approved employers are listed.</span></div></div>
+          <p class="hint">…the same sections as the employer form…</p>
+          <label class="row" style="min-height:44px"><input type="checkbox" /> Publish straight away</label>
+        </div>
+        <div class="bar"><button class="btn btn-secondary">Save draft</button><button class="btn btn-primary">Create and publish</button></div>
+      </div>
+    </section>
+  </div>
+
+  <section class="notes">
+    <h2>Notes</h2>
+    <ul>
+      <li>One form for creating and editing. A draft needs only a title; Publish checks the rest and names every missing field in red.</li>
+      <li>Skills are searched and added as rows; each has a Required toggle (Required or Preferred). Qualification, certification and other requirements are typed. At most 20 in total.</li>
+      <li>The closing date is a date picker limited to 89 days from today (or from the publish date when editing), so the server rule of 90 days always holds. The vacancy closes at the end of that day, Kampala time.</li>
+      <li>When the vacancy is published, title, type, place and how to apply are locked and shown disabled with an explanation.</li>
+      <li>Close always asks first and cannot be undone. A draft can be discarded the same way.</li>
+      <li>Publish is aria-disabled with the reason next to it until the company is approved; Save draft always works.</li>
+    </ul>
+  </section>
+</div>
+</body>
+</html>

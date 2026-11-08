@@ -1,0 +1,166 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    name: Backend (ruff + pytest)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          # Throwaway credentials for the CI container only. Not used anywhere else.
+          POSTGRES_USER: djm_ci
+          POSTGRES_PASSWORD: djm_ci_password
+          POSTGRES_DB: djm_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U djm_ci -d djm_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      APP_ENV: test
+      DATABASE_URL: postgresql+psycopg://djm_ci:djm_ci_password@localhost:5432/djm_test
+      TEST_DATABASE_URL: postgresql+psycopg://djm_ci:djm_ci_password@localhost:5432/djm_test
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: backend/requirements-dev.txt
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements-dev.txt
+
+      - name: Ruff
+        run: ruff check . && ruff check --config pyproject.toml ../scripts
+
+      - name: Pytest
+        # The failures are repeated as annotations, so they can be read on the run page without
+        # downloading the log.
+        run: |
+          set +e
+          pytest -q -ra --tb=short 2>&1 | tee pytest.log
+          code=${PIPESTATUS[0]}
+          grep -E '^(FAILED|ERROR) ' pytest.log | head -20 | sed 's/^/::error::/'
+          grep -E '^E  ' pytest.log | head -20 | sed 's/^/::error::/'
+          exit $code
+
+  frontend:
+    name: Frontend (lint + test + build)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Unit and component tests
+        run: npm run test
+
+      - name: Build
+        run: npm run build
+
+  e2e:
+    name: End-to-end (Playwright journey)
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          # Throwaway credentials for the CI container only. Not used anywhere else.
+          POSTGRES_USER: djm_ci
+          POSTGRES_PASSWORD: djm_ci_password
+          POSTGRES_DB: djm_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U djm_ci -d djm_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      # The backend started by Playwright runs in APP_ENV=test against this *_test database.
+      APP_ENV: test
+      DATABASE_URL: postgresql+psycopg://djm_ci:djm_ci_password@localhost:5432/djm_test
+      TEST_DATABASE_URL: postgresql+psycopg://djm_ci:djm_ci_password@localhost:5432/djm_test
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: backend/requirements-dev.txt
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install backend dependencies
+        working-directory: backend
+        run: python -m pip install -r requirements-dev.txt
+
+      - name: Migrate the test database
+        working-directory: backend
+        run: alembic upgrade head
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Install the Playwright browser
+        working-directory: frontend
+        run: npx playwright install --with-deps chromium
+
+      - name: Playwright tests
+        working-directory: frontend
+        run: npx playwright test
+
+      - name: Upload the Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            frontend/playwright-report
+            frontend/test-results
+          retention-days: 7

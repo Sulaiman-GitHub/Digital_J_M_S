@@ -1,0 +1,107 @@
+name: Deploy
+
+# Runs after CI succeeds on main (or by hand). Builds the website, uploads the code to the
+# server over SSH and restarts the containers. Server-only secrets stay on the server.
+on:
+  workflow_run:
+    workflows: [CI]
+    branches: [main]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to Azure VM
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    env:
+      DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+      DEPLOY_USER: azureuser
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Build the website
+        working-directory: frontend
+        run: npm ci && npm run build
+
+      - name: Package
+        run: |
+          mkdir stage
+          cp -r backend scripts .dockerignore stage/
+          mkdir stage/deploy
+          cp deploy/Caddyfile deploy/backend.Dockerfile deploy/docker-compose.yml deploy/*.sh stage/deploy/
+          cp -r frontend/dist stage/deploy/web
+          find stage -name __pycache__ -prune -exec rm -rf {} +
+          rm -rf stage/backend/.venv stage/backend/storage stage/backend/.env
+          tar -C stage -czf djms.tgz .
+
+      - name: Sign in to Azure (limited to the djms-rg resource group)
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Allow SSH from this runner only
+        run: |
+          RUNNER_IP=$(curl -fsS https://api.ipify.org)
+          echo "RUNNER_IP=$RUNNER_IP" >> "$GITHUB_ENV"
+          # The Azure CLI sometimes crashes on import on hosted runners; retry a few times.
+          for attempt in 1 2 3 4; do
+            az network nsg rule create -g djms-rg --nsg-name djms-nsg -n gh-deploy \
+              --priority 120 --access Allow --protocol Tcp --direction Inbound \
+              --destination-port-ranges 22 --source-address-prefixes "$RUNNER_IP/32" -o none && break
+            [ "$attempt" = 4 ] && exit 1
+            sleep 5
+          done
+          sleep 20
+
+      - name: Set up SSH
+        run: |
+          install -m 700 -d ~/.ssh
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          ssh-keyscan -T 20 "$DEPLOY_HOST" >> ~/.ssh/known_hosts
+
+      - name: Upload and restart
+        run: |
+          scp -i ~/.ssh/id_deploy djms.tgz "$DEPLOY_USER@$DEPLOY_HOST:/tmp/djms.tgz"
+          ssh -i ~/.ssh/id_deploy "$DEPLOY_USER@$DEPLOY_HOST" '
+            set -e
+            cd ~/djms
+            rm -rf backend scripts deploy/web
+            tar -xzf /tmp/djms.tgz
+            rm /tmp/djms.tgz
+            chmod +x deploy/*.sh
+            sudo ./deploy/deploy.sh
+          '
+
+      - name: Close SSH again
+        if: always()
+        run: |
+          for attempt in 1 2 3 4; do
+            az network nsg rule delete -g djms-rg --nsg-name djms-nsg -n gh-deploy && break
+            sleep 5
+          done
+
+      - name: Check the site
+        run: |
+          sleep 15
+          curl -fsS "https://$DEPLOY_HOST/api/v1/health"
+          echo
+          # The website itself, and a deep link that must fall back to index.html.
+          curl -fsS -o /dev/null -w "home %{http_code}\n" "https://$DEPLOY_HOST/"
+          curl -fsS -o /dev/null -w "deep link %{http_code}\n" "https://$DEPLOY_HOST/jobs"

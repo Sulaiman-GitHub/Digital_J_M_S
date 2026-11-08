@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>S4 Vacancy detail · mockup</title>
+  <link rel="stylesheet" href="mockup.css" />
+  <style>
+    .back { display: inline-flex; align-items: center; gap: 4px; min-height: 44px; font-weight: 600; text-decoration: none; }
+    .title-block h1 { font-size: 24px; }
+    .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0; padding: 16px; background: var(--color-surface); border-radius: var(--radius-card); }
+    .facts dt { font-size: 14px; color: var(--color-text-secondary); }
+    .facts dd { margin: 0; font-weight: 600; }
+    .content h2 { font-size: 20px; margin: 24px 0 8px; }
+    .content p + p { margin-top: 8px; }
+    .req { list-style: none; }
+    .req li { display: flex; gap: 8px; align-items: flex-start; padding: 6px 0; }
+    .req-tag { flex: none; font-size: 12px; font-weight: 700; border-radius: 999px; padding: 1px 8px; border: 1px solid currentColor; margin-top: 2px; }
+    .must { color: var(--color-primary); background: var(--color-primary-tint); }
+    .nice { color: var(--color-text-secondary); background: #fff; }
+    .bullets li { margin-left: 20px; margin-bottom: 4px; }
+    .report { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; color: var(--color-text-secondary); font-size: 14px; }
+    .desk { display: grid; grid-template-columns: 1fr 360px; gap: 40px; padding: 24px 48px 48px; }
+    .side { position: sticky; top: 24px; align-self: start; border: 1px solid var(--color-border); border-radius: var(--radius-card); padding: 20px; }
+    .desktop .title-block h1 { font-size: 32px; }
+  </style>
+</head>
+<body>
+<div class="doc">
+  <header class="doc-head">
+    <h1>S4 · Vacancy detail</h1>
+    <p>Title block, key facts, description, requirements (mandatory vs preferred), sticky Apply bar, Report link,
+      external-link notice. One primary action: <strong>Apply</strong>. Sample data is fictional.</p>
+    <nav><a href="s1-home.html">S1 Home</a><a href="s2-job-list.html">S2 Job list</a><a href="s3-vacancy-card.html">S3 Vacancy card</a><a href="s4-vacancy-detail.html">S4 Vacancy detail</a><a href="s5-auth.html">S5 Auth</a><a href="s6-profile.html">S6 Profile</a></nav>
+  </header>
+
+  <div class="frames">
+    <!-- ================= PHONE: hosted vacancy ================= -->
+    <section>
+      <div class="frame-label">Phone · 360 px · apply in the app</div>
+      <div class="frame phone">
+        <header class="app-header">
+          <a class="brand" href="s1-home.html">DJM<span>S</span></a>
+          <div class="header-actions"><a class="btn btn-ghost btn-sm" href="#">Log in</a></div>
+        </header>
+
+        <div style="padding:8px 16px 0"><a class="back" href="s2-job-list.html">‹ Back to results</a></div>
+
+        <article style="padding:0 16px 16px">
+          <div class="title-block stack-2">
+            <h1>Graduate Trainee – Accounts</h1>
+            <p class="vc-company" style="font-size:16px">Ssese Fresh Foods Ltd
+              <span class="verified"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" role="img" aria-label="Verified employer"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3zm-1.2 14.2-3.5-3.5 1.4-1.4 2.1 2.1 4.6-4.6 1.4 1.4-6 6z"/></svg></span>
+              <span class="small">Verified employer</span></p>
+            <div class="vc-meta" style="margin-top:4px"><span>Kampala</span><span class="pill pill-tag">Full-time</span><span>Posted 3 days ago</span></div>
+          </div>
+
+          <dl class="facts" style="margin-top:16px">
+            <div><dt>Salary</dt><dd>UGX 1.2M – 1.5M / month</dd></div>
+            <div><dt>Closes</dt><dd>28 Nov 2026</dd></div>
+            <div><dt>Qualification</dt><dd>Bachelor's degree</dd></div>
+            <div><dt>Field</dt><dd>Accounting, Finance</dd></div>
+            <div><dt>Experience</dt><dd>None required</dd></div>
+            <div><dt>Positions</dt><dd>3</dd></div>
+          </dl>
+
+          <div class="content">
+            <h2>About the role</h2>
+            <p>A 12-month graduate programme in our Kampala finance office. You will rotate through payables,
+              receivables and month-end reporting, with a mentor and a clear path to an Accounts Officer role.</p>
+            <ul class="bullets" style="margin-top:8px">
+              <li>Record supplier invoices and payments</li>
+              <li>Reconcile bank and mobile money statements</li>
+              <li>Prepare monthly management reports</li>
+            </ul>
+
+            <h2>Requirements</h2>
+            <ul class="req">
+              <li><span class="req-tag must">Required</span>Bachelor's degree in Accounting, Finance or Commerce</li>
+              <li><span class="req-tag must">Required</span>Graduated in 2024, 2025 or 2026</li>
+              <li><span class="req-tag must">Required</span>Good Excel skills</li>
+              <li><span class="req-tag nice">Preferred</span>Progress towards CPA (U)</li>
+              <li><span class="req-tag nice">Preferred</span>Experience with QuickBooks or Sage</li>
+            </ul>
+
+            <h2>About Ssese Fresh Foods Ltd</h2>
+            <p>Food processing company based in Kampala, buying from farmer groups around Lake Victoria.</p>
+
+            <a class="report" href="#">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>
+              Report this vacancy
+            </a>
+          </div>
+        </article>
+
+        <div class="apply-bar">
+          <div style="flex:1"><p class="small muted">Closes 28 Nov</p><p class="small" style="font-weight:600">3 positions</p></div>
+          <button class="btn btn-primary" type="button" style="min-width:150px">Apply now</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PHONE: external vacancy ================= -->
+    <section>
+      <div class="frame-label">Phone · 360 px · external link (apply on employer site)</div>
+      <div class="frame phone" style="min-height:0">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a></header>
+        <div style="padding:8px 16px 0"><a class="back" href="s2-job-list.html">‹ Back to results</a></div>
+        <article style="padding:0 16px 16px" class="stack-4">
+          <div class="title-block stack-2">
+            <h1>Community Health Officer</h1>
+            <p class="vc-company" style="font-size:16px">Kigezi Health Trust</p>
+            <div class="vc-meta" style="margin-top:4px"><span>Kabale</span><span class="pill pill-tag">Contract</span><span>Posted 1 week ago</span></div>
+          </div>
+          <div class="notice" role="note">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1D4ED8" stroke-width="2" aria-hidden="true" style="flex:none"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v5h1"/></svg>
+            <p><strong>You apply on the employer's website.</strong> This application will not appear in
+              "My applications", and we cannot show you its status.</p>
+          </div>
+          <p class="muted">… description and requirements as above …</p>
+        </article>
+        <div class="apply-bar">
+          <a class="btn btn-primary btn-block" href="#" rel="noopener noreferrer">
+            Continue to employer site
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
+          </a>
+        </div>
+        <p class="small muted" style="padding:0 16px 16px">Opens kigezihealth.example in a new tab.</p>
+      </div>
+    </section>
+
+    <!-- ================= DESKTOP ================= -->
+    <section>
+      <div class="frame-label">Desktop · 1280 px</div>
+      <div class="frame desktop">
+        <header class="app-header">
+          <a class="brand" href="s1-home.html">Digital Job Matching <span>System</span></a>
+          <nav class="desktop-nav" aria-label="Main"><a href="s2-job-list.html" aria-current="page">Find jobs</a><a href="#">For employers</a></nav>
+          <div class="header-actions"><a class="btn btn-ghost" href="#">Log in</a><a class="btn btn-secondary" href="#">Register</a></div>
+        </header>
+        <div style="padding:16px 48px 0"><a class="back" href="s2-job-list.html">‹ Back to results</a></div>
+
+        <div class="desk">
+          <article>
+            <div class="title-block stack-2">
+              <h1>Graduate Trainee – Accounts</h1>
+              <p class="vc-company" style="font-size:18px">Ssese Fresh Foods Ltd
+                <span class="verified"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" role="img" aria-label="Verified employer"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3zm-1.2 14.2-3.5-3.5 1.4-1.4 2.1 2.1 4.6-4.6 1.4 1.4-6 6z"/></svg></span>
+                <span class="small">Verified employer</span></p>
+              <div class="vc-meta"><span>Kampala</span><span class="pill pill-tag">Full-time</span><span>Posted 3 days ago</span></div>
+            </div>
+            <div class="content">
+              <h2>About the role</h2>
+              <p>A 12-month graduate programme in our Kampala finance office. You will rotate through payables,
+                receivables and month-end reporting, with a mentor and a clear path to an Accounts Officer role.</p>
+              <ul class="bullets" style="margin-top:8px">
+                <li>Record supplier invoices and payments</li>
+                <li>Reconcile bank and mobile money statements</li>
+                <li>Prepare monthly management reports</li>
+              </ul>
+              <h2>Requirements</h2>
+              <ul class="req">
+                <li><span class="req-tag must">Required</span>Bachelor's degree in Accounting, Finance or Commerce</li>
+                <li><span class="req-tag must">Required</span>Graduated in 2024, 2025 or 2026</li>
+                <li><span class="req-tag must">Required</span>Good Excel skills</li>
+                <li><span class="req-tag nice">Preferred</span>Progress towards CPA (U)</li>
+                <li><span class="req-tag nice">Preferred</span>Experience with QuickBooks or Sage</li>
+              </ul>
+              <h2>About Ssese Fresh Foods Ltd</h2>
+              <p>Food processing company based in Kampala, buying from farmer groups around Lake Victoria.</p>
+              <a class="report" href="#">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg>
+                Report this vacancy
+              </a>
+            </div>
+          </article>
+
+          <aside class="side stack-4" aria-label="Apply">
+            <button class="btn btn-primary btn-block" type="button" style="min-height:48px">Apply now</button>
+            <dl class="facts" style="grid-template-columns:1fr">
+              <div><dt>Salary</dt><dd>UGX 1,200,000 – 1,500,000 / month</dd></div>
+              <div><dt>Closes</dt><dd>28 November 2026 (24 days left)</dd></div>
+              <div><dt>Qualification</dt><dd>Bachelor's degree</dd></div>
+              <div><dt>Field of study</dt><dd>Accounting, Finance</dd></div>
+              <div><dt>Experience</dt><dd>None required</dd></div>
+              <div><dt>Positions</dt><dd>3</dd></div>
+            </dl>
+            <p class="small muted">Your profile and CV are sent with your application. You can withdraw later.</p>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="notes">
+    <h2>Notes and states</h2>
+    <ul>
+      <li><strong>Apply button by state:</strong> anonymous → "Log in to apply" (returns here after login);
+        email not verified → disabled with "Verify your email to apply" and a resend link;
+        profile or CV missing → "Complete your profile to apply" link; already applied → "Applied on 4 Nov" (no button);
+        employer/admin → no Apply bar.</li>
+      <li>Phone: the Apply bar is sticky at the bottom; it never covers content (page gets bottom padding).</li>
+      <li>External vacancies: the notice is shown before the button; the link opens in a new tab with
+        <code>rel="noopener noreferrer"</code> and is never counted as an application (C.3).</li>
+      <li>Required vs Preferred uses a text tag, not colour alone.</li>
+      <li>Dates in Africa/Kampala; salary integer UGX. Salary row hidden when the employer hides it.</li>
+      <li>Closed or expired vacancy: page still loads with a "This vacancy is closed" notice and no Apply.</li>
+      <li>Report link opens a Modal with a reason select and short text (Phase 4).</li>
+      <li><strong>Loading:</strong> title and fact skeletons. <strong>Not found:</strong> "This vacancy is no longer available" with a link back to jobs. <strong>Error:</strong> ErrorState with Retry.</li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>

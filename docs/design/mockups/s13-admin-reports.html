@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>S13 Reports · mockup</title>
+  <link rel="stylesheet" href="mockup.css" />
+  <style>
+    .page { padding: 16px 16px 40px; }
+    .page h1 { font-size: 24px; }
+    .stack > * + * { margin-top: 16px; }
+    .tabs { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+    .hint { font-size: 14px; color: var(--color-text-secondary); }
+    .err { font-size: 14px; font-weight: 600; color: var(--color-danger); }
+    .quote { margin-top: 8px; padding: 8px 12px; background: var(--color-surface); border-radius: 8px; font-size: 14px; }
+    .preview { border: 1px solid var(--color-border); border-radius: 8px; padding: 12px; background: var(--color-surface); }
+    .opt { border: 1px solid var(--color-text-secondary); border-radius: var(--radius-card); padding: 10px 12px; display: flex; gap: 10px; min-height: 44px; align-items: center; margin-top: 8px; }
+    .opt.checked { border: 2px solid var(--color-primary); background: var(--color-primary-tint); font-weight: 600; }
+    .textarea { width: 100%; min-height: 96px; padding: 10px 12px; font: inherit; border: 1px solid var(--color-text-secondary); border-radius: 8px; }
+    .scrim { position: absolute; inset: 0; background: rgb(17 24 39 / .5); }
+    .dialog { background: #fff; border-radius: 12px; padding: 20px; position: absolute; left: 16px; right: 16px; top: 72px; box-shadow: 0 8px 24px rgb(0 0 0 / .25); max-height: 620px; overflow: auto; }
+    .dialog h2 { font-size: 20px; }
+    .dialog .row { justify-content: flex-end; margin-top: 16px; flex-wrap: wrap; }
+    .btn-danger { background: var(--color-danger); color: #fff; }
+    .reported { color: var(--color-text-secondary); font-size: 14px; }
+  </style>
+</head>
+<body>
+<div class="doc">
+  <header class="doc-head">
+    <h1>S13 · Reports</h1>
+    <p>Report a vacancy (a dialog on the vacancy page) and the admin reports list with a review dialog.
+      Sample data is fictional.</p>
+    <nav><a href="s4-vacancy-detail.html">S4 Vacancy detail</a><a href="s12-admin-verification.html">S12 Admin verification</a></nav>
+  </header>
+
+  <div class="frames">
+    <!-- 1 report dialog -->
+    <section>
+      <div class="frame-label">1 · Report this vacancy (phone, on S4)</div>
+      <div class="frame phone" style="min-height:700px">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a></header>
+        <div class="page"><h1>Graduate Trainee – Accounts</h1><p class="hint">Ssese Fresh Foods Ltd</p></div>
+        <div class="scrim"></div>
+        <div class="dialog" role="dialog" aria-labelledby="d1">
+          <h2 id="d1">Report this vacancy</h2>
+          <p class="hint" style="margin:4px 0 8px">Tell us what is wrong. We read every report. The employer is not told who reported.</p>
+          <fieldset class="field"><legend class="label">What is the problem?</legend>
+            <label class="opt checked"><input type="radio" checked /> Asks for money or a fee</label>
+            <label class="opt"><input type="radio" /> Fake or unknown employer</label>
+            <label class="opt"><input type="radio" /> Misleading or false information</label>
+            <label class="opt"><input type="radio" /> Discriminatory</label>
+            <label class="opt"><input type="radio" /> Something else</label></fieldset>
+          <div class="field" style="margin-top:12px"><label class="label">Details (optional)</label><textarea class="textarea"></textarea></div>
+          <div class="row"><button class="btn btn-ghost">Cancel</button><button class="btn btn-primary">Send report</button></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 after reporting + anonymous -->
+    <section>
+      <div class="frame-label">2 · After reporting, and when not logged in (phone)</div>
+      <div class="frame phone">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a></header>
+        <div class="page stack">
+          <h1>Graduate Trainee – Accounts</h1>
+          <p>About the role … requirements …</p>
+          <p class="reported">✓ You reported this vacancy. Thank you, we will look at it.</p>
+          <hr style="border:0;border-top:1px solid var(--color-border)" />
+          <h2 style="font-size:16px">Not logged in</h2>
+          <p><a href="#">Log in to report this vacancy</a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 admin list -->
+    <section>
+      <div class="frame-label">3 · Admin: reports (phone)</div>
+      <div class="frame phone">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a><div class="header-actions"><button class="btn btn-ghost btn-sm">Menu</button></div></header>
+        <div class="page stack">
+          <h1>Reports</h1>
+          <div class="pills tabs"><button class="pill" aria-pressed="true">Open</button><button class="pill" aria-pressed="false">Actioned</button><button class="pill" aria-pressed="false">Dismissed</button><button class="pill" aria-pressed="false">All</button></div>
+          <p class="hint">3 reports</p>
+          <div class="card"><div class="row between"><span class="vc-title">Earn money fast</span><span class="badge badge-danger" style="color:var(--color-danger);background:var(--color-danger-tint)">Asks for a fee</span></div>
+            <div class="vc-company">Quick Cash Traders</div>
+            <p class="quote">“They asked me to pay a registration fee before the interview.”</p>
+            <div class="vc-meta"><span>2 open reports</span><span class="dot">Reported 6 Nov 2026 by nakato@example.com</span></div>
+            <div style="margin-top:12px"><button class="btn btn-secondary btn-sm">Review</button></div></div>
+          <div class="card"><div class="row between"><span class="vc-title">Office Assistant</span><span class="badge badge-warning">Misleading</span></div>
+            <div class="vc-company">Gulu Hardware</div>
+            <div class="vc-meta"><span>1 open report</span><span class="dot">Reported 5 Nov 2026</span></div>
+            <div style="margin-top:12px"><button class="btn btn-secondary btn-sm">Review</button></div></div>
+          <div class="row" style="justify-content:center"><span class="hint">‹ 1 2 ›</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 review dialog -->
+    <section>
+      <div class="frame-label">4 · Review dialog (phone)</div>
+      <div class="frame phone" style="min-height:760px">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a></header>
+        <div class="page"><h1>Reports</h1></div>
+        <div class="scrim"></div>
+        <div class="dialog" role="dialog" aria-labelledby="d4" style="top:24px">
+          <h2 id="d4">Review report</h2>
+          <div class="preview stack" style="margin-top:8px">
+            <div><strong>Earn money fast</strong><div class="hint">Quick Cash Traders · Live · <a href="#">Open the public page</a></div></div>
+            <p style="font-size:14px">Work from home and earn UGX 2,000,000 a week. Pay a small registration fee to start …</p></div>
+          <p class="quote"><strong>Asks for a fee</strong> · “They asked me to pay a registration fee.” <span class="hint">nakato@example.com</span></p>
+          <label class="opt" style="margin-top:12px"><input type="checkbox" checked /> Also suspend Quick Cash Traders</label>
+          <div class="field" style="margin-top:8px"><label class="label">Reason (the employer will see it)</label><textarea class="textarea" style="border:2px solid var(--color-danger)"></textarea><span class="err">Give a reason. The employer will see it.</span></div>
+          <div class="row"><button class="btn btn-ghost">Cancel</button><button class="btn btn-secondary">Dismiss report</button><button class="btn btn-danger">Close vacancy</button></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <section class="notes">
+    <h2>Notes</h2>
+    <ul>
+      <li>Anyone logged in can report a live vacancy once. Anonymous visitors are asked to log in first. A vacancy the person already reported shows "You reported this vacancy".</li>
+      <li>"Something else" needs details; the other reasons do not. The reporter is never shown to the employer.</li>
+      <li>The admin list opens on Open reports, newest first, with filters for Actioned, Dismissed and All. Each card shows the vacancy, the company, the reason, the reporter's words, and how many open reports the vacancy has.</li>
+      <li>Review shows the vacancy as people see it. Dismiss keeps the vacancy live. Close vacancy removes it from public search at once and settles every open report about it. The suspend option is offered only for an approved employer and needs a reason.</li>
+      <li>States: loading skeletons, "No open reports" empty state, error with Retry.</li>
+    </ul>
+  </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>S3 Vacancy card · mockup</title>
+  <link rel="stylesheet" href="mockup.css" />
+</head>
+<body>
+<div class="doc">
+  <header class="doc-head">
+    <h1>S3 · Vacancy card</h1>
+    <p>The building block of S1 (home) and S2 (job list). Whole card is one link to the vacancy detail (S4).
+      Sample data is fictional.</p>
+    <nav><a href="s1-home.html">S1 Home</a><a href="s2-job-list.html">S2 Job list</a><a href="s3-vacancy-card.html">S3 Vacancy card</a><a href="s4-vacancy-detail.html">S4 Vacancy detail</a><a href="s5-auth.html">S5 Auth</a><a href="s6-profile.html">S6 Profile</a></nav>
+  </header>
+
+  <div class="frames">
+    <section>
+      <div class="frame-label">Phone · 360 px · variants</div>
+      <div class="frame phone" style="padding:16px; min-height:0">
+
+        <p class="small muted" style="margin-bottom:8px">A. Standard, with salary <span class="annot">1</span>–<span class="annot">6</span></p>
+        <a class="card" href="s4-vacancy-detail.html">
+          <h3 class="vc-title">Graduate Trainee – Accounts <span class="annot">1</span></h3>
+          <p class="vc-company">Ssese Fresh Foods Ltd
+            <span class="verified" title="Verified employer"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" role="img" aria-label="Verified employer"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3zm-1.2 14.2-3.5-3.5 1.4-1.4 2.1 2.1 4.6-4.6 1.4 1.4-6 6z"/></svg></span>
+            <span class="annot">2</span></p>
+          <div class="vc-meta">
+            <span class="row" style="gap:4px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Kampala <span class="annot">3</span></span>
+            <span class="pill pill-tag">Full-time</span><span class="annot">4</span>
+          </div>
+          <p class="vc-salary">UGX 1,200,000 – 1,500,000 / month <span class="annot">5</span></p>
+          <div class="vc-foot"><span class="vc-posted">Posted 3 days ago <span class="annot">6</span></span></div>
+        </a>
+
+        <p class="small muted" style="margin:20px 0 8px">B. No salary shown, closing soon</p>
+        <a class="card" href="s4-vacancy-detail.html">
+          <h3 class="vc-title">Software Developer Intern</h3>
+          <p class="vc-company">Rwenzori Digital Labs
+            <span class="verified"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" role="img" aria-label="Verified employer"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3zm-1.2 14.2-3.5-3.5 1.4-1.4 2.1 2.1 4.6-4.6 1.4 1.4-6 6z"/></svg></span></p>
+          <div class="vc-meta">
+            <span class="row" style="gap:4px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Fort Portal</span>
+            <span class="pill pill-tag">Internship</span>
+          </div>
+          <div class="vc-foot"><span class="vc-posted">Posted today</span><span class="vc-closing">Closes in 2 days</span></div>
+        </a>
+
+        <p class="small muted" style="margin:20px 0 8px">C. External application (apply on employer site)</p>
+        <a class="card" href="s4-vacancy-detail.html">
+          <h3 class="vc-title">Community Health Officer</h3>
+          <p class="vc-company">Kigezi Health Trust</p>
+          <div class="vc-meta">
+            <span class="row" style="gap:4px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Kabale</span>
+            <span class="pill pill-tag">Contract</span>
+            <span class="badge badge-neutral"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>Employer site</span>
+          </div>
+          <div class="vc-foot"><span class="vc-posted">Posted 1 week ago</span></div>
+        </a>
+
+        <p class="small muted" style="margin:20px 0 8px">D. Long title wraps (max 2 lines, then …)</p>
+        <a class="card" href="s4-vacancy-detail.html">
+          <h3 class="vc-title" style="display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">Monitoring, Evaluation and Learning Assistant – Agricultural Value Chains Programme (Northern Region)</h3>
+          <p class="vc-company">Elgon Coffee Growers Cooperative</p>
+          <div class="vc-meta">
+            <span class="row" style="gap:4px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Lira</span>
+            <span class="pill pill-tag">Full-time</span>
+          </div>
+          <p class="vc-salary">UGX 900,000 / month</p>
+          <div class="vc-foot"><span class="vc-posted">Posted 2 weeks ago</span></div>
+        </a>
+
+        <p class="small muted" style="margin:20px 0 8px">E. Loading (Skeleton, not a spinner)</p>
+        <div class="card" aria-hidden="true">
+          <div class="skeleton" style="height:20px;width:75%"></div>
+          <div class="skeleton" style="height:16px;width:45%;margin-top:8px"></div>
+          <div class="row" style="margin-top:14px"><div class="skeleton" style="height:16px;width:70px"></div><div class="skeleton" style="height:22px;width:80px;border-radius:999px"></div></div>
+          <div class="skeleton" style="height:14px;width:100px;margin-top:14px"></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="frame-label">Desktop · card in a 2-column grid (S1) or full-width list (S2)</div>
+      <div class="frame" style="width:640px;padding:24px;min-height:0">
+        <a class="card" href="s4-vacancy-detail.html">
+          <div class="row between" style="align-items:flex-start">
+            <div>
+              <h3 class="vc-title">Graduate Trainee – Accounts</h3>
+              <p class="vc-company">Ssese Fresh Foods Ltd
+                <span class="verified"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" role="img" aria-label="Verified employer"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3zm-1.2 14.2-3.5-3.5 1.4-1.4 2.1 2.1 4.6-4.6 1.4 1.4-6 6z"/></svg></span></p>
+            </div>
+            <span class="vc-posted">Posted 3 days ago</span>
+          </div>
+          <div class="vc-meta">
+            <span class="row" style="gap:4px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Kampala</span>
+            <span class="pill pill-tag">Full-time</span>
+            <span>Degree</span><span>Accounting, Finance</span>
+          </div>
+          <p class="vc-salary">UGX 1,200,000 – 1,500,000 / month</p>
+        </a>
+      </div>
+
+      <div class="notes">
+        <h2>Anatomy and rules</h2>
+        <ol>
+          <li><strong>Title</strong> 18 px semibold, text colour. Max 2 lines then ellipsis.</li>
+          <li><strong>Company</strong> in secondary colour. Shield icon only for an approved employer, with an accessible name "Verified employer".</li>
+          <li><strong>District</strong> with a pin icon (icon is decorative; the word carries the meaning).</li>
+          <li><strong>Job type pill</strong>: Full-time, Part-time, Contract, Internship, Graduate trainee, Volunteer.</li>
+          <li><strong>Salary</strong> only if the employer chose to show it. Integer UGX with thousands separators.</li>
+          <li><strong>Posted</strong> relative time ("today", "3 days ago", "2 weeks ago"), shown in Africa/Kampala time. "Closes in N days" in warning colour when ≤ 3 days remain.</li>
+        </ol>
+        <ul style="margin-top:8px">
+          <li>The whole card is one link (one tab stop). Hover and focus show a primary border; focus also shows the outline ring.</li>
+          <li>External-link vacancies show an "Employer site" badge so seekers know before opening.</li>
+          <li>No logos or images in the MVP card (low data).</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+</div>
+</body>
+</html>

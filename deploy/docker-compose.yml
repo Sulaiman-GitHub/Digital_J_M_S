@@ -1,0 +1,62 @@
+# Production stack for one small VM: Postgres, the API and Caddy (HTTPS + static frontend).
+# Run on the server from this folder:  docker compose --env-file .env.prod up -d --build
+name: djms
+
+services:
+  db:
+    image: postgres:18
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: djm_user
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: djm
+    # Small settings for a ~1 GB machine.
+    command: ["postgres", "-c", "shared_buffers=64MB", "-c", "max_connections=30", "-c", "work_mem=2MB"]
+    volumes:
+      - pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U djm_user -d djm"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    mem_limit: 300m
+
+  api:
+    build:
+      context: ..
+      dockerfile: deploy/backend.Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file: .env.prod
+    environment:
+      APP_ENV: production
+      DATABASE_URL: postgresql+psycopg://djm_user:${POSTGRES_PASSWORD}@db:5432/djm
+      STORAGE_LOCAL_DIR: /data/storage
+    volumes:
+      - storage:/data/storage
+    mem_limit: 350m
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    depends_on:
+      - api
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./web:/srv:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    environment:
+      SITE_ADDRESS: ${SITE_ADDRESS}
+    mem_limit: 100m
+
+volumes:
+  pgdata:
+  storage:
+  caddy_data:
+  caddy_config:

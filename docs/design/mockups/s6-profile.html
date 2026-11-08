@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>S6 Profile stepper · mockup</title>
+  <link rel="stylesheet" href="mockup.css" />
+  <style>
+    .page { padding: 16px 16px 88px; }
+    .page h1 { font-size: 24px; }
+    .lead { color: var(--color-text-secondary); margin-top: 4px; }
+    .stack > * + * { margin-top: 16px; }
+    .hint { font-size: 14px; color: var(--color-text-secondary); }
+    .err { font-size: 14px; font-weight: 600; color: var(--color-danger); }
+    .input.invalid, .select.invalid { border: 2px solid var(--color-danger); }
+    .textarea { min-height: 112px; padding: 10px 12px; width: 100%; font: inherit; border: 1px solid var(--color-text-secondary); border-radius: var(--radius-card); }
+    .counter { font-size: 14px; color: var(--color-text-secondary); text-align: right; }
+    /* progress */
+    .progress { margin: 16px 0; }
+    .progress .meta { display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+    .bar { height: 8px; background: var(--color-surface); border-radius: 999px; overflow: hidden; }
+    .bar i { display: block; height: 100%; background: var(--color-primary); border-radius: 999px; }
+    .steps { list-style: none; display: flex; gap: 6px; margin-top: 12px; overflow-x: auto; padding-bottom: 4px; }
+    .step { flex: none; display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--color-text-secondary); background: #fff; font-size: 14px; font-weight: 600; color: var(--color-text); }
+    .step .n { width: 22px; height: 22px; border-radius: 999px; display: grid; place-items: center; font-size: 12px; background: var(--color-surface); }
+    .step.done { border-color: var(--color-success); color: var(--color-success); background: var(--color-success-tint); }
+    .step.done .n { background: var(--color-success); color: #fff; }
+    .step.current { border: 2px solid var(--color-primary); background: var(--color-primary-tint); color: var(--color-primary); }
+    .step.current .n { background: var(--color-primary); color: #fff; }
+    .step.locked { border-style: dashed; color: var(--color-text-secondary); opacity: .75; }
+    /* radio cards */
+    .choice { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .opt { border: 1px solid var(--color-text-secondary); border-radius: var(--radius-card); padding: 12px; display: flex; gap: 10px; min-height: 44px; align-items: center; }
+    .opt.checked { border: 2px solid var(--color-primary); background: var(--color-primary-tint); font-weight: 600; }
+    .opt input { width: 18px; height: 18px; accent-color: var(--color-primary); }
+    /* skills */
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .chip { display: inline-flex; align-items: center; gap: 4px; min-height: 36px; padding: 0 4px 0 12px; border-radius: 999px; border: 1px solid var(--color-primary); background: var(--color-primary-tint); color: var(--color-primary); font-size: 14px; font-weight: 600; }
+    .chip button { min-width: 36px; min-height: 36px; border: 0; background: none; color: inherit; font-size: 16px; }
+    .listbox { border: 1px solid var(--color-border); border-radius: var(--radius-card); box-shadow: 0 8px 24px rgb(0 0 0 / .12); background: #fff; margin-top: 4px; }
+    .listbox div { min-height: 44px; display: flex; align-items: center; padding: 0 12px; }
+    .listbox div.active { background: var(--color-primary-tint); }
+    /* experience */
+    .entry { border: 1px solid var(--color-border); border-radius: var(--radius-card); padding: 16px; }
+    .entry-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-weight: 600; }
+    .actions { position: sticky; bottom: 56px; background: #fff; border-top: 1px solid var(--color-border); padding: 12px 16px; display: flex; gap: 8px; }
+    .actions .btn-primary { flex: 1; }
+    .alert { border-radius: var(--radius-card); padding: 12px; font-size: 14px; display: flex; gap: 8px; }
+    .alert-danger { border: 1px solid var(--color-danger); background: var(--color-danger-tint); }
+    .alert-danger strong { color: var(--color-danger); }
+    .alert-success { border: 1px solid var(--color-success); background: var(--color-success-tint); }
+    .alert-success strong { color: var(--color-success); }
+    .review dt { font-size: 14px; color: var(--color-text-secondary); }
+    .review dd { margin: 0 0 12px; font-weight: 600; }
+    .review .edit { font-size: 14px; font-weight: 600; margin-left: 8px; }
+    /* bottom nav */
+    .bottom-nav { position: absolute; left: 0; right: 0; bottom: 0; background: #fff; border-top: 1px solid var(--color-border); display: grid; grid-template-columns: repeat(3, 1fr); }
+    .bottom-nav a { min-height: 56px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-size: 12px; font-weight: 600; color: var(--color-text-secondary); text-decoration: none; }
+    .bottom-nav a[aria-current] { color: var(--color-primary); box-shadow: inset 0 3px 0 var(--color-primary); }
+    .bottom-nav svg { width: 22px; height: 22px; }
+    .modal-wrap { position: absolute; inset: 0; background: rgb(17 24 39 / .5); display: grid; place-items: center; padding: 16px; }
+    .modal { background: #fff; border-radius: var(--radius-card); width: 100%; box-shadow: 0 16px 40px rgb(0 0 0 / .3); }
+    .modal header { padding: 12px 16px; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center; }
+    .modal .body { padding: 16px; }
+    .modal footer { padding: 12px 16px; border-top: 1px solid var(--color-border); display: flex; justify-content: flex-end; gap: 8px; }
+    /* desktop */
+    .desk { display: grid; grid-template-columns: 260px 1fr; gap: 40px; padding: 32px 48px 48px; }
+    .vsteps { list-style: none; position: sticky; top: 24px; align-self: start; }
+    .vsteps li + li { margin-top: 8px; }
+    .vsteps .step { width: 100%; border-radius: var(--radius-card); }
+    .desk .form { max-width: 560px; }
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .note-tag { display: inline-block; font-size: 12px; font-weight: 700; color: #fff; background: #7c3aed; border-radius: 999px; padding: 0 7px; }
+  </style>
+</head>
+<body>
+<div class="doc">
+  <header class="doc-head">
+    <h1>S6 · Profile (stepper)</h1>
+    <p>Basics, Education, Skills, Experience, Summary (and later CV and consent). Progress is always visible, each step has
+      one primary action, and the page resumes where you left off. Sample data is fictional.</p>
+    <nav><a href="s1-home.html">S1 Home</a><a href="s2-job-list.html">S2 Job list</a><a href="s3-vacancy-card.html">S3 Vacancy card</a><a href="s4-vacancy-detail.html">S4 Vacancy detail</a><a href="s5-auth.html">S5 Auth</a><a href="s6-profile.html">S6 Profile</a></nav>
+  </header>
+
+  <div class="frames">
+    <!-- 1 BASICS -->
+    <section>
+      <div class="frame-label">Phone · Step 1 Basics (nothing saved yet)</div>
+      <div class="frame phone" style="min-height:800px">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a><button class="burger" aria-label="Menu" style="min-width:44px;min-height:44px;border:1px solid var(--color-border);border-radius:8px;background:#fff">☰</button></header>
+        <main class="page">
+          <h1>Your profile</h1>
+          <p class="lead">Employers see this when you apply. It takes about 5 minutes.</p>
+          <div class="progress" role="group" aria-label="Profile progress">
+            <div class="meta"><span>Step 1 of 5: Basics</span><span>0% saved</span></div>
+            <div class="bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><i style="width:4%"></i></div>
+            <ol class="steps">
+              <li><span class="step current" aria-current="step"><span class="n">1</span>Basics</span></li>
+              <li><span class="step"><span class="n">2</span>Education</span></li>
+              <li><span class="step locked"><span class="n">3</span>Skills 🔒</span></li>
+              <li><span class="step locked"><span class="n">4</span>Experience 🔒</span></li>
+              <li><span class="step locked"><span class="n">5</span>Summary 🔒</span></li>
+            </ol>
+          </div>
+          <form class="stack">
+            <div class="field"><label class="label" for="b-name">Full name</label><input class="input" id="b-name" value="Nakato Sarah" autocomplete="name" /></div>
+            <div class="field"><label class="label" for="b-phone">Phone number <span class="hint">(optional)</span></label>
+              <p class="hint">Ugandan mobile number, e.g. 0772 123456</p><input class="input invalid" id="b-phone" value="12345" inputmode="tel" aria-invalid="true" />
+              <p class="err">! Enter a Ugandan mobile number, like 0772 123456 or +256 772 123456.</p></div>
+            <div class="field"><label class="label" for="b-district">District where you live</label>
+              <select class="select" id="b-district"><option>Gulu</option></select></div>
+          </form>
+        </main>
+        <div class="actions"><button class="btn btn-primary" type="button">Continue</button></div>
+        <nav class="bottom-nav" aria-label="Main">
+          <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Jobs</a>
+          <a href="#" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Profile</a>
+          <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>Account</a>
+        </nav>
+      </div>
+    </section>
+
+    <!-- 2 EDUCATION -->
+    <section>
+      <div class="frame-label">Phone · Step 2 Education (the first save happens here)</div>
+      <div class="frame phone" style="min-height:800px">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a></header>
+        <main class="page">
+          <div class="progress"><div class="meta"><span>Step 2 of 5: Education</span><span>0% saved</span></div>
+            <div class="bar"><i style="width:20%"></i></div>
+            <ol class="steps"><li><span class="step done"><span class="n">✓</span>Basics</span></li><li><span class="step current" aria-current="step"><span class="n">2</span>Education</span></li><li><span class="step locked"><span class="n">3</span>Skills 🔒</span></li><li><span class="step locked"><span class="n">4</span>Experience 🔒</span></li><li><span class="step locked"><span class="n">5</span>Summary 🔒</span></li></ol></div>
+          <form class="stack">
+            <div class="field"><label class="label" for="e-inst">Institution</label><input class="input" id="e-inst" role="combobox" value="Other (type its name)" />
+              <div class="listbox"><div>Gulu University</div><div class="active">Other (type its name)</div></div></div>
+            <div class="field"><label class="label" for="e-other">Institution name</label><input class="input" id="e-other" placeholder="e.g. Kabale Hills Institute" /></div>
+            <div class="field"><label class="label" for="e-level">Qualification</label><select class="select" id="e-level"><option>Bachelor's degree</option></select></div>
+            <div class="field"><label class="label" for="e-field">Field of study <span class="hint">(optional)</span></label><input class="input" id="e-field" value="Accounting" /></div>
+            <fieldset style="border:0;padding:0;margin:0"><legend class="label" style="margin-bottom:8px">Where are you with this course?</legend>
+              <div class="choice"><label class="opt"><input type="radio" name="s" />Still studying</label><label class="opt checked"><input type="radio" name="s" checked />Completed</label></div></fieldset>
+            <div class="field"><label class="label" for="e-grad">Graduation date <span class="hint">(optional)</span></label><input class="input" id="e-grad" type="date" value="2025-07-15" />
+              <p class="hint">If you are still studying, this becomes "Expected completion date".</p></div>
+          </form>
+        </main>
+        <div class="actions"><button class="btn btn-secondary" type="button">Back</button><button class="btn btn-primary" type="button">Save and continue</button></div>
+        <nav class="bottom-nav" aria-label="Main"><a href="#">Jobs</a><a href="#" aria-current="page">Profile</a><a href="#">Account</a></nav>
+      </div>
+    </section>
+
+    <!-- 3 SKILLS -->
+    <section>
+      <div class="frame-label">Phone · Step 3 Skills (search, chips, limit 30)</div>
+      <div class="frame phone" style="min-height:800px">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a></header>
+        <main class="page">
+          <div class="progress"><div class="meta"><span>Step 3 of 5: Skills</span><span>40% saved</span></div><div class="bar"><i style="width:40%"></i></div>
+            <ol class="steps"><li><span class="step done"><span class="n">✓</span>Basics</span></li><li><span class="step done"><span class="n">✓</span>Education</span></li><li><span class="step current" aria-current="step"><span class="n">3</span>Skills</span></li><li><span class="step"><span class="n">4</span>Experience</span></li><li><span class="step"><span class="n">5</span>Summary</span></li></ol></div>
+          <div class="field"><label class="label" for="k-q">Add skills</label><p class="hint">Search and pick from the list. Up to 30.</p>
+            <input class="input" id="k-q" role="combobox" value="exc" aria-expanded="true" />
+            <div class="listbox"><div class="active">Microsoft <b>Exc</b>el</div></div>
+            <p class="counter">3 of 30 selected</p></div>
+          <ul class="chips" aria-label="Selected skills">
+            <li class="chip" style="list-style:none">Python<button aria-label="Remove Python">✕</button></li>
+            <li class="chip" style="list-style:none">Communication<button aria-label="Remove Communication">✕</button></li>
+            <li class="chip" style="list-style:none">Customer service<button aria-label="Remove Customer service">✕</button></li>
+          </ul>
+        </main>
+        <div class="actions"><button class="btn btn-ghost" type="button">Skip for now</button><button class="btn btn-primary" type="button">Save and continue</button></div>
+        <nav class="bottom-nav" aria-label="Main"><a href="#">Jobs</a><a href="#" aria-current="page">Profile</a><a href="#">Account</a></nav>
+      </div>
+    </section>
+
+    <!-- 4 EXPERIENCE -->
+    <section>
+      <div class="frame-label">Phone · Step 4 Experience (up to 10)</div>
+      <div class="frame phone" style="min-height:800px">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a></header>
+        <main class="page">
+          <div class="progress"><div class="meta"><span>Step 4 of 5: Experience</span><span>60% saved</span></div><div class="bar"><i style="width:60%"></i></div></div>
+          <p class="hint" style="margin-bottom:12px">Internships, volunteering and part-time work count too.</p>
+          <div class="stack">
+            <div class="entry"><div class="entry-head"><span>Experience 1</span><button class="btn btn-ghost btn-sm" style="color:var(--color-danger)">Remove</button></div>
+              <div class="stack">
+                <div class="field"><label class="label" for="x-t">Job title</label><input class="input" id="x-t" value="Accounts Intern" /></div>
+                <div class="field"><label class="label" for="x-o">Organisation</label><input class="input" id="x-o" value="Ssese Fresh Foods Ltd" /></div>
+                <div class="two"><div class="field"><label class="label" for="x-s">Start</label><input class="input" id="x-s" type="date" value="2024-01-08" /></div>
+                  <div class="field"><label class="label" for="x-e">End</label><input class="input invalid" id="x-e" type="date" value="2023-06-28" aria-invalid="true" /></div></div>
+                <p class="err">! The end date cannot be before the start date.</p>
+                <label class="opt" style="border-width:1px"><input type="checkbox" /> I still work here</label>
+                <div class="field"><label class="label" for="x-d">What did you do? <span class="hint">(optional)</span></label><textarea class="textarea" id="x-d">Recorded supplier invoices and reconciled bank statements.</textarea><p class="counter">61 of 1000</p></div>
+              </div></div>
+            <button class="btn btn-secondary btn-block" type="button">+ Add another experience</button>
+          </div>
+        </main>
+        <div class="actions"><button class="btn btn-ghost" type="button">Skip for now</button><button class="btn btn-primary" type="button">Save and continue</button></div>
+        <nav class="bottom-nav" aria-label="Main"><a href="#">Jobs</a><a href="#" aria-current="page">Profile</a><a href="#">Account</a></nav>
+      </div>
+    </section>
+
+    <!-- 5 SUMMARY -->
+    <section>
+      <div class="frame-label">Phone · Step 5 Summary and review</div>
+      <div class="frame phone" style="min-height:800px">
+        <header class="app-header"><a class="brand" href="#">DJM<span>S</span></a></header>
+        <main class="page">
+          <div class="progress"><div class="meta"><span>Step 5 of 5: Summary</span><span>80% saved</span></div><div class="bar"><i style="width:80%"></i></div></div>
+          <div class="field"><label class="label" for="m-s">About you <span class="hint">(optional)</span></label><p class="hint">Two or three sentences about what you are looking for.</p>
+            <textarea class="textarea" id="m-s">Recent accounting graduate looking for a trainee role in Gulu or Kampala.</textarea><p class="counter">76 of 1000</p></div>
+          <h2 class="section-title" style="margin:20px 0 8px">Review</h2>
+          <dl class="review card" style="margin:0">
+            <dt>Name <a class="edit" href="#">Edit</a></dt><dd>Nakato Sarah · +256 772 123456</dd>
+            <dt>Education <a class="edit" href="#">Edit</a></dt><dd>Bachelor's degree, Accounting · Other: Kabale Hills Institute · Completed 15 Jul 2025</dd>
+            <dt>Skills <a class="edit" href="#">Edit</a></dt><dd>Python, Communication, Customer service</dd>
+            <dt>Experience <a class="edit" href="#">Edit</a></dt><dd>Accounts Intern, Ssese Fresh Foods Ltd</dd>
+          </dl>
+          <div class="alert alert-success" style="margin-top:12px" role="status"><strong>✓</strong><span><strong>Profile saved.</strong> You are ready to apply.</span></div>
+        </main>
+        <div class="actions"><button class="btn btn-primary" type="button">Save profile</button></div>
+        <nav class="bottom-nav" aria-label="Main"><a href="#">Jobs</a><a href="#" aria-current="page">Profile</a><a href="#">Account</a></nav>
+      </div>
+    </section>
+
+    <!-- STATES -->
+    <section>
+      <div class="frame-label">Phone · States: loading, load error, save error, unsaved changes</div>
+      <div class="frame phone" style="min-height:0">
+        <main class="page" style="padding-bottom:16px;border-bottom:1px solid var(--color-border)">
+          <p class="hint">A. Loading (skeletons, announced as "Loading your profile")</p>
+          <div class="skeleton" style="height:24px;width:40%;margin-top:12px"></div><div class="skeleton" style="height:8px;width:100%;margin-top:16px"></div>
+          <div class="skeleton" style="height:48px;margin-top:20px"></div><div class="skeleton" style="height:48px;margin-top:12px"></div>
+        </main>
+        <main class="page" style="padding-bottom:16px;border-bottom:1px solid var(--color-border)">
+          <p class="hint">B. Could not load</p>
+          <div class="alert alert-danger" role="alert" style="margin-top:12px;display:block"><strong>Could not load your profile</strong><p style="margin-top:4px">We could not reach the server. Check your connection and try again.</p><button class="btn btn-secondary" style="margin-top:8px" type="button">Retry</button></div>
+        </main>
+        <main class="page" style="padding-bottom:16px;border-bottom:1px solid var(--color-border)">
+          <p class="hint">C. A save fails (server rule): jump to the step with the error</p>
+          <div class="alert alert-danger" role="alert" style="margin-top:12px"><strong>!</strong><span><strong>We could not save yet.</strong> Fix the field marked in red on the Education step.</span></div>
+        </main>
+        <main class="page" style="padding-bottom:16px;position:relative;min-height:260px">
+          <p class="hint">D. Leaving with unsaved changes</p>
+          <div class="modal-wrap"><div class="modal" role="dialog" aria-labelledby="u"><header><h2 id="u" style="font-size:20px">Leave without saving?</h2><span aria-hidden="true">✕</span></header>
+            <div class="body"><p>You have changes that are not saved. If you leave now they will be lost.</p></div>
+            <footer><button class="btn btn-ghost" type="button">Leave</button><button class="btn btn-primary" type="button">Keep editing</button></footer></div></div>
+        </main>
+      </div>
+    </section>
+
+    <!-- DESKTOP -->
+    <section>
+      <div class="frame-label">Desktop · 1280 px · vertical stepper, Education step</div>
+      <div class="frame desktop" style="min-height:0">
+        <header class="app-header"><a class="brand" href="#">Digital Job Matching <span>System</span></a>
+          <nav class="desktop-nav" aria-label="Main"><a href="#">Find jobs</a><a href="#" aria-current="page">My profile</a><a href="#">My account</a></nav>
+          <div class="header-actions"><button class="user-btn" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 8px;border-radius:8px;border:1px solid var(--color-border);background:#fff"><span style="width:28px;height:28px;border-radius:999px;background:var(--color-primary);color:#fff;display:grid;place-items:center;font-weight:700">N</span>nakato@example.com ▾</button></div></header>
+        <div class="desk">
+          <aside><ol class="vsteps" aria-label="Profile steps">
+            <li><span class="step done"><span class="n">✓</span>Basics</span></li>
+            <li><span class="step current" aria-current="step"><span class="n">2</span>Education</span></li>
+            <li><span class="step"><span class="n">3</span>Skills</span></li>
+            <li><span class="step"><span class="n">4</span>Experience</span></li>
+            <li><span class="step"><span class="n">5</span>Summary</span></li>
+            <li><span class="step locked"><span class="n">6</span>CV and consent</span></li></ol>
+            <div class="progress"><div class="meta"><span>Profile</span><span>40% saved</span></div><div class="bar"><i style="width:40%"></i></div></div></aside>
+          <div class="form"><h1 style="font-size:28px">Education</h1><p class="lead">Where you studied helps employers find the right applicants.</p>
+            <form class="stack" style="margin-top:20px">
+              <div class="field"><label class="label">Institution</label><input class="input" value="Gulu University" role="combobox" /></div>
+              <div class="two"><div class="field"><label class="label">Qualification</label><select class="select"><option>Bachelor's degree</option></select></div>
+                <div class="field"><label class="label">Field of study</label><input class="input" value="Accounting" /></div></div>
+              <fieldset style="border:0;padding:0;margin:0"><legend class="label" style="margin-bottom:8px">Where are you with this course?</legend><div class="choice" style="max-width:380px"><label class="opt checked"><input type="radio" checked />Still studying</label><label class="opt"><input type="radio" />Completed</label></div></fieldset>
+              <div class="field" style="max-width:260px"><label class="label">Expected completion date</label><input class="input" type="date" value="2027-06-30" /></div>
+              <div class="row" style="justify-content:flex-end;gap:8px"><button class="btn btn-secondary" type="button">Back</button><button class="btn btn-primary" type="button">Save and continue</button></div>
+            </form></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="notes">
+    <h2>Notes and rules</h2>
+    <ul>
+      <li><strong>When things are saved:</strong> the server needs name, district, qualification, institution and study status together, so <em>Basics</em> is only checked, and <em>Basics and Education are saved together</em> when you press "Save and continue" on Education (the first save). After that every step saves on its own. Refreshing while still on Basics or Education loses those answers.</li>
+      <li>Skills, Experience and Summary can be skipped. The page opens at the first unfinished step (no skills: Skills; none added: Experience; otherwise Summary).</li>
+      <li>Steps you have not reached are locked (dashed, 🔒) until the first save; finished steps are always clickable.</li>
+      <li>"Still studying" shows <em>Expected completion date</em>; "Completed" shows <em>Graduation date</em>. Never both.</li>
+      <li>Institution: pick from the list, or choose "Other (type its name)" and type it. Field of study the same, and it is optional.</li>
+      <li>Limits shown as counters: 30 skills, 10 experiences, 1000 characters in the summary and in each description.</li>
+      <li>Errors from the server appear under the field; if the field is on another step the page jumps to that step and says so.</li>
+      <li>Leaving with unsaved changes (browser back, link, closing the tab) asks first.</li>
+      <li><strong>Bottom navigation (new, phones, job seekers only):</strong> Jobs, Profile, Account. Applications is added with the applications screens. The page keeps space at the bottom so nothing is hidden behind it. Desktop uses the header links instead.</li>
+      <li>"CV and consent" is the sixth step, built later; it is not part of this step.</li>
+      <li>Inputs 16 px, labels always visible, dates use the phone's own date picker, tap targets 44 px.</li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>
