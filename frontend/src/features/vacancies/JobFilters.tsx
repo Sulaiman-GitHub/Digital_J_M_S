@@ -14,32 +14,46 @@ export function RadioGroup<T extends string>({
   choices,
   value,
   onChange,
-  anyLabel = 'Any',
 }: {
   legend: string
   choices: Choice<T>[]
   value: T | undefined
   onChange: (value: T | undefined) => void
-  anyLabel?: string
 }) {
   const name = useId()
-  const options: Choice<T | ''>[] = [{ value: '', label: anyLabel }, ...choices]
   return (
-    <fieldset className="space-y-1">
-      <legend className="mb-1 text-sm font-semibold">{legend}</legend>
-      {options.map((option) => (
-        <label key={option.value} className="flex min-h-11 cursor-pointer items-center gap-2.5">
-          <input
-            type="radio"
-            name={name}
-            value={option.value}
-            checked={(value ?? '') === option.value}
-            onChange={() => onChange(option.value === '' ? undefined : option.value)}
-            className="size-4.5 accent-primary"
-          />
-          <span>{option.label}</span>
-        </label>
-      ))}
+    <fieldset className="space-y-2">
+      <div className="flex items-center justify-between gap-2">
+        <legend className="text-sm font-semibold">{legend}</legend>
+        {value !== undefined && (
+          <button
+            type="button"
+            onClick={() => onChange(undefined)}
+            aria-label={`Clear ${legend.toLowerCase()}`}
+            className="cursor-pointer text-sm font-semibold text-primary underline"
+          >
+            Clear
+          </button>
+        )}
+      </div>
+      <div className="flex flex-wrap gap-2">
+        {choices.map((option) => (
+          <label
+            key={option.value}
+            className="relative inline-flex min-h-10 cursor-pointer items-center rounded-pill border border-border bg-white px-3.5 text-sm font-medium hover:border-primary has-checked:border-primary has-checked:bg-primary-tint has-checked:font-semibold has-checked:text-primary has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-primary"
+          >
+            <input
+              type="radio"
+              name={name}
+              value={option.value}
+              checked={value === option.value}
+              onChange={() => onChange(option.value)}
+              className="absolute inset-0 size-full cursor-pointer opacity-0"
+            />
+            {option.label}
+          </label>
+        ))}
+      </div>
     </fieldset>
   )
 }
@@ -84,7 +98,6 @@ export function JobFilters({ value, onChange, districts, levels }: JobFiltersPro
       {levels.length > 0 && (
         <RadioGroup<string>
           legend="Your qualification"
-          anyLabel="Any"
           choices={levels.map((level) => ({ value: level.id, label: level.name }))}
           value={value.qualification_level_id}
           onChange={(qualification_level_id) => set({ qualification_level_id })}

@@ -86,7 +86,7 @@ export function AppHeader() {
           >
             <span
               aria-hidden="true"
-              className="grid size-8 place-items-center rounded-card bg-primary text-sm font-extrabold text-white"
+              className="grid size-8 place-items-center rounded-card bg-linear-to-br from-primary to-primary-deep text-sm font-extrabold text-white"
             >
               DJ
             </span>
@@ -128,11 +128,6 @@ export function AppHeader() {
                   Reports
                 </NavLink>
               </>
-            )}
-            {user && (
-              <NavLink to="/account" className={navLinkClasses}>
-                My account
-              </NavLink>
             )}
           </nav>
         </div>
@@ -204,6 +199,15 @@ export function AppHeader() {
               {!user.email_verified && ' · email not verified'}
             </span>
           </p>
+          {user.role === 'employer' && (
+            <Link
+              to="/employer/profile"
+              onClick={closeOnNavigate}
+              className={cn(menuItemClasses, 'px-4')}
+            >
+              Company profile
+            </Link>
+          )}
           <Link to="/account" onClick={closeOnNavigate} className={cn(menuItemClasses, 'px-4')}>
             My account
           </Link>

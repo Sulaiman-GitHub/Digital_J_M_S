@@ -8,8 +8,8 @@ tokens only; Tailwind's default colour palette is switched off.
 
 | Token | CSS variable | Value | Use |
 | --- | --- | --- | --- |
-| Primary | `--color-primary` | `#0A66C2` | Primary buttons, links, focus ring, active states |
-| Primary hover | `--color-primary-hover` | `#004182` | Hover/pressed for primary |
+| Primary | `--color-primary` | `#4338CA` | Primary buttons, links, focus ring, active states |
+| Primary hover | `--color-primary-hover` | `#3730A3` | Hover/pressed for primary |
 | Accent | `--color-accent` | `#F59E0B` | **Highlights only** (backgrounds, dots, bars). Never text on white |
 | Text | `--color-text` | `#111827` | Body text, headings |
 | Text secondary | `--color-text-secondary` | `#4B5563` | Meta text, help text |
@@ -28,7 +28,7 @@ strong colour and a 1 px border in that colour.
 
 | Token | Value | Pair with | Contrast |
 | --- | --- | --- | --- |
-| `--color-primary-tint` | `#EAF2FB` | primary text | 5.04:1 |
+| `--color-primary-tint` | `#EEF0FD` | primary text | 5.04:1 |
 | `--color-teal-tint` | `#F1F7F6` | teal text (`--color-teal` `#0F766E`) | 5.05:1 |
 | `--color-success-tint` | `#F1F7F3` | success text | 4.62:1 |
 | `--color-warning-tint` | `#FAF5F0` | warning text | 4.64:1 |
