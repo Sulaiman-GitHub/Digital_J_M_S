@@ -13,7 +13,7 @@ export function ThemeToggle({ className }: { className?: string }) {
       aria-label="Dark mode"
       title={dark ? 'Switch to light mode' : 'Switch to dark mode'}
       className={cn(
-        'inline-flex size-11 cursor-pointer items-center justify-center rounded-pill border border-border bg-card text-text hover:bg-primary-tint',
+        'inline-flex size-10 cursor-pointer items-center justify-center rounded-pill border border-border bg-card text-text hover:bg-primary-tint sm:size-11',
         className,
       )}
     >

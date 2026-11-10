@@ -133,14 +133,20 @@ export function AppHeader() {
           </nav>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           <ThemeToggle />
           {status !== 'loading' && !user && (
             <div className="flex items-center gap-2">
-              <Link to="/login" className={buttonClasses({ variant: 'ghost' })}>
+              <Link
+                to="/login"
+                className={buttonClasses({ variant: 'ghost', className: 'px-3 sm:px-4' })}
+              >
                 Log in
               </Link>
-              <Link to="/register" className={buttonClasses({ variant: 'secondary' })}>
+              <Link
+                to="/register"
+                className={buttonClasses({ variant: 'secondary', className: 'px-3 sm:px-4' })}
+              >
                 Register
               </Link>
             </div>

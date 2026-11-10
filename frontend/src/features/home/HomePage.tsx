@@ -9,6 +9,7 @@ import { toJobsSearch } from '../vacancies/searchParams'
 import { useFilterLists, useLatestVacancies } from '../vacancies/useVacancies'
 import { CardSkeletons } from '../vacancies/CardSkeletons'
 import { VacancyCard } from '../vacancies/VacancyCard'
+import { Faq, Features, ForEmployers, HowItWorks } from './LandingSections'
 
 // Popular searches are plain links to pre-filtered results (mockup S1), not toggles.
 const POPULAR = [
@@ -44,9 +45,17 @@ export function HomePage() {
     <div className="space-y-8">
       <section
         aria-labelledby="home-title"
-        className="-mx-4 -mt-6 space-y-4 bg-linear-to-br from-hero-from to-hero-to px-4 py-10 text-white shadow-md md:mx-0 md:mt-0 md:rounded-card md:px-10 md:py-12"
+        className="relative -mx-4 -mt-6 space-y-4 overflow-hidden bg-linear-to-br from-hero-from to-hero-to px-4 py-10 text-white shadow-md md:mx-0 md:mt-0 md:rounded-card md:px-10 md:py-12"
       >
-        <div>
+        <span
+          aria-hidden="true"
+          className="animate-float pointer-events-none absolute -top-16 -right-10 size-56 rounded-pill bg-white/10"
+        />
+        <span
+          aria-hidden="true"
+          className="animate-float pointer-events-none absolute -bottom-20 left-1/3 size-48 rounded-pill bg-white/5 [animation-delay:-3s]"
+        />
+        <div className="animate-rise relative">
           <h1 id="home-title" className="text-title-md font-bold sm:text-title-lg">
             Find jobs and internships across Uganda
           </h1>
@@ -55,6 +64,7 @@ export function HomePage() {
           </p>
         </div>
         <SearchBar
+          className="relative"
           whatLabel="What"
           whatValue={q}
           onWhatChange={setQ}
@@ -66,7 +76,7 @@ export function HomePage() {
           submitLabel="Search jobs"
           onSubmit={search}
         />
-        <nav aria-label="Popular searches" className="flex flex-wrap items-center gap-2">
+        <nav aria-label="Popular searches" className="relative flex flex-wrap items-center gap-2">
           <span className="text-sm font-semibold text-white">Popular</span>
           {POPULAR.map((item) => (
             <Link
@@ -78,6 +88,18 @@ export function HomePage() {
             </Link>
           ))}
         </nav>
+        <ul className="relative flex flex-wrap gap-x-5 gap-y-1 pt-1 text-sm text-white">
+          {[
+            'Free for students and graduates',
+            'Verified employers',
+            'Every tertiary institution',
+          ].map((point) => (
+            <li key={point} className="flex items-center gap-1.5">
+              <span aria-hidden="true">✓</span>
+              {point}
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section aria-labelledby="latest-title" className="space-y-3">
@@ -117,20 +139,10 @@ export function HomePage() {
         )}
       </section>
 
-      <p className="text-sm text-text-secondary">
-        Hiring?{' '}
-        <Link to={user?.role === 'employer' ? '/employer' : '/register'} className="underline">
-          Post a vacancy
-        </Link>
-        {' · '}
-        <Link to="/privacy" className="underline">
-          Privacy
-        </Link>
-        {' · '}
-        <Link to="/terms" className="underline">
-          Terms
-        </Link>
-      </p>
+      <HowItWorks />
+      <Features />
+      <ForEmployers role={user?.role} />
+      <Faq />
     </div>
   )
 }
