@@ -73,7 +73,12 @@ export function Footer() {
                 <FooterLink to="/employer/vacancies/new">Post a vacancy</FooterLink>
               </>
             ) : (
-              !user && <FooterLink to="/register">Register your company</FooterLink>
+              !user && (
+                <>
+                  <FooterLink to="/register">Register your company</FooterLink>
+                  <FooterLink to="/login?as=employer">Employer log in</FooterLink>
+                </>
+              )
             )}
             <li>
               <Link to="/#for-employers" className={linkClass}>

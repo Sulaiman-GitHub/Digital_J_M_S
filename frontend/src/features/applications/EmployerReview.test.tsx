@@ -44,6 +44,7 @@ function renderList(
 ) {
   const api = mockApi({
     ...employer,
+    'GET /api/v1/applications/a1': () => jsonResponse({ data: makeApplication({ id: 'a1' }) }),
     [LIST]:
       typeof applicants === 'function'
         ? applicants
@@ -65,6 +66,25 @@ function renderList(
 }
 
 describe('the applicants list', () => {
+  it('opens a pop-up preview of an applicant without leaving the list', async () => {
+    const { api } = renderList([makeApplicant()], { total: undefined, route: undefined })
+    await screen.findByRole('link', { name: /Nakato Sarah/ })
+    expect(api.calls.some((call) => call.path === '/api/v1/applications/a1')).toBe(false)
+
+    await userEvent.click(screen.getByRole('button', { name: 'Quick view of Nakato Sarah' }))
+
+    const dialog = await screen.findByRole('dialog', { name: 'Nakato Sarah' })
+    expect(within(dialog).getByText('Excel')).toBeInTheDocument()
+    expect(within(dialog).getByText('Recent accounting graduate.')).toBeInTheDocument()
+    expect(within(dialog).getByRole('link', { name: 'Open full application' })).toHaveAttribute(
+      'href',
+      '/employer/applications/a1',
+    )
+
+    await userEvent.click(within(dialog).getByRole('button', { name: 'Close' }))
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
+  })
+
   it('shows each applicant with status, qualification and the date', async () => {
     renderList([
       makeApplicant(),

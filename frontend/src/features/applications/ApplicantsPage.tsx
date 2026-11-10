@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { APPLICANT_PAGE_SIZE } from '../../api/applications'
 import { applicantPhotoUrl } from '../../api/pictures'
@@ -16,12 +17,14 @@ import {
   APPLICATION_STATUSES,
   type ApplicationStatus,
 } from '../../lib/applicationStatus'
+import { ApplicantQuickView } from './ApplicantQuickView'
 import { useApplicants } from './useApplications'
 
 /** The people who applied for one vacancy (mockup S11), newest first, filterable by status. */
 export function ApplicantsPage() {
   const { id = '' } = useParams()
   const [params, setParams] = useSearchParams()
+  const [quickId, setQuickId] = useState<string | null>(null)
   const requestedStatus = params.get('status')
   const status =
     APPLICATION_STATUSES.find((item) => item === requestedStatus) ??
@@ -110,9 +113,20 @@ export function ApplicantsPage() {
                   </p>
                 </Card>
               </Link>
+              <button
+                type="button"
+                onClick={() => setQuickId(item.id)}
+                aria-label={`Quick view of ${item.applicant_name}`}
+                className="mt-1 min-h-9 cursor-pointer text-sm font-semibold text-primary underline"
+              >
+                Quick view
+              </button>
             </li>
           ))}
         </ul>
+        {quickId && (
+          <ApplicantQuickView applicationId={quickId} open onClose={() => setQuickId(null)} />
+        )}
         <Pagination
           page={meta.page}
           pageCount={Math.ceil(meta.total / APPLICANT_PAGE_SIZE)}
