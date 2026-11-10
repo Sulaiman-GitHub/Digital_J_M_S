@@ -14,6 +14,7 @@ import { useMediaQuery } from '../../lib/useMediaQuery'
 import { ARRANGEMENT_LABELS, EMPLOYMENT_LABELS } from './format'
 import { CardSkeletons } from './CardSkeletons'
 import { JobFilterChips } from './JobFilterChips'
+import { OtherJobSites } from './OtherJobSites'
 import { JobFilters } from './JobFilters'
 import { VacancyPane } from './JobDetailPage'
 import {
@@ -50,7 +51,9 @@ export function JobsPage() {
   const pageCount = total === undefined ? 0 : Math.ceil(total / PAGE_SIZE)
   // Wide screens show the chosen job beside the list; by default the first one on the page.
   const listed = results.data?.data ?? []
-  const selectedId = wide ? (listed.find((item) => item.id === picked)?.id ?? listed[0]?.id) : undefined
+  const selectedId = wide
+    ? (listed.find((item) => item.id === picked)?.id ?? listed[0]?.id)
+    : undefined
   const districtName = districts.find((item) => item.id === filters.district_id)?.name
   const levelName = levels.find((item) => item.id === filters.qualification_level_id)?.name
 
@@ -217,6 +220,13 @@ export function JobsPage() {
                 }}
               />
             </>
+          )}
+
+          {!results.isPending && !results.isError && (
+            <OtherJobSites
+              words={filters.q ?? ''}
+              heading="Not finding it? Search other job sites"
+            />
           )}
         </div>
 

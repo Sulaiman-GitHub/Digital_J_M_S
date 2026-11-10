@@ -11,6 +11,7 @@ import { formatDate } from '../../lib/dates'
 import { closingSoonLabel, daysLeft, postedLabel } from '../../lib/relativeDates'
 import { ApplyBar } from './ApplyBar'
 import { BookmarkButton } from '../saved/BookmarkButton'
+import { OtherJobSites } from './OtherJobSites'
 import { ReportVacancy } from './ReportVacancy'
 import {
   ARRANGEMENT_LABELS,
@@ -125,6 +126,8 @@ export function VacancyArticle({
               <RequirementList title="Preferred" items={preferred} />
             </section>
           )}
+
+          <OtherJobSites words={data.title} />
 
           <ReportVacancy vacancyId={data.id} />
         </div>
