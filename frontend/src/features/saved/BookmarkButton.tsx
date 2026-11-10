@@ -73,7 +73,7 @@ export function BookmarkButton({
           'inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-card border px-4 font-semibold',
           isSaved
             ? 'border-primary bg-primary-tint text-primary'
-            : 'border-primary bg-white text-primary hover:bg-primary-tint',
+            : 'border-primary bg-card text-primary hover:bg-primary-tint',
           className,
         )}
       >

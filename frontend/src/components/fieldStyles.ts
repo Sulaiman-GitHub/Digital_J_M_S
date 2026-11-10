@@ -1,6 +1,6 @@
 // Shared look for text-like inputs. 16 px text so phones do not zoom on focus.
 export const inputClasses =
-  'block min-h-12 w-full rounded-card border border-text-secondary bg-white px-3 text-base text-text ' +
+  'block min-h-12 w-full rounded-card border border-text-secondary bg-card px-3 text-base text-text ' +
   'placeholder:text-text-secondary disabled:cursor-not-allowed disabled:bg-surface ' +
   'aria-[invalid=true]:border-2 aria-[invalid=true]:border-danger'
 

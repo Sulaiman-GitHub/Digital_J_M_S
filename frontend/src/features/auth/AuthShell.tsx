@@ -16,7 +16,7 @@ export function AuthShell({ title, lead, centered = false, children }: AuthShell
     <section
       aria-labelledby="auth-title"
       className={cn(
-        'mx-auto w-full max-w-md rounded-card border border-border bg-white p-5 shadow-sm sm:my-6 sm:p-8',
+        'mx-auto w-full max-w-md rounded-card border border-border bg-card p-5 shadow-sm sm:my-6 sm:p-8',
         centered && 'text-center',
       )}
     >

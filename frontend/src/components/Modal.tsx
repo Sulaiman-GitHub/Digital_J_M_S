@@ -61,7 +61,7 @@ export function Modal({ open, onClose, title, children, footer, className }: Mod
         if (event.target === event.currentTarget) onClose() // backdrop click
       }}
       className={cn(
-        'm-auto w-[calc(100%-2rem)] max-w-lg rounded-card bg-white p-0 text-text shadow-xl',
+        'm-auto w-[calc(100%-2rem)] max-w-lg rounded-card bg-card p-0 text-text shadow-xl',
         'backdrop:bg-scrim',
         className,
       )}

@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react'
+import { screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it } from 'vitest'
 import { apiError, loggedIn, makeUser, mockApi, renderRoutes } from '../../test/utils'
@@ -65,7 +65,8 @@ describe('latest vacancies', () => {
     )
     await screen.findByText('Job 0')
 
-    const items = screen.getAllByRole('listitem')
+    const latest = screen.getByRole('heading', { name: 'Latest vacancies' }).closest('section')!
+    const items = within(latest).getAllByRole('listitem')
     const hiddenOnPhone = items.filter((item) => item.className.includes('max-md:hidden'))
     expect(items).toHaveLength(6)
     expect(hiddenOnPhone.map((item) => item.querySelector('h3')?.textContent)).toEqual([
@@ -158,8 +159,8 @@ describe('search', () => {
   })
 })
 
-describe('the footer links', () => {
-  it('invites visitors to register as an employer, and sends employers to their company', async () => {
+describe('the landing sections', () => {
+  it('invites visitors to register as an employer, and sends employers to their dashboard', async () => {
     const visitor = renderHome()
     expect(await screen.findByRole('link', { name: 'Post a vacancy' })).toHaveAttribute(
       'href',
@@ -169,17 +170,19 @@ describe('the footer links', () => {
 
     renderHome(undefined, loggedIn(makeUser({ role: 'employer' })) as Routes)
     await waitFor(() =>
-      expect(screen.getByRole('link', { name: 'Post a vacancy' })).toHaveAttribute(
+      expect(screen.getByRole('link', { name: 'Go to my dashboard' })).toHaveAttribute(
         'href',
         '/employer',
       ),
     )
   })
 
-  it('links to the privacy policy and the terms', async () => {
+  it('explains how it works, why to use it, and answers common questions', async () => {
     renderHome()
 
-    expect(await screen.findByRole('link', { name: 'Privacy' })).toHaveAttribute('href', '/privacy')
-    expect(screen.getByRole('link', { name: 'Terms' })).toHaveAttribute('href', '/terms')
+    expect(await screen.findByRole('heading', { name: 'How it works' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Why use DJMS' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Questions and answers' })).toBeInTheDocument()
+    expect(screen.getByText('Who can see my CV and my details?')).toBeInTheDocument()
   })
 })

@@ -178,7 +178,7 @@ export function Combobox({
           role="listbox"
           aria-label={label}
           hidden={!open || filtered.length === 0}
-          className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-card border border-border bg-white py-1 shadow-lg"
+          className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-card border border-border bg-card py-1 shadow-lg"
         >
           {filtered.map((option, index) => (
             <li
@@ -204,7 +204,7 @@ export function Combobox({
         {open && filtered.length === 0 && (
           <p
             role="status"
-            className="absolute z-20 mt-1 w-full rounded-card border border-border bg-white px-3 py-3 text-text-secondary shadow-lg"
+            className="absolute z-20 mt-1 w-full rounded-card border border-border bg-card px-3 py-3 text-text-secondary shadow-lg"
           >
             {emptyText}
           </p>

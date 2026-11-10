@@ -25,7 +25,7 @@ export function StatusTimeline({ entries, className }: StatusTimelineProps) {
             <span
               className={cn(
                 'mt-1.5 size-3 shrink-0 rounded-pill border-2',
-                index === 0 ? 'border-primary bg-primary' : 'border-text-secondary bg-white',
+                index === 0 ? 'border-primary bg-primary' : 'border-text-secondary bg-card',
               )}
             />
             {index < entries.length - 1 && <span className="mt-1 w-0.5 flex-1 bg-border" />}

@@ -145,7 +145,7 @@ function AdminVacancyForm({
             requirementsError={tools.requirementsError}
           />
         </div>
-        <div className="sticky bottom-0 z-10 -mx-4 mt-6 flex flex-wrap gap-2 border-t border-border bg-white px-4 py-3 md:static md:mx-0 md:px-0">
+        <div className="sticky bottom-0 z-10 -mx-4 mt-6 flex flex-wrap gap-2 border-t border-border bg-card px-4 py-3 md:static md:mx-0 md:px-0">
           <Button variant="secondary" onClick={() => void submit(false)} loading={create.isPending}>
             Save draft
           </Button>

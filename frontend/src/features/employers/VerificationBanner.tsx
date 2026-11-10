@@ -50,7 +50,7 @@ function Band({
 
 function Reason({ children }: { children: string }) {
   return (
-    <blockquote className="mt-1.5 border-l-4 border-danger bg-white px-3 py-2 text-sm">
+    <blockquote className="mt-1.5 border-l-4 border-danger bg-card px-3 py-2 text-sm">
       {children}
     </blockquote>
   )

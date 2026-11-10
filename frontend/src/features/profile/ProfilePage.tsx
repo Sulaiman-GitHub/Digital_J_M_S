@@ -254,7 +254,7 @@ function ProfileStepper({
 
   return (
     <section aria-labelledby="profile-title" className="md:grid md:grid-cols-[15rem_1fr] md:gap-10">
-      <div className="rounded-card border border-border bg-white p-4 shadow-sm md:sticky md:top-6 md:self-start">
+      <div className="rounded-card border border-border bg-card p-4 shadow-sm md:sticky md:top-6 md:self-start">
         <h1 id="profile-title" className="mb-4 text-title-md font-semibold">
           Your profile
         </h1>
@@ -275,7 +275,7 @@ function ProfileStepper({
           event.preventDefault()
           onSubmit()
         }}
-        className="mt-6 rounded-card border border-border bg-white p-4 shadow-sm sm:p-6 md:mt-0"
+        className="mt-6 rounded-card border border-border bg-card p-4 shadow-sm sm:p-6 md:mt-0"
       >
         <h2
           ref={headingRef}
@@ -342,7 +342,7 @@ function ProfileStepper({
           )}
         </div>
 
-        <div className="sticky bottom-14 z-10 mt-6 flex flex-wrap gap-2 border-t border-border bg-white py-3 md:static md:bottom-auto">
+        <div className="sticky bottom-14 z-10 mt-6 flex flex-wrap gap-2 border-t border-border bg-card py-3 md:static md:bottom-auto">
           {previous && (
             <Button variant="secondary" onClick={() => goTo(previous)} disabled={saving}>
               Back

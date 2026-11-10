@@ -69,14 +69,14 @@ export function SearchBar({
   const whatId = useId()
   const whereId = useId()
   const field =
-    'flex min-h-12 flex-1 items-center gap-2 rounded-card border border-text-secondary bg-white px-3 ' +
+    'flex min-h-12 flex-1 items-center gap-2 rounded-card border border-text-secondary bg-card px-3 ' +
     'md:rounded-none md:border-0 md:bg-transparent'
   return (
     <form
       role="search"
       onSubmit={onSubmit}
       className={cn(
-        'space-y-2 rounded-card bg-white p-3 text-text shadow-md',
+        'space-y-2 rounded-card bg-card p-3 text-text shadow-md',
         'md:flex md:items-center md:gap-0 md:space-y-0 md:rounded-pill md:border md:border-text-secondary md:p-1.5 md:pl-4',
         className,
       )}
@@ -117,7 +117,7 @@ export function SearchBar({
       </div>
       <button
         type="submit"
-        className="inline-flex min-h-12 w-full cursor-pointer items-center justify-center rounded-card bg-primary px-6 font-semibold text-white transition-colors hover:bg-primary-hover md:w-auto md:rounded-pill"
+        className="inline-flex min-h-12 w-full cursor-pointer items-center justify-center rounded-card bg-primary px-6 font-semibold text-on-solid transition-colors hover:bg-primary-hover md:w-auto md:rounded-pill"
       >
         {submitLabel}
       </button>

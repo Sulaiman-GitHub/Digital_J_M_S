@@ -64,7 +64,10 @@ test('a student saves a job on a phone, sees it under Saved jobs and removes it'
   ).toHaveAttribute('aria-pressed', 'true')
 
   // It is under Saved jobs, also after a reload (it is stored on the server).
-  await student.getByRole('link', { name: 'Saved' }).click()
+  await student
+    .getByRole('navigation', { name: 'Main' })
+    .getByRole('link', { name: 'Saved' })
+    .click()
   await expect(student.getByRole('heading', { name: 'Saved jobs', level: 1 })).toBeVisible()
   await expect(student.getByRole('link', { name: new RegExp(title) })).toBeVisible()
   expect(await noSideScroll(student)).toBe(true)

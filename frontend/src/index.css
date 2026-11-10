@@ -11,26 +11,32 @@
   --color-*: initial;
   --color-white: #ffffff;
 
-  --color-primary: #4338ca;
-  --color-primary-hover: #3730a3;
+  --color-primary: #1d4ed8;
+  --color-primary-hover: #1e40af;
   --color-accent: #f59e0b;
 
   --color-text: #0f172a;
   --color-text-secondary: #475569;
 
   --color-bg: #ffffff;
-  --color-surface: #f4f5fb;
-  --color-border: #e0e3f0;
+  --color-card: #ffffff;
+  /* Text on a solid brand/status colour (white in light mode, dark navy in dark mode). */
+  --color-on-solid: #ffffff;
+  /* The hero banner is always deep blue with white text, in both themes. */
+  --color-hero-from: #1d4ed8;
+  --color-hero-to: #1e3a8a;
+  --color-surface: #f3f7fd;
+  --color-border: #dbe5f4;
 
   --color-success: #15803d;
   --color-warning: #b45309;
   --color-danger: #b91c1c;
   --color-info: #0369a1;
-  /* Teal keeps "Shortlisted" different from the indigo brand colour. */
+  /* Teal keeps "Shortlisted" different from the blue brand colour. */
   --color-teal: #0f766e;
 
   /* Tints for badges and notices; pair with the matching strong colour (all >= 4.5:1). */
-  --color-primary-tint: #eef0fd;
+  --color-primary-tint: #eaf1ff;
   --color-teal-tint: #f1f7f6;
   --color-success-tint: #f1f7f3;
   --color-warning-tint: #faf5f0;
@@ -38,7 +44,7 @@
   --color-info-tint: #f0f7fc;
   --color-accent-tint: #fef5e7;
 
-  --color-primary-deep: #2e1f8f;
+  --color-primary-deep: #1e3a8a;
   --color-scrim: rgb(17 24 39 / 0.5);
 
   --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -52,6 +58,35 @@
 
   --radius-card: 12px;
   --radius-pill: 999px;
+}
+
+/* Dark theme: the same tokens, redefined. Chosen by the toggle (data-theme) or the device setting. */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --color-primary: #6aa5ff;
+  --color-primary-hover: #93bcff;
+  --color-primary-deep: #1e3a8a;
+  --color-accent: #fbbf24;
+  --color-text: #e8eefb;
+  --color-text-secondary: #a3b3cc;
+  --color-bg: #0a1220;
+  --color-card: #111c30;
+  --color-surface: #0d1626;
+  --color-border: #263650;
+  --color-on-solid: #0a1220;
+  --color-success: #4ade80;
+  --color-warning: #fbbf24;
+  --color-danger: #f87171;
+  --color-info: #38bdf8;
+  --color-teal: #2dd4bf;
+  --color-primary-tint: #14284a;
+  --color-teal-tint: #0f2a2a;
+  --color-success-tint: #0f2a1c;
+  --color-warning-tint: #2e2410;
+  --color-danger-tint: #301517;
+  --color-info-tint: #0e2535;
+  --color-accent-tint: #2e2410;
+  --color-scrim: rgb(0 0 0 / 0.65);
 }
 
 @layer base {
@@ -75,4 +110,47 @@
       transition-duration: 0.01ms !important;
     }
   }
+}
+
+/* ---- Motion used on the landing page. Reduced-motion users get none (see the base layer). ---- */
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-float {
+  animation: float-y 7s ease-in-out infinite;
+}
+
+.animate-rise {
+  animation: rise-in 0.7s ease-out both;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
 }
