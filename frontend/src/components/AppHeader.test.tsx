@@ -53,6 +53,14 @@ describe('AppHeader when logged out', () => {
 })
 
 describe('AppHeader profile link', () => {
+  it('keeps My account out of the main bar (it lives in the account menu)', async () => {
+    mockApi({ ...loggedIn(makeUser({ role: 'job_seeker' })) })
+    renderHeader()
+    await screen.findByRole('button', { name: 'Account menu' })
+    const main = screen.getByRole('navigation', { name: 'Main' })
+    expect(within(main).queryByRole('link', { name: 'My account' })).not.toBeInTheDocument()
+  })
+
   it('shows My profile to job seekers only', async () => {
     mockApi({ ...loggedIn(makeUser({ role: 'job_seeker' })) })
     const seeker = renderHeader()

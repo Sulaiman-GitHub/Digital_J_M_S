@@ -44,7 +44,7 @@ export function HomePage() {
     <div className="space-y-8">
       <section
         aria-labelledby="home-title"
-        className="-mx-4 -mt-6 space-y-4 bg-primary px-4 py-8 text-white md:mx-0 md:mt-0 md:rounded-card md:px-8"
+        className="-mx-4 -mt-6 space-y-4 bg-linear-to-br from-primary to-primary-deep px-4 py-10 text-white shadow-md md:mx-0 md:mt-0 md:rounded-card md:px-10 md:py-12"
       >
         <div>
           <h1 id="home-title" className="text-title-md font-bold sm:text-title-lg">

@@ -186,7 +186,7 @@ describe('the address is the state', () => {
     expect(router.state.location.search).toBe('?employment_type=part_time')
   })
 
-  it('each filter can be set, combined and cleared with "Any"', async () => {
+  it('each filter can be set, combined and cleared with "Clear"', async () => {
     const { api, router } = renderJobs()
     await screen.findByText('Accounts Assistant')
 
@@ -208,7 +208,7 @@ describe('the address is the state', () => {
     )
 
     await chip(/^Job type: Contract/)
-    await userEvent.click(screen.getByRole('radio', { name: 'Any' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Clear job type' }))
     await userEvent.selectOptions(screen.getByLabelText('Where'), 'All districts')
 
     await waitFor(() => expect(lastQuery(api).has('district_id')).toBe(false))
@@ -227,9 +227,9 @@ describe('the address is the state', () => {
 
     await waitFor(() => expect(router.state.location.search).toBe(''))
     await waitFor(() => expect(lastQuery(api).has('employment_type')).toBe(false))
-    // The chip is back to its plain name and "Any" is ticked again.
+    // The chip is back to its plain name and nothing is ticked.
     await chip(/^Job type$/)
-    expect(screen.getByRole('radio', { name: 'Any' })).toBeChecked()
+    expect(screen.getByRole('radio', { name: 'Internship' })).not.toBeChecked()
   })
 })
 
