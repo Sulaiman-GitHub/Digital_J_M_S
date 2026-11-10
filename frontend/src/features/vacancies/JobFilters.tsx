@@ -40,7 +40,7 @@ export function RadioGroup<T extends string>({
         {choices.map((option) => (
           <label
             key={option.value}
-            className="inline-flex min-h-10 cursor-pointer items-center rounded-pill border border-border bg-white px-3.5 text-sm font-medium hover:border-primary has-checked:border-primary has-checked:bg-primary-tint has-checked:font-semibold has-checked:text-primary has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-primary"
+            className="relative inline-flex min-h-10 cursor-pointer items-center rounded-pill border border-border bg-white px-3.5 text-sm font-medium hover:border-primary has-checked:border-primary has-checked:bg-primary-tint has-checked:font-semibold has-checked:text-primary has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-primary"
           >
             <input
               type="radio"
@@ -48,7 +48,7 @@ export function RadioGroup<T extends string>({
               value={option.value}
               checked={value === option.value}
               onChange={() => onChange(option.value)}
-              className="sr-only"
+              className="absolute inset-0 size-full cursor-pointer opacity-0"
             />
             {option.label}
           </label>
