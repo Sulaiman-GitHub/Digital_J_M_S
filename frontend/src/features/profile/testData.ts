@@ -53,6 +53,7 @@ export function makeProfile(overrides: Partial<Profile> = {}): Profile {
     id: '99999999-9999-4999-8999-999999999999',
     full_name: 'Nakato Sarah',
     phone: '+256772123456',
+    date_of_birth: '2001-05-17',
     institution_id: GULU_UNIVERSITY,
     institution_other_name: null,
     qualification_level_id: BACHELORS,

@@ -61,6 +61,8 @@ class SeekerProfile(TimestampedUUIDMixin, Base):
     full_name: Mapped[str] = mapped_column(String(150), nullable=False)
     # Stored as +256XXXXXXXXX (13 characters).
     phone: Mapped[str | None] = mapped_column(String(13))
+    # Optional and private: never sent to employers (the application snapshot lists its fields).
+    date_of_birth: Mapped[date | None] = mapped_column(Date)
     institution_id: Mapped[uuid.UUID | None] = mapped_column(
         ForeignKey("institutions.id", ondelete="RESTRICT"), index=True
     )

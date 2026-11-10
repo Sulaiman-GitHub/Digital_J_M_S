@@ -113,6 +113,7 @@ export interface Profile {
   id: string
   full_name: string
   phone: string | null
+  date_of_birth: string | null
   institution_id: string | null
   institution_other_name: string | null
   qualification_level_id: string
@@ -141,6 +142,7 @@ export interface ExperienceInput {
 export interface ProfileInput {
   full_name: string
   phone: string | null
+  date_of_birth: string | null
   institution_id: string | null
   institution_other_name: string | null
   qualification_level_id: string

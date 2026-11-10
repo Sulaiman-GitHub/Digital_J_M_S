@@ -31,6 +31,15 @@ export function BasicsStep({ form, districts }: BasicsStepProps) {
         error={errors.phone?.message}
         {...register('phone')}
       />
+      <TextField
+        label="Date of birth (optional)"
+        hint="Private. Employers never see it. You must be 16 or older."
+        type="date"
+        className="max-w-xs"
+        autoComplete="bday"
+        error={errors.date_of_birth?.message}
+        {...register('date_of_birth')}
+      />
       <Select
         label="District where you live"
         placeholder="Choose your district"

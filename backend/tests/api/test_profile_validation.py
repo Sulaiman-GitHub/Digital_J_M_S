@@ -43,6 +43,45 @@ def profiles_saved(db: Session) -> int:
     return db.scalar(select(func.count()).select_from(SeekerProfile)) or 0
 
 
+# ---------- date of birth ----------
+
+
+def years_ago(years: int, extra_days: int = 0) -> str:
+    today = today_in_kampala()
+    same_day = today.replace(year=today.year - years, day=min(today.day, 28))
+    return (same_day - timedelta(days=extra_days)).isoformat()
+
+
+def test_the_date_of_birth_is_optional_saved_and_can_be_cleared(
+    seeker: TestClient, refs: Refs
+) -> None:
+    without = put_profile(seeker, profile_payload(refs)).json()["data"]
+    saved = put_profile(seeker, profile_payload(refs, date_of_birth="2001-05-17")).json()["data"]
+    cleared = put_profile(seeker, profile_payload(refs, date_of_birth=None)).json()["data"]
+
+    assert without["date_of_birth"] is None
+    assert saved["date_of_birth"] == "2001-05-17"
+    assert cleared["date_of_birth"] is None
+
+
+def test_you_must_be_at_least_16(seeker: TestClient, refs: Refs) -> None:
+    sixteen = put_profile(seeker, profile_payload(refs, date_of_birth=years_ago(16, 2)))
+    young = put_profile(seeker, profile_payload(refs, date_of_birth=years_ago(15)))
+    future = put_profile(seeker, profile_payload(refs, date_of_birth=iso(30)))
+
+    assert sixteen.status_code == 200, sixteen.text
+    assert "at least 16" in field_errors(young)["date_of_birth"]
+    assert "at least 16" in field_errors(future)["date_of_birth"]
+
+
+def test_an_impossible_date_of_birth_is_refused(seeker: TestClient, refs: Refs) -> None:
+    old = put_profile(seeker, profile_payload(refs, date_of_birth="1900-01-01"))
+    junk = put_profile(seeker, profile_payload(refs, date_of_birth="not-a-date"))
+
+    assert "valid date of birth" in field_errors(old)["date_of_birth"]
+    assert "date_of_birth" in field_errors(junk)
+
+
 # ---------- name, phone, summary ----------
 
 
