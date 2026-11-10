@@ -24,7 +24,7 @@ export function ApplyBar({ vacancy }: { vacancy: VacancyDetail }) {
   // Job seekers have a bottom navigation on phones: sit above it, never behind it.
   const bottom = user?.role === 'job_seeker' ? 'bottom-14' : 'bottom-0'
   const bar = cn(
-    'sticky z-10 -mx-4 border-t border-border bg-white px-4 py-3 md:static md:mx-0 md:rounded-card md:border md:p-4',
+    'sticky z-10 -mx-4 border-t border-border bg-card px-4 py-3 md:static md:mx-0 md:rounded-card md:border md:p-4',
     bottom,
     'md:bottom-auto',
   )

@@ -50,7 +50,7 @@ export function CompanyAvatar({
         'grid shrink-0 place-items-center overflow-hidden border border-border font-bold',
         round ? 'rounded-pill' : 'rounded-card',
         size === 'lg' ? 'size-14 text-lg' : 'size-12 text-base',
-        showImage ? 'bg-white' : toneFor(name),
+        showImage ? 'bg-card' : toneFor(name),
         className,
       )}
     >

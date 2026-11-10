@@ -7,7 +7,7 @@ export type BadgeTone =
 // Text colour on its tint, with a border in the same colour (docs/design/tokens.md).
 const toneClasses: Record<BadgeTone, string> = {
   neutral: 'border-text-secondary bg-surface text-text-secondary',
-  outline: 'border-text-secondary bg-white text-text-secondary',
+  outline: 'border-text-secondary bg-card text-text-secondary',
   primary: 'border-primary bg-primary-tint text-primary',
   info: 'border-info bg-info-tint text-info',
   teal: 'border-teal bg-teal-tint text-teal',

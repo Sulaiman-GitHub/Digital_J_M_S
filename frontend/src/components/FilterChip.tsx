@@ -36,7 +36,7 @@ export function FilterChip({ label, value, children }: FilterChipProps) {
           'inline-flex min-h-10 cursor-pointer items-center gap-1.5 rounded-pill border px-4 text-sm font-medium whitespace-nowrap',
           value
             ? 'border-primary bg-primary-tint text-primary'
-            : 'border-text-secondary bg-white text-text hover:border-primary',
+            : 'border-text-secondary bg-card text-text hover:border-primary',
         )}
       >
         {value ? `${label}: ${value}` : label}
@@ -49,7 +49,7 @@ export function FilterChip({ label, value, children }: FilterChipProps) {
           id={panelId}
           role="group"
           aria-label={label}
-          className="absolute top-full left-0 z-20 mt-2 max-h-80 w-64 overflow-y-auto rounded-card border border-border bg-white p-3 shadow-lg"
+          className="absolute top-full left-0 z-20 mt-2 max-h-80 w-64 overflow-y-auto rounded-card border border-border bg-card p-3 shadow-lg"
         >
           {children(close)}
         </div>

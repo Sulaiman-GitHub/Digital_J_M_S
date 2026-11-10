@@ -223,7 +223,7 @@ export function JobsPage() {
         {wide && selectedId && (
           <section
             aria-label="Selected job"
-            className="sticky top-4 max-h-[calc(100svh-2rem)] overflow-y-auto rounded-card border border-border bg-white p-6 shadow-sm"
+            className="sticky top-4 max-h-[calc(100svh-2rem)] overflow-y-auto rounded-card border border-border bg-card p-6 shadow-sm"
           >
             <VacancyPane id={selectedId} />
           </section>

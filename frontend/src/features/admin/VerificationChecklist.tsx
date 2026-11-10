@@ -21,7 +21,7 @@ export function VerificationChecklist({ employer }: { employer: AdminEmployerDet
             <span
               aria-hidden="true"
               className={cn(
-                'grid size-6 flex-none place-items-center rounded-pill text-sm font-bold text-white',
+                'grid size-6 flex-none place-items-center rounded-pill text-sm font-bold text-on-solid',
                 item.present ? 'bg-success' : 'bg-danger',
               )}
             >

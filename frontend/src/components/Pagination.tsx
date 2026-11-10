@@ -47,7 +47,7 @@ export function Pagination({
                 onClick={() => item !== page && onPageChange(item)}
                 className={cn(
                   itemClasses,
-                  item === page ? 'bg-primary text-white' : 'text-text hover:bg-surface',
+                  item === page ? 'bg-primary text-on-solid' : 'text-text hover:bg-surface',
                 )}
               >
                 {item}

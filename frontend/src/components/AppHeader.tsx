@@ -8,6 +8,7 @@ import { ROLE_LABELS } from '../lib/roles'
 import { useDismiss } from '../lib/useDismiss'
 import { buttonClasses } from './buttonStyles'
 import { CompanyAvatar } from './CompanyAvatar'
+import { ThemeToggle } from './ThemeToggle'
 import { useToast } from './toastContext'
 
 const navLinkClasses = ({ isActive }: { isActive: boolean }) =>
@@ -76,7 +77,7 @@ export function AppHeader() {
   }
 
   return (
-    <header ref={headerRef} className="relative border-b border-border bg-white shadow-sm">
+    <header ref={headerRef} className="relative border-b border-border bg-card shadow-sm">
       <div className="mx-auto flex min-h-14 max-w-5xl items-center justify-between gap-2 px-4 md:min-h-16">
         <div className="flex items-center gap-5 lg:gap-8">
           <Link
@@ -86,7 +87,7 @@ export function AppHeader() {
           >
             <span
               aria-hidden="true"
-              className="grid size-8 place-items-center rounded-card bg-linear-to-br from-primary to-primary-deep text-sm font-extrabold text-white"
+              className="grid size-8 place-items-center rounded-card bg-linear-to-br from-hero-from to-hero-to text-sm font-extrabold text-white"
             >
               DJ
             </span>
@@ -132,65 +133,68 @@ export function AppHeader() {
           </nav>
         </div>
 
-        {status !== 'loading' && !user && (
-          <div className="flex items-center gap-2">
-            <Link to="/login" className={buttonClasses({ variant: 'ghost' })}>
-              Log in
-            </Link>
-            <Link to="/register" className={buttonClasses({ variant: 'secondary' })}>
-              Register
-            </Link>
-          </div>
-        )}
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          {status !== 'loading' && !user && (
+            <div className="flex items-center gap-2">
+              <Link to="/login" className={buttonClasses({ variant: 'ghost' })}>
+                Log in
+              </Link>
+              <Link to="/register" className={buttonClasses({ variant: 'secondary' })}>
+                Register
+              </Link>
+            </div>
+          )}
 
-        {user && (
-          <>
-            <button
-              ref={userButtonRef}
-              type="button"
-              aria-expanded={userMenuOpen}
-              aria-controls="user-menu"
-              aria-label="Account menu"
-              onClick={() => setUserMenuOpen((open) => !open)}
-              className="hidden min-h-11 cursor-pointer items-center gap-2 rounded-card border border-border bg-white px-2 md:inline-flex"
-            >
-              {avatarUrl ? (
-                <CompanyAvatar
-                  name={user.email}
-                  imageUrl={avatarUrl}
-                  round
-                  className="size-7 text-sm"
-                />
-              ) : (
-                <span
-                  aria-hidden="true"
-                  className="grid size-7 place-items-center rounded-pill bg-primary text-sm font-bold text-white"
-                >
-                  {user.email.charAt(0).toUpperCase()}
-                </span>
-              )}
-              <span className="max-w-24 truncate lg:max-w-44">{user.email}</span>
-              <span aria-hidden="true">▾</span>
-            </button>
-            <button
-              ref={menuButtonRef}
-              type="button"
-              aria-expanded={mobileMenuOpen}
-              aria-controls="mobile-menu"
-              aria-label="Menu"
-              onClick={() => setMobileMenuOpen((open) => !open)}
-              className="inline-flex size-11 cursor-pointer items-center justify-center rounded-card border border-border bg-white text-xl md:hidden"
-            >
-              <span aria-hidden="true">{mobileMenuOpen ? '✕' : '☰'}</span>
-            </button>
-          </>
-        )}
+          {user && (
+            <>
+              <button
+                ref={userButtonRef}
+                type="button"
+                aria-expanded={userMenuOpen}
+                aria-controls="user-menu"
+                aria-label="Account menu"
+                onClick={() => setUserMenuOpen((open) => !open)}
+                className="hidden min-h-11 cursor-pointer items-center gap-2 rounded-card border border-border bg-card px-2 md:inline-flex"
+              >
+                {avatarUrl ? (
+                  <CompanyAvatar
+                    name={user.email}
+                    imageUrl={avatarUrl}
+                    round
+                    className="size-7 text-sm"
+                  />
+                ) : (
+                  <span
+                    aria-hidden="true"
+                    className="grid size-7 place-items-center rounded-pill bg-primary text-sm font-bold text-on-solid"
+                  >
+                    {user.email.charAt(0).toUpperCase()}
+                  </span>
+                )}
+                <span className="max-w-24 truncate lg:max-w-44">{user.email}</span>
+                <span aria-hidden="true">▾</span>
+              </button>
+              <button
+                ref={menuButtonRef}
+                type="button"
+                aria-expanded={mobileMenuOpen}
+                aria-controls="mobile-menu"
+                aria-label="Menu"
+                onClick={() => setMobileMenuOpen((open) => !open)}
+                className="inline-flex size-11 cursor-pointer items-center justify-center rounded-card border border-border bg-card text-xl md:hidden"
+              >
+                <span aria-hidden="true">{mobileMenuOpen ? '✕' : '☰'}</span>
+              </button>
+            </>
+          )}
+        </div>
       </div>
 
       {user && userMenuOpen && (
         <div
           id="user-menu"
-          className="absolute top-full right-4 z-20 hidden w-64 rounded-card border border-border bg-white py-2 shadow-lg md:block"
+          className="absolute top-full right-4 z-20 hidden w-64 rounded-card border border-border bg-card py-2 shadow-lg md:block"
         >
           <p className="border-b border-border px-4 pb-3 text-sm">
             <strong className="block truncate">{user.email}</strong>

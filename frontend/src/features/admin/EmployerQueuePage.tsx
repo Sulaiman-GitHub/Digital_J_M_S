@@ -66,8 +66,8 @@ export function EmployerQueuePage() {
             className={cn(
               'inline-flex min-h-11 cursor-pointer items-center rounded-pill border px-3.5 text-sm font-medium whitespace-nowrap',
               item.value === filter
-                ? 'border-primary bg-primary text-white'
-                : 'border-text-secondary bg-white text-text',
+                ? 'border-primary bg-primary text-on-solid'
+                : 'border-text-secondary bg-card text-text',
             )}
           >
             {item.label}

@@ -80,7 +80,7 @@ export function Stepper({
                       ? 'border-success bg-success-tint text-success'
                       : locked
                         ? 'border-dashed border-text-secondary text-text-secondary opacity-75'
-                        : 'border-text-secondary bg-white text-text',
+                        : 'border-text-secondary bg-card text-text',
                 )}
               >
                 <span
@@ -88,9 +88,9 @@ export function Stepper({
                   className={cn(
                     'grid size-5.5 place-items-center rounded-pill text-xs',
                     current
-                      ? 'bg-primary text-white'
+                      ? 'bg-primary text-on-solid'
                       : done
-                        ? 'bg-success text-white'
+                        ? 'bg-success text-on-solid'
                         : 'bg-surface',
                   )}
                 >

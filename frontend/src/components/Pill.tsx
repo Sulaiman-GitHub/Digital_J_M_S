@@ -22,10 +22,10 @@ export function Pill({ label, selected, onRemove, onClick, className, ...rest }:
         // An invisible ::after extends the 36 px pill to a 44 px tap target.
         'relative after:absolute after:-inset-y-1 after:inset-x-0 after:content-[""]',
         selected
-          ? 'border-primary bg-primary text-white'
+          ? 'border-primary bg-primary text-on-solid'
           : removable
             ? 'border-primary bg-primary-tint text-primary'
-            : 'border-text-secondary bg-white text-text hover:border-primary',
+            : 'border-text-secondary bg-card text-text hover:border-primary',
         className,
       )}
       {...rest}
