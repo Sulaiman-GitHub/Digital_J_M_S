@@ -12,6 +12,8 @@ function renderPage(route = '/login') {
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/account" element={<p>Account page</p>} />
+      <Route path="/employer" element={<p>Employer home</p>} />
+      <Route path="/admin/employers" element={<p>Admin home</p>} />
       <Route path="/jobs/:id" element={<p>Job page</p>} />
       <Route path="*" element={<p>Somewhere else</p>} />
     </Routes>,
@@ -62,6 +64,47 @@ describe('LoginPage', () => {
       email: 'nakato@example.com',
       password: 'Kampala-Sunrise-42',
     })
+  })
+
+  it('lets people choose the door they use, which only changes the wording', async () => {
+    mockApi({ ...loggedOut })
+    renderPage()
+    expect(screen.getByRole('radio', { name: 'Job seeker' })).toBeChecked()
+
+    await userEvent.click(screen.getByRole('radio', { name: 'Employer' }))
+
+    expect(screen.getByRole('radio', { name: 'Employer' })).toBeChecked()
+    expect(screen.getByText('Manage your vacancies and applicants.')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Create an account' })).toBeInTheDocument()
+  })
+
+  it('starts on the door named in the address, and admins cannot register', async () => {
+    mockApi({ ...loggedOut })
+    renderPage('/login?as=admin')
+
+    expect(screen.getByRole('radio', { name: 'Admin' })).toBeChecked()
+    expect(screen.queryByRole('link', { name: 'Create an account' })).not.toBeInTheDocument()
+    expect(screen.getByText(/created by the system owner/)).toBeInTheDocument()
+  })
+
+  it('ignores an unknown door', () => {
+    mockApi({ ...loggedOut })
+    renderPage('/login?as=superuser')
+
+    expect(screen.getByRole('radio', { name: 'Job seeker' })).toBeChecked()
+  })
+
+  it.each([
+    ['employer', 'Employer home'],
+    ['admin', 'Admin home'],
+    ['job_seeker', 'Account page'],
+  ] as const)('sends a %s to their own home after logging in', async (role, page) => {
+    mockApi({ ...loggedOut, [LOGIN]: () => okData(makeUser({ role })) })
+    renderPage()
+
+    await logIn()
+
+    expect(await screen.findByText(page)).toBeInTheDocument()
   })
 
   it('returns to the page that asked for login (?next=)', async () => {

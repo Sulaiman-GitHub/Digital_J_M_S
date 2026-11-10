@@ -29,10 +29,11 @@ export function useMyApplicationFor(vacancyId: string, enabled: boolean) {
   })
 }
 
-export function useApplication(id: string) {
+export function useApplication(id: string, enabled = true) {
   return useQuery({
     queryKey: [...APPLICATIONS_KEY, 'detail', id],
     queryFn: ({ signal }) => fetchApplication(id, signal),
+    enabled,
     retry: false,
   })
 }
