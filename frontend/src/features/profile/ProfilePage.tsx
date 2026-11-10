@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useForm, useWatch, type FieldPath } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
 import { ApiError, type Profile } from '../../api/types'
 import { Alert } from '../../components/Alert'
 import { Button } from '../../components/Button'
@@ -25,6 +25,7 @@ import {
   formFieldForServerKey,
   fromProfile,
   savedPercent,
+  isStepId,
   stepOfField,
   toPayload,
   type ProfileFormValues,
@@ -54,6 +55,7 @@ const labelOf = (id: StepId) => STEPS.find((step) => step.id === id)?.label ?? i
 export function ProfilePage() {
   const profile = useProfile()
   const references = useReferenceLists()
+  const { step } = useParams()
 
   if (profile.isPending || references.isPending) {
     return (
@@ -81,16 +83,28 @@ export function ProfilePage() {
     )
   }
 
-  return <ProfileStepper profile={profile.data ?? null} references={references} />
+  // Each section has its own address (/profile/education, ...), so Back, Refresh and links work.
+  const saved = profile.data != null
+  const wanted = isStepId(step) ? step : null
+  const lockedWhileUnsaved = wanted === 'skills' || wanted === 'experience' || wanted === 'summary'
+  if (!wanted || (!saved && lockedWhileUnsaved)) {
+    const target = wanted ? 'basics' : firstUnfinishedStep(profile.data ?? null)
+    return <Navigate to={`/profile/${target}`} replace />
+  }
+
+  return <ProfileStepper profile={profile.data ?? null} references={references} step={wanted} />
 }
 
 function ProfileStepper({
   profile,
   references,
+  step,
 }: {
   profile: Profile | null
   references: ReferenceLists
+  step: StepId
 }) {
+  const navigate = useNavigate()
   const toast = useToast()
   const mutation = useSaveProfile()
   const cv = useCv()
@@ -101,14 +115,13 @@ function ProfileStepper({
     mode: 'onTouched',
   })
   const fullName = useWatch({ control: form.control, name: 'full_name' })
-  const [step, setStep] = useState<StepId>(() => firstUnfinishedStep(profile))
   const [failure, setFailure] = useState<string | null>(null)
   const [justSaved, setJustSaved] = useState(false)
   const headingRef = useRef<HTMLHeadingElement>(null)
   const firstRender = useRef(true)
 
   const dirty = form.formState.isDirty
-  const blocker = useUnsavedChangesWarning(dirty)
+  const blocker = useUnsavedChangesWarning(dirty, '/profile')
 
   useEffect(() => {
     // A field that is showing an error is re-checked as the user edits it, so the message goes
@@ -146,6 +159,10 @@ function ProfileStepper({
   // Skills onwards need a saved profile: the server takes name, district, qualification,
   // institution and study status together, which is why Education does the first save.
   const locked = new Set<string>(saved ? [] : ['skills', 'experience', 'summary'])
+
+  function setStep(next: StepId) {
+    void navigate(`/profile/${next}`)
+  }
 
   function goTo(next: StepId) {
     setStep(next)
@@ -237,7 +254,7 @@ function ProfileStepper({
 
   return (
     <section aria-labelledby="profile-title" className="md:grid md:grid-cols-[15rem_1fr] md:gap-10">
-      <div className="md:sticky md:top-6 md:self-start">
+      <div className="rounded-card border border-border bg-white p-4 shadow-sm md:sticky md:top-6 md:self-start">
         <h1 id="profile-title" className="mb-4 text-title-md font-semibold">
           Your profile
         </h1>
@@ -258,7 +275,7 @@ function ProfileStepper({
           event.preventDefault()
           onSubmit()
         }}
-        className="mt-6 md:mt-0"
+        className="mt-6 rounded-card border border-border bg-white p-4 shadow-sm sm:p-6 md:mt-0"
       >
         <h2
           ref={headingRef}

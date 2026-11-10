@@ -45,7 +45,7 @@ function renderPage(
       {
         element: <Shell />,
         children: [
-          { path: '/profile', element: <ProfilePage /> },
+          { path: '/profile/:step?', element: <ProfilePage /> },
           { path: '/account', element: <p>Account page</p> },
         ],
       },
@@ -170,6 +170,29 @@ describe('Basics step', () => {
     expect(await heading('Education')).toBeInTheDocument()
     expect(screen.getByText('Step 2 of 6: Education')).toBeInTheDocument()
     expect(puts(api)).toHaveLength(0)
+  })
+
+  it('gives every section its own address', async () => {
+    const { router } = renderPage()
+    await fillBasics()
+    await waitFor(() => expect(router.state.location.pathname).toBe('/profile/basics'))
+
+    await click('Continue')
+
+    expect(await heading('Education')).toBeInTheDocument()
+    expect(router.state.location.pathname).toBe('/profile/education')
+    await router.navigate(-1)
+    expect(await heading('Basics')).toBeInTheDocument()
+  })
+
+  it('sends a locked section address back to Basics until the first save', async () => {
+    const { router } = renderPage()
+    await heading('Basics')
+
+    await router.navigate('/profile/skills')
+
+    await waitFor(() => expect(router.state.location.pathname).toBe('/profile/basics'))
+    expect(await heading('Basics')).toBeInTheDocument()
   })
 
   it('keeps Skills, Experience and Summary locked until the first save', async () => {

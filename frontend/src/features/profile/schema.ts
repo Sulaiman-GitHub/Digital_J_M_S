@@ -30,6 +30,10 @@ export const STEPS = [
 ] as const
 export type StepId = (typeof STEPS)[number]['id']
 
+export function isStepId(value: unknown): value is StepId {
+  return STEPS.some((step) => step.id === value)
+}
+
 const experienceSchema = z.object({
   title: z.string(),
   organisation: z.string(),

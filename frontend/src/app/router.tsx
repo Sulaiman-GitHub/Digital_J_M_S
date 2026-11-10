@@ -69,7 +69,7 @@ const authRoutes: RouteObject[] = [
         element: <RequireRole roles={['job_seeker']} />,
         children: [
           {
-            path: '/profile',
+            path: '/profile/:step?',
             lazy: async () => ({
               Component: (await import('../features/profile/ProfilePage')).ProfilePage,
             }),
