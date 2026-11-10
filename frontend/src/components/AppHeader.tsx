@@ -2,6 +2,7 @@ import { useCallback, useRef, useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { pictureUrl } from '../api/pictures'
 import { useAuth } from '../features/auth/authContext'
+import { NotificationBell } from '../features/notifications/NotificationBell'
 import { usePicture } from '../features/pictures/usePicture'
 import { cn } from '../lib/cn'
 import { ROLE_LABELS } from '../lib/roles'
@@ -137,6 +138,7 @@ export function AppHeader() {
         </div>
 
         <div className="flex items-center gap-1.5 sm:gap-2">
+          {user?.role === 'job_seeker' && <NotificationBell />}
           <ThemeToggle />
           {status !== 'loading' && !user && (
             <div className="flex items-center gap-2">
