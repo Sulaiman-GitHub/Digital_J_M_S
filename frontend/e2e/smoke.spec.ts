@@ -15,3 +15,26 @@ test('unknown routes show the not found page', async ({ page }) => {
 
   await expect(page.getByRole('heading', { name: 'Page not found' })).toBeVisible()
 })
+
+// CI draws text with a wider fallback font than a developer's PC, so check with a wide one too.
+for (const path of ['/', '/jobs']) {
+  test(`${path} does not scroll sideways on a 360 px phone, even with a wide font`, async ({
+    browser,
+  }) => {
+    const context = await browser.newContext({ viewport: { width: 360, height: 740 } })
+    const page = await context.newPage()
+    await page.goto(path)
+    await page.addStyleTag({
+      content: '* { font-family: Verdana, "DejaVu Sans", sans-serif !important; }',
+    })
+    await expect(page.getByRole('banner')).toBeVisible()
+
+    const widths = await page.evaluate(() => ({
+      scroll: document.documentElement.scrollWidth,
+      client: document.documentElement.clientWidth,
+    }))
+
+    expect(widths.scroll).toBeLessThanOrEqual(widths.client)
+    await context.close()
+  })
+}
