@@ -31,11 +31,14 @@ from app.schemas.profile import ProfileIn
 DISPLAY_TIME_ZONE = ZoneInfo("Africa/Kampala")  # stored in UTC, shown in Kampala time
 EARLIEST_DATE = date(1970, 1, 1)
 EXPECTED_COMPLETION_YEARS_AHEAD = 10
+MIN_AGE_YEARS = 16
+MAX_AGE_YEARS = 80
 
 # Columns replaced by a PUT. Everything else (id, user_id, is_discoverable, created_at) is kept.
 _PROFILE_COLUMNS = (
     "full_name",
     "phone",
+    "date_of_birth",
     "institution_id",
     "institution_other_name",
     "qualification_level_id",
@@ -117,6 +120,13 @@ def _existing_ids(db: Session, model: type, wanted: set[uuid.UUID]) -> set[uuid.
     return set(db.scalars(select(model.id).where(model.id.in_(wanted))))  # type: ignore[attr-defined]
 
 
+def _years_before(day: date, years: int) -> date:
+    try:
+        return day.replace(year=day.year - years)
+    except ValueError:  # 29 February
+        return day.replace(year=day.year - years, day=28)
+
+
 def profile_errors(
     db: Session,
     data: ProfileIn,
@@ -134,6 +144,16 @@ def profile_errors(
         errors["institution_other_name"] = "Choose from the list or type a name, not both."
     if data.field_of_study_id is not None and data.field_of_study_other is not None:
         errors["field_of_study_other"] = "Choose from the list or type a name, not both."
+
+    # Date of birth is optional. It only has to be a believable age for someone job hunting.
+    born = data.date_of_birth
+    if born is not None:
+        youngest = _years_before(today, MIN_AGE_YEARS)
+        oldest = _years_before(today, MAX_AGE_YEARS)
+        if born > youngest:
+            errors["date_of_birth"] = f"You must be at least {MIN_AGE_YEARS} years old."
+        elif born < oldest:
+            errors["date_of_birth"] = "Enter a valid date of birth."
 
     # Study status decides which date makes sense.
     if data.study_status is StudyStatus.STUDYING and data.graduation_date is not None:

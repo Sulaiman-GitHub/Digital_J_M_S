@@ -300,6 +300,7 @@ describe('the first save', () => {
     expect(puts(api)[0].body).toEqual({
       full_name: 'Nakato Sarah',
       phone: '0772 123456',
+      date_of_birth: null,
       institution_id: GULU_UNIVERSITY,
       institution_other_name: null,
       qualification_level_id: BACHELORS,

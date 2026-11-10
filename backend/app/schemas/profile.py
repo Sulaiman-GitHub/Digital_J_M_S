@@ -119,6 +119,7 @@ class ProfileIn(_Request):
 
     full_name: str = Field(max_length=300)
     phone: str | None = Field(default=None, max_length=40)
+    date_of_birth: date | None = None
     institution_id: uuid.UUID | None = None
     institution_other_name: str | None = Field(default=None, max_length=500)
     qualification_level_id: uuid.UUID
@@ -197,6 +198,7 @@ class ProfileOut(BaseModel):
     id: uuid.UUID
     full_name: str
     phone: str | None
+    date_of_birth: date | None
     institution_id: uuid.UUID | None
     institution_other_name: str | None
     qualification_level_id: uuid.UUID

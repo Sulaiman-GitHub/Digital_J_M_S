@@ -68,6 +68,25 @@ describe('profile rules (mirroring the backend)', () => {
     expect(problems(valid({ phone: '  ' }))).toEqual({})
   })
 
+  it('lets the date of birth be empty or a believable age', () => {
+    expect(problems(valid({ date_of_birth: '' }))).toEqual({})
+    expect(problems(valid({ date_of_birth: '2001-05-17' }))).toEqual({})
+    expect(problems(valid({ date_of_birth: '2010-11-05' }))).toEqual({}) // exactly 16 today
+  })
+
+  it.each(['2010-11-06', '2026-12-01'])('refuses a date of birth under 16: %s', (date_of_birth) => {
+    expect(problems(valid({ date_of_birth })).date_of_birth).toMatch(/at least 16/)
+  })
+
+  it('refuses a date of birth that is too old', () => {
+    expect(problems(valid({ date_of_birth: '1900-01-01' })).date_of_birth).toMatch(/valid date/)
+  })
+
+  it('sends a blank date of birth as null and keeps a real one', () => {
+    expect(toPayload(valid({ date_of_birth: '' })).date_of_birth).toBeNull()
+    expect(toPayload(valid({ date_of_birth: '2001-05-17' })).date_of_birth).toBe('2001-05-17')
+  })
+
   it('needs a district, an institution and a qualification', () => {
     const found = problems(
       valid({ district_id: '', institution_id: '', qualification_level_id: '' }),

@@ -9,6 +9,14 @@ export const MAX_EXPERIENCES = 10
 export const SUMMARY_MAX = 1000
 export const DESCRIPTION_MAX = 1000
 const EARLIEST_DATE = '1970-01-01'
+const MIN_AGE = 16
+const MAX_AGE = 80
+
+/** `today` (YYYY-MM-DD) moved back by whole years. */
+function yearsBefore(today: string, years: number): string {
+  const [year, month, day] = today.split('-')
+  return `${Number(year) - years}-${month}-${month === '02' && day === '29' ? '28' : day}`
+}
 const EXPECTED_COMPLETION_YEARS_AHEAD = 10
 
 /** Value of the institution and field-of-study pickers when the user chooses "Other". */
@@ -46,6 +54,7 @@ const experienceSchema = z.object({
 const fields = {
   full_name: z.string(),
   phone: z.string(),
+  date_of_birth: z.string(),
   district_id: z.string(),
   institution_id: z.string(),
   institution_other_name: z.string(),
@@ -65,7 +74,7 @@ export type ExperienceFormValues = ProfileFormValues['experiences'][number]
 
 /** Which form fields belong to which step: used to validate a step and to find an error's step. */
 export const STEP_FIELDS: Record<StepId, readonly string[]> = {
-  basics: ['full_name', 'phone', 'district_id'],
+  basics: ['full_name', 'phone', 'date_of_birth', 'district_id'],
   education: [
     'institution_id',
     'institution_other_name',
@@ -99,6 +108,14 @@ export function createProfileSchema(today: string = todayInKampala()) {
     else if (name.length > 150) problem(['full_name'], 'Your name must be at most 150 characters.')
     if (v.phone.trim() && !isUgandanMobile(v.phone)) {
       problem(['phone'], 'Enter a Ugandan mobile number, like 0772 123456 or +256 772 123456.')
+    }
+    if (v.date_of_birth) {
+      const youngest = yearsBefore(today, MIN_AGE)
+      if (v.date_of_birth > youngest) {
+        problem(['date_of_birth'], `You must be at least ${MIN_AGE} years old.`)
+      } else if (v.date_of_birth < yearsBefore(today, MAX_AGE)) {
+        problem(['date_of_birth'], 'Enter a valid date of birth.')
+      }
     }
     if (!v.district_id) problem(['district_id'], 'Choose your district.')
 
@@ -184,6 +201,7 @@ export function emptyValues(): ProfileFormValues {
   return {
     full_name: '',
     phone: '',
+    date_of_birth: '',
     district_id: '',
     institution_id: '',
     institution_other_name: '',
@@ -215,6 +233,7 @@ export function fromProfile(profile: Profile): ProfileFormValues {
   return {
     full_name: profile.full_name,
     phone: profile.phone ?? '',
+    date_of_birth: profile.date_of_birth ?? '',
     district_id: profile.district_id,
     institution_id: profile.institution_id ?? (profile.institution_other_name ? OTHER : ''),
     institution_other_name: profile.institution_other_name ?? '',
@@ -244,6 +263,7 @@ export function toPayload(v: ProfileFormValues): ProfileInput {
   return {
     full_name: v.full_name.trim(),
     phone: v.phone.trim() || null,
+    date_of_birth: v.date_of_birth || null,
     institution_id: institutionIsOther ? null : v.institution_id,
     institution_other_name: institutionIsOther ? v.institution_other_name.trim() : null,
     qualification_level_id: v.qualification_level_id,

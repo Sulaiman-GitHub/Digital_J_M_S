@@ -1,13 +1,13 @@
 """Applications: applying, the copies, the status table, ownership, the CV."""
 
 from collections.abc import Iterator
-from datetime import UTC, datetime, timedelta
+from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
 from uuid import uuid4
 
 import pytest
 from fastapi.testclient import TestClient
-from sqlalchemy import func, select
+from sqlalchemy import func, select, update
 from sqlalchemy.orm import Session
 
 from app.models import (
@@ -17,6 +17,7 @@ from app.models import (
     ApplicationStatusEvent,
     AuditEvent,
     Cv,
+    SeekerProfile,
     UserRole,
     VacancyStatus,
     VerificationStatus,
@@ -98,6 +99,20 @@ def audit_count(db: Session, action: str) -> int:
 
 
 # ---------- applying ----------
+
+
+def test_the_date_of_birth_never_reaches_the_employer(
+    seeker: TestClient, scene: Scene, db_session: Session
+) -> None:
+    db_session.execute(update(SeekerProfile).values(date_of_birth=date(2001, 5, 17)))
+    db_session.commit()
+
+    response = apply_to(seeker, scene.vacancy.id)
+
+    assert response.status_code == 201, response.text
+    assert "birth" not in str(response.json()) and "2001-05-17" not in str(response.json())
+    snapshot = db_session.scalar(select(Application.profile_snapshot))
+    assert "birth" not in str(snapshot)
 
 
 def test_apply_happy_path(seeker: TestClient, scene: Scene, db_session: Session) -> None:
