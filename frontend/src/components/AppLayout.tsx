@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
+import { Chatbot } from '../features/chatbot/Chatbot'
 import { ForgetDeletedSession } from '../features/auth/ForgetDeletedSession'
 import { useAuth } from '../features/auth/authContext'
 import { cn } from '../lib/cn'
@@ -31,6 +32,7 @@ export function AppLayout() {
       <div className={cn(showBottomNav && 'pb-14 md:pb-0')}>
         <Footer />
       </div>
+      <Chatbot />
       {showBottomNav && <BottomNav />}
     </div>
   )
