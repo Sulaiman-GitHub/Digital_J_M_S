@@ -29,10 +29,9 @@ for (const path of ['/', '/jobs']) {
     })
     await expect(page.getByRole('banner')).toBeVisible()
 
-    const widths = await page.evaluate(() => ({
-      scroll: document.documentElement.scrollWidth,
-      client: document.documentElement.clientWidth,
-    }))
+    const widths = await page
+      .locator('html')
+      .evaluate((root) => ({ scroll: root.scrollWidth, client: root.clientWidth }))
 
     expect(widths.scroll).toBeLessThanOrEqual(widths.client)
     await context.close()
