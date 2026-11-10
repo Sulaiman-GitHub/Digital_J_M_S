@@ -91,7 +91,10 @@ export function AppHeader() {
             >
               DJ
             </span>
-            <span aria-hidden="true" className={cn(!compactBrand && 'sm:hidden')}>
+            <span
+              aria-hidden="true"
+              className={cn('max-[399px]:hidden', !compactBrand && 'sm:hidden')}
+            >
               DJM<span className="text-primary">S</span>
             </span>
             <span aria-hidden="true" className={cn('hidden', !compactBrand && 'sm:inline')}>
