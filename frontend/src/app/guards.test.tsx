@@ -12,7 +12,11 @@ import {
   okData,
   renderWithAuth,
 } from '../test/utils'
+import type { RouteObject } from 'react-router-dom'
+import type { UserRole } from '../api/types'
+import { canRoleOpen } from '../lib/roles'
 import { RedirectIfAuthenticated, RequireAuth, RequireRole } from './guards'
+import { authRoutes } from './router'
 
 function Where() {
   const location = useLocation()
@@ -36,6 +40,7 @@ function renderRoutes(route: string) {
           <Route path="/employer" element={<p>Employer page</p>} />
         </Route>
       </Route>
+      <Route path="/admin/employers" element={<p>Admin home</p>} />
       <Route path="/jobs/:id" element={<p>Job page</p>} />
       <Route path="/" element={<p>Home page</p>} />
     </Routes>,
@@ -129,5 +134,102 @@ describe('RedirectIfAuthenticated', () => {
 
     renderRoutes(`/login?next=${encodeURIComponent('//evil.example')}`)
     expect(await screen.findByText('Account page')).toBeInTheDocument()
+  })
+
+  it.each([
+    ['job_seeker', '/employer', 'Account page'],
+    ['job_seeker', '/jobs/7', 'Job page'],
+    ['employer', '/employer', 'Employer page'],
+    ['employer', '/admin/reports', 'Employer page'],
+    ['employer', undefined, 'Employer page'],
+    ['admin', '/employer', 'Admin home'],
+    ['admin', '/jobs/7', 'Job page'],
+    ['admin', undefined, 'Admin home'],
+  ] as const)('%s with next=%s lands on %s', async (role, next, page) => {
+    mockApi({ ...loggedIn(makeUser({ role })) })
+    renderRoutes(next ? `/login?next=${encodeURIComponent(next)}` : '/login')
+
+    expect(await screen.findByText(page)).toBeInTheDocument()
+  })
+})
+
+describe('ForbiddenPage', () => {
+  it.each([
+    ['job_seeker', '/employer', '/account'],
+    ['admin', '/employer', '/admin/employers'],
+  ] as const)('a %s who opens %s gets a link to their dashboard', async (role, visit, home) => {
+    // The test router lets only employer/admin into /employer, so a job seeker is refused.
+    // For the admin case we use a router that allows job seekers only.
+    mockApi({ ...loggedIn(makeUser({ role })) })
+    renderWithAuth(
+      <Routes>
+        <Route element={<RequireAuth />}>
+          <Route
+            element={
+              <RequireRole
+                roles={['job_seeker', 'employer'].filter((r) => r !== role) as UserRole[]}
+              />
+            }
+          >
+            <Route path={visit} element={<p>Hidden page</p>} />
+          </Route>
+        </Route>
+      </Routes>,
+      { route: visit },
+    )
+
+    const link = await screen.findByRole('link', { name: 'Go to your dashboard' })
+    expect(link).toHaveAttribute('href', home)
+  })
+
+  it('links an employer to their dashboard', async () => {
+    mockApi({ ...loggedIn(makeUser({ role: 'employer' })) })
+    renderWithAuth(
+      <Routes>
+        <Route element={<RequireAuth />}>
+          <Route element={<RequireRole roles={['admin']} />}>
+            <Route path="/admin/reports" element={<p>Hidden page</p>} />
+          </Route>
+        </Route>
+      </Routes>,
+      { route: '/admin/reports' },
+    )
+
+    expect(await screen.findByRole('link', { name: 'Go to your dashboard' })).toHaveAttribute(
+      'href',
+      '/employer',
+    )
+  })
+})
+
+describe('router RequireRole agrees with the path rules', () => {
+  type Found = [string, readonly UserRole[] | null]
+
+  function collect(routes: RouteObject[], roles: readonly UserRole[] | null, out: Found[]) {
+    for (const route of routes) {
+      let current = roles
+      const element = route.element as
+        { type?: unknown; props?: { roles?: UserRole[] } } | undefined
+      if (element?.type === RequireRole) current = element.props?.roles ?? null
+      if (route.path) out.push([route.path, current])
+      if (route.children) collect(route.children, current, out)
+    }
+    return out
+  }
+
+  const everyRole: UserRole[] = ['job_seeker', 'employer', 'admin']
+  const found = collect(authRoutes, null, []).filter(
+    ([path]) => !/^\/(login|register|forgot-password|reset-password|verify-email)/.test(path),
+  )
+
+  it('finds the guarded routes', () => {
+    expect(found.some(([, roles]) => roles !== null)).toBe(true)
+  })
+
+  it.each(found)('%s', (path, roles) => {
+    const sample = path.replace(/\/:[^/]+/g, '/1').replace(/\/1\?/, '/1')
+    for (const role of everyRole) {
+      expect(canRoleOpen(role, sample)).toBe(roles ? roles.includes(role) : true)
+    }
   })
 })

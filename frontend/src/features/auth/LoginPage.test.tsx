@@ -117,6 +117,20 @@ describe('LoginPage', () => {
   })
 
   it.each([
+    ['admin', '/employer', 'Admin home'],
+    ['employer', '/employer', 'Employer home'],
+    ['job_seeker', '/admin/reports', 'Account page'],
+    ['job_seeker', '/jobs/42', 'Job page'],
+  ] as const)('a %s with ?next=%s ends on the right page', async (role, next, page) => {
+    mockApi({ ...loggedOut, [LOGIN]: () => okData(makeUser({ role })) })
+    renderPage(`/login?next=${encodeURIComponent(next)}`)
+
+    await logIn()
+
+    expect(await screen.findByText(page)).toBeInTheDocument()
+  })
+
+  it.each([
     '//evil.example/phish',
     '/\\evil.example',
     'https://evil.example',

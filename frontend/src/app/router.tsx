@@ -19,7 +19,7 @@ const devRoutes: RouteObject[] = import.meta.env.DEV
   : []
 
 // Route modules are loaded on demand to keep the first download small.
-const authRoutes: RouteObject[] = [
+export const authRoutes: RouteObject[] = [
   {
     element: <RedirectIfAuthenticated />,
     children: [
