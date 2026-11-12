@@ -48,3 +48,34 @@ describe('AppLayout bottom navigation', () => {
     expect(screen.getByRole('main').className).not.toContain('pb-24')
   })
 })
+
+describe('AppLayout width', () => {
+  function renderAt(route: string) {
+    mockApi({ ...loggedOut })
+    return renderWithAuth(
+      <Routes>
+        <Route element={<AppLayout />}>
+          <Route path="/" element={<p>Home content</p>} />
+          <Route path="/jobs" element={<p>Jobs content</p>} />
+        </Route>
+      </Routes>,
+      { route },
+    )
+  }
+
+  it('lets the landing page run edge to edge, with a wide header and footer', async () => {
+    renderAt('/')
+
+    await screen.findByText('Home content')
+    expect(screen.getByRole('main').className).not.toContain('max-w-5xl')
+    expect(screen.getByRole('contentinfo').firstElementChild?.className).toContain('max-w-6xl')
+  })
+
+  it('keeps every other page in the normal reading width', async () => {
+    renderAt('/jobs')
+
+    await screen.findByText('Jobs content')
+    expect(screen.getByRole('main').className).toContain('max-w-5xl')
+    expect(screen.getByRole('contentinfo').firstElementChild?.className).toContain('max-w-5xl')
+  })
+})

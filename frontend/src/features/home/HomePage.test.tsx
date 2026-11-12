@@ -186,3 +186,61 @@ describe('the landing sections', () => {
     expect(screen.getByText('Who can see my CV and my details?')).toBeInTheDocument()
   })
 })
+
+describe('the vision, support and contact sections', () => {
+  it('states the vision with photos that have descriptions', async () => {
+    renderHome()
+
+    expect(
+      await screen.findByRole('heading', { name: /Every graduate in Uganda/ }),
+    ).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: /graduates smiling/ })).toBeInTheDocument()
+    expect(screen.getByRole('img', { name: /job interview/ })).toBeInTheDocument()
+  })
+
+  it('shows the support contact details as phone and email links', async () => {
+    renderHome()
+    const support = (await screen.findByRole('heading', { name: /Help keep DJMS free/ })).closest(
+      'section',
+    )!
+
+    expect(within(support).getByRole('link', { name: '+256 740 994 073' })).toHaveAttribute(
+      'href',
+      'tel:+256740994073',
+    )
+    expect(within(support).getByRole('link', { name: 'djm@gmail.com' })).toHaveAttribute(
+      'href',
+      'mailto:djm@gmail.com?subject=Supporting%20DJMS',
+    )
+  })
+
+  it('labels every sponsor card as Sponsored and takes no payment', async () => {
+    renderHome()
+    const support = (await screen.findByRole('heading', { name: /Help keep DJMS free/ })).closest(
+      'section',
+    )!
+
+    expect(within(support).getAllByText('Sponsored')).toHaveLength(2)
+    expect(within(support).queryByRole('button')).not.toBeInTheDocument()
+    expect(within(support).queryByRole('textbox')).not.toBeInTheDocument()
+  })
+
+  it('puts the support section after the latest vacancies', async () => {
+    renderHome()
+    const latest = await screen.findByRole('heading', { name: 'Latest vacancies' })
+    const support = screen.getByRole('heading', { name: /Help keep DJMS free/ })
+
+    expect(latest.compareDocumentPosition(support) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy()
+  })
+
+  it('shows the real number of open jobs in the hero, and no number when there are none', async () => {
+    const withJobs = renderHome()
+    expect(await screen.findByText('134')).toBeInTheDocument()
+    expect(screen.getByText('open jobs')).toBeInTheDocument()
+    withJobs.unmount()
+
+    renderHome(() => listResponse(pageOf([])))
+    expect(await screen.findByText('No vacancies yet')).toBeInTheDocument()
+    expect(screen.queryByText('open jobs')).not.toBeInTheDocument()
+  })
+})

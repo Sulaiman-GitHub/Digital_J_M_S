@@ -20,17 +20,24 @@ export function AppLayout() {
   }, [hash, pathname])
   // Job seekers get a bottom navigation on phones; leave room so it never covers content.
   const showBottomNav = user?.role === 'job_seeker'
+  const isHome = pathname === '/'
 
   return (
     <div id="top" className="min-h-svh bg-surface text-text">
       <ForgetDeletedSession />
-      <AppHeader />
+      <AppHeader wide={isHome} />
       <VerifyEmailBanner />
-      <main className={cn('mx-auto max-w-5xl px-4 py-6', showBottomNav && 'pb-24 md:pb-6')}>
+      <main
+        className={cn(
+          // The landing page runs in full-width bands of its own (decision 026).
+          !isHome && 'mx-auto max-w-5xl px-4 py-6',
+          showBottomNav && 'pb-24 md:pb-6',
+        )}
+      >
         <Outlet />
       </main>
       <div className={cn(showBottomNav && 'pb-14 md:pb-0')}>
-        <Footer />
+        <Footer wide={isHome} />
       </div>
       <Chatbot />
       {showBottomNav && <BottomNav />}

@@ -25,7 +25,7 @@ const menuItemClasses =
  * Site header. Logged out: Log in and Register. Logged in: a user menu with Logout on desktop,
  * a menu button on phones. (Job seekers also get a bottom navigation on phones.)
  */
-export function AppHeader() {
+export function AppHeader({ wide = false }: { wide?: boolean }) {
   const { user, status, logout } = useAuth()
   const navigate = useNavigate()
   const toast = useToast()
@@ -79,7 +79,12 @@ export function AppHeader() {
 
   return (
     <header ref={headerRef} className="relative border-b border-border bg-card shadow-sm">
-      <div className="mx-auto flex min-h-14 max-w-5xl items-center justify-between gap-2 px-4 md:min-h-16">
+      <div
+        className={cn(
+          'mx-auto flex min-h-14 items-center justify-between gap-2 px-4 md:min-h-16',
+          wide ? 'max-w-6xl' : 'max-w-5xl',
+        )}
+      >
         <div className="flex items-center gap-5 lg:gap-8">
           <Link
             to="/"
