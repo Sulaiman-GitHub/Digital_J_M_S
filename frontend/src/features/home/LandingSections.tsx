@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom'
 import type { UserRole } from '../../api/types'
 import { buttonClasses } from '../../components/buttonStyles'
 import { Reveal } from '../../components/Reveal'
+import { HOME_PATH } from '../../lib/roles'
+import { Eyebrow } from './landingBits'
+import { IMAGES } from './landingContent'
 
 function Icon({ children }: { children: ReactNode }) {
   return (
@@ -56,27 +59,41 @@ const STEPS = [
   },
 ] as const
 
-export function HowItWorks() {
+export function HowItWorks({ role }: { role: UserRole | undefined }) {
+  const links = [
+    role
+      ? { to: HOME_PATH[role], label: 'Go to my home' }
+      : { to: '/register', label: 'Create account' },
+    { to: '/jobs', label: 'Browse jobs' },
+    { to: '/#faq', label: 'Read the answers' },
+  ]
   return (
-    <section id="how-it-works" aria-labelledby="how-title" className="scroll-mt-6 space-y-5">
-      <Reveal>
-        <h2 id="how-title" className="text-title-md font-bold">
+    <section id="how-it-works" aria-labelledby="how-title" className="scroll-mt-6 space-y-8">
+      <Reveal className="space-y-2">
+        <Eyebrow>Simple and free</Eyebrow>
+        <h2 id="how-title" className="text-title-md font-bold md:text-title-lg">
           How it works
         </h2>
-        <p className="mt-1 text-text-secondary">From student to hired in three simple steps.</p>
+        <p className="text-text-secondary">From student to hired in three simple steps.</p>
       </Reveal>
-      <ol className="grid gap-4 md:grid-cols-3">
+      <ol className="grid gap-6 md:grid-cols-3">
         {STEPS.map((step, index) => (
           <Reveal as="li" key={step.title} delay={index * 120}>
-            <div className="h-full rounded-card border border-border bg-card p-5 shadow-sm transition-shadow hover:shadow-md">
+            <div className="h-full rounded-card border border-border bg-card p-6 shadow-sm transition-shadow hover:shadow-md">
               <div className="flex items-center justify-between">
                 <Icon>{step.icon}</Icon>
-                <span aria-hidden="true" className="text-title-md font-extrabold text-border">
+                <span aria-hidden="true" className="text-5xl font-light text-primary/40">
                   {index + 1}
                 </span>
               </div>
-              <h3 className="mt-3 font-semibold">{step.title}</h3>
+              <h3 className="mt-4 text-lg font-semibold">{step.title}</h3>
               <p className="mt-1 text-text-secondary">{step.text}</p>
+              <Link
+                to={links[index].to}
+                className="mt-4 inline-block font-semibold text-primary underline"
+              >
+                {links[index].label} →
+              </Link>
             </div>
           </Reveal>
         ))}
@@ -135,9 +152,10 @@ const FEATURES = [
 
 export function Features() {
   return (
-    <section aria-labelledby="why-title" className="space-y-5">
-      <Reveal>
-        <h2 id="why-title" className="text-title-md font-bold">
+    <section aria-labelledby="why-title" className="space-y-8">
+      <Reveal className="space-y-2">
+        <Eyebrow>Why choose us</Eyebrow>
+        <h2 id="why-title" className="text-title-md font-bold md:text-title-lg">
           Why use DJMS
         </h2>
       </Reveal>
@@ -171,9 +189,18 @@ export function ForEmployers({ role }: { role: UserRole | undefined }) {
       <section
         id="for-employers"
         aria-labelledby="employers-title"
-        className="grid scroll-mt-6 gap-6 overflow-hidden rounded-card bg-linear-to-br from-hero-from to-hero-to p-6 text-white shadow-md md:grid-cols-[1.3fr_1fr] md:p-10"
+        className="grid scroll-mt-6 overflow-hidden rounded-card bg-linear-to-br from-hero-from to-hero-to text-white shadow-md md:grid-cols-[1fr_1.2fr]"
       >
-        <div className="space-y-3">
+        <img
+          src={IMAGES.handshake}
+          alt="An employer and a candidate shaking hands in an office"
+          width={1100}
+          height={733}
+          loading="lazy"
+          className="h-56 w-full object-cover object-[35%_center] md:h-full"
+        />
+        <div className="space-y-4 p-6 md:p-10">
+          <Eyebrow className="text-white">For employers</Eyebrow>
           <h2 id="employers-title" className="text-title-md font-bold">
             Hiring? Reach students and graduates across Uganda
           </h2>
@@ -181,6 +208,23 @@ export function ForEmployers({ role }: { role: UserRole | undefined }) {
             Publish a vacancy, receive complete applications with the applicant&apos;s profile and
             CV, and move candidates from review to offer in one place.
           </p>
+          <ul className="space-y-2">
+            {[
+              'Companies are verified before they go live',
+              'Applicants arrive with a full profile and CV',
+              'Shortlist, interview and offer from one screen',
+            ].map((point) => (
+              <li key={point} className="flex items-start gap-2">
+                <span
+                  aria-hidden="true"
+                  className="mt-0.5 grid size-5 flex-none place-items-center rounded-pill bg-white/20 text-xs"
+                >
+                  ✓
+                </span>
+                {point}
+              </li>
+            ))}
+          </ul>
           <Link
             to={to}
             className={buttonClasses({
@@ -191,23 +235,6 @@ export function ForEmployers({ role }: { role: UserRole | undefined }) {
             {label}
           </Link>
         </div>
-        <ul className="space-y-2 self-center">
-          {[
-            'Companies are verified before they go live',
-            'Applicants arrive with a full profile and CV',
-            'Shortlist, interview and offer from one screen',
-          ].map((point) => (
-            <li key={point} className="flex items-start gap-2">
-              <span
-                aria-hidden="true"
-                className="mt-0.5 grid size-5 flex-none place-items-center rounded-pill bg-white/20 text-xs"
-              >
-                ✓
-              </span>
-              {point}
-            </li>
-          ))}
-        </ul>
       </section>
     </Reveal>
   )
@@ -238,9 +265,10 @@ const FAQ = [
 
 export function Faq() {
   return (
-    <section id="faq" aria-labelledby="faq-title" className="scroll-mt-6 space-y-4">
-      <Reveal>
-        <h2 id="faq-title" className="text-title-md font-bold">
+    <section id="faq" aria-labelledby="faq-title" className="scroll-mt-6 space-y-6">
+      <Reveal className="space-y-2">
+        <Eyebrow>Good to know</Eyebrow>
+        <h2 id="faq-title" className="text-title-md font-bold md:text-title-lg">
           Questions and answers
         </h2>
       </Reveal>

@@ -1,6 +1,12 @@
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../features/auth/authContext'
+import {
+  SUPPORT_EMAIL,
+  SUPPORT_PHONE_HREF,
+  SUPPORT_PHONE_LABEL,
+} from '../features/home/landingContent'
+import { cn } from '../lib/cn'
 
 function Column({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -24,12 +30,12 @@ function FooterLink({ to, children }: { to: string; children: ReactNode }) {
 }
 
 /** Site footer: what the system is, where to go next for each kind of user, and the legal pages. */
-export function Footer() {
+export function Footer({ wide = false }: { wide?: boolean }) {
   const { user } = useAuth()
   const year = new Date().getFullYear()
   return (
-    <footer className="mt-12 border-t border-border bg-card">
-      <div className="mx-auto max-w-5xl px-4 py-10">
+    <footer className={cn('border-t border-border bg-card', !wide && 'mt-12')}>
+      <div className={cn('mx-auto px-4 py-10', wide ? 'max-w-6xl' : 'max-w-5xl')}>
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div className="space-y-3">
             <Link to="/" className="inline-flex items-center gap-2 text-lg font-bold text-text">
@@ -44,6 +50,17 @@ export function Footer() {
             <p className="max-w-xs text-text-secondary">
               Connecting students and graduates of every university and tertiary institution in
               Uganda with verified employers.
+            </p>
+            <p className="space-y-1 text-text-secondary">
+              <a href={SUPPORT_PHONE_HREF} className="block hover:text-primary hover:underline">
+                {SUPPORT_PHONE_LABEL}
+              </a>
+              <a
+                href={`mailto:${SUPPORT_EMAIL}`}
+                className="block hover:text-primary hover:underline"
+              >
+                {SUPPORT_EMAIL}
+              </a>
             </p>
           </div>
 

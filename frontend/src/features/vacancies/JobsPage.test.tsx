@@ -453,3 +453,13 @@ describe('the phone filter sheet', () => {
     expect(screen.queryByRole('radio', { name: 'Contract', checked: true })).not.toBeInTheDocument()
   })
 })
+
+describe('no adverts while searching', () => {
+  it('does not show the support or sponsor section on the job list', async () => {
+    renderJobs()
+    await screen.findByText('Accounts Assistant')
+
+    expect(screen.queryByText('Sponsored')).not.toBeInTheDocument()
+    expect(screen.queryByText(/Help keep DJMS free/)).not.toBeInTheDocument()
+  })
+})
