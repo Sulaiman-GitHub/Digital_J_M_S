@@ -4,7 +4,7 @@ import { buttonClasses } from '../components/buttonStyles'
 import { ErrorState } from '../components/ErrorState'
 import { Skeleton } from '../components/Skeleton'
 import { useAuth } from '../features/auth/authContext'
-import { safeNextPath } from '../lib/safeRedirect'
+import { HOME_PATH, nextPathForUser } from '../lib/roles'
 
 function PageLoading() {
   return (
@@ -50,28 +50,33 @@ export function RequireRole({ roles }: { roles: readonly UserRole[] }) {
 }
 
 export function ForbiddenPage() {
+  const { user } = useAuth()
   return (
     <section aria-labelledby="forbidden-title" className="space-y-4">
       <h1 id="forbidden-title" className="text-title-md font-semibold">
         You do not have permission to see this page
       </h1>
       <p className="text-text-secondary">
-        This page is for a different kind of account. Go back and choose something else.
+        This page is for a different kind of account. Your dashboard has everything your account can
+        do.
       </p>
-      <Link to="/" className={buttonClasses({ variant: 'secondary' })}>
-        Go to the home page
+      <Link
+        to={user ? HOME_PATH[user.role] : '/'}
+        className={buttonClasses({ variant: 'secondary' })}
+      >
+        Go to your dashboard
       </Link>
     </section>
   )
 }
 
-/** Login and register pages: logged-in users are sent on instead (to ?next= or /account). */
+/** Login and register pages: logged-in users are sent on instead (to ?next= if their role may open it, else their own home). */
 export function RedirectIfAuthenticated() {
   const { status, user } = useAuth()
   const [params] = useSearchParams()
 
   if (status === 'authenticated' && user) {
-    return <Navigate to={safeNextPath(params.get('next')) ?? '/account'} replace />
+    return <Navigate to={nextPathForUser(params.get('next'), user.role)} replace />
   }
   return <Outlet />
 }

@@ -9,8 +9,7 @@ import { PasswordField } from '../../components/PasswordField'
 import { TextField } from '../../components/TextField'
 import type { UserRole } from '../../api/types'
 import { cn } from '../../lib/cn'
-import { HOME_PATH } from '../../lib/roles'
-import { safeNextPath } from '../../lib/safeRedirect'
+import { nextPathForUser } from '../../lib/roles'
 import { AuthShell, TextLink } from './AuthShell'
 import { loginSchema, type LoginValues } from './schemas'
 import { ME_KEY } from './useCurrentUser'
@@ -47,8 +46,8 @@ export function LoginPage() {
     mutationFn: loginUser,
     onSuccess: (user) => {
       queryClient.setQueryData(ME_KEY, user)
-      // Back to the page that asked for login, but only if it is a path on this site.
-      navigate(safeNextPath(params.get('next')) ?? HOME_PATH[user.role], { replace: true })
+      // Back to the page that asked for login, but only if it is on this site and this role may open it.
+      navigate(nextPathForUser(params.get('next'), user.role), { replace: true })
     },
     onError: handleError,
   })
