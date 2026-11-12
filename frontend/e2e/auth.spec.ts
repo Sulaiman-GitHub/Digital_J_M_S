@@ -86,7 +86,7 @@ test('an unverified user can log in and sees the verify banner', async ({ page, 
     data: { email, password: PASSWORD, role: 'employer', accept_terms: true },
   })
 
-  await page.goto('/login')
+  await page.goto('/login?next=%2Faccount')
   await logIn(page, email)
 
   await expect(page.getByRole('heading', { name: 'My account' })).toBeVisible()
